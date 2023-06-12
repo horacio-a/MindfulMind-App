@@ -50,7 +50,12 @@ export default function Main({ navigation }) {
                 </View>
 
             </ScrollView>
-            <NavBar Redirect={Redirect} />
+            <NavBar Redirect={Redirect}
+                home={true}
+                routine={false}
+                calendar={false}
+                text={false}
+                settings={false} />
         </SafeAreaView>
     );
 }

@@ -9,17 +9,17 @@ import {
 import Loading from '../sreens/Loading'
 import { useState } from 'react';
 
-export default function NavBar({ Redirect }) {
+export default function NavBar({ Redirect, home, routine, calendar, text, settings }) {
     let [fontsLoaded] = useFonts({
         Lato_400Regular,
         Lato_700Bold
     });
-    const [navIcon, setnavIcon] = useState({
-        home: true,
-        routine: false,
-        calendar: false,
-        text: false,
-        settings: false
+    const [setnavIcon] = useState({
+        home: home,
+        routine: routine,
+        calendar: calendar,
+        text: text,
+        settings: settings
     })
 
 
@@ -35,50 +35,50 @@ export default function NavBar({ Redirect }) {
                     <Icon
                         name='home-filled'
                         type='material'
-                        color={navIcon.home ? '#fff' : 'rgba(255, 255, 255, 0.5)'}
+                        color={home ? '#fff' : 'rgba(255, 255, 255, 0.5)'}
                         size={18}
                     />
-                    <Text style={navIcon.home ? styleNavBar.activetextNavBar : styleNavBar.textNavBar}>Incio</Text>
+                    <Text style={home ? styleNavBar.activetextNavBar : styleNavBar.textNavBar}>Incio</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity onPress={() => { Redirect('RoutineScreen') }} style={styleNavBar.IconConteiner}>
                     <Icon
                         name='format-list-bulleted'
                         type='material-community'
-                        color={navIcon.routine ? '#fff' : 'rgba(255, 255, 255, 0.5)'}
+                        color={routine ? '#fff' : 'rgba(255, 255, 255, 0.5)'}
                         size={18}
                     />
-                    <Text style={navIcon.routine ? styleNavBar.activetextNavBar : styleNavBar.textNavBar}>Rutina</Text>
+                    <Text style={routine ? styleNavBar.activetextNavBar : styleNavBar.textNavBar}>Rutina</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity onPress={() => { Redirect('CalendarScreen') }} style={styleNavBar.IconConteiner}>
                     <Icon
                         name='calendar-today'
                         type='material'
-                        color={navIcon.calendar ? '#fff' : 'rgba(255, 255, 255, 0.5)'}
+                        color={calendar ? '#fff' : 'rgba(255, 255, 255, 0.5)'}
                         size={18}
                     />
-                    <Text style={navIcon.calendar ? styleNavBar.activetextNavBar : styleNavBar.textNavBar}>Calendario</Text>
+                    <Text style={calendar ? styleNavBar.activetextNavBar : styleNavBar.textNavBar}>Calendario</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity onPress={() => { Redirect('TextScreen') }} style={styleNavBar.IconConteiner}>
                     <Icon
                         name='book'
                         type='material'
-                        color={navIcon.text ? '#fff' : 'rgba(255, 255, 255, 0.5)'}
+                        color={text ? '#fff' : 'rgba(255, 255, 255, 0.5)'}
                         size={18}
                     />
-                    <Text style={navIcon.text ? styleNavBar.activetextNavBar : styleNavBar.textNavBar}>Tus textos</Text>
+                    <Text style={text ? styleNavBar.activetextNavBar : styleNavBar.textNavBar}>Tus textos</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity onPress={() => { Redirect('SettingScreen') }} style={styleNavBar.IconConteiner}>
                     <Icon
                         name='settings'
                         type='material'
-                        color={navIcon.settings ? '#fff' : 'rgba(255, 255, 255, 0.5)'}
+                        color={settings ? '#fff' : 'rgba(255, 255, 255, 0.5)'}
                         size={18}
                     />
-                    <Text style={navIcon.settings ? styleNavBar.activetextNavBar : styleNavBar.textNavBar}>Ajustes</Text>
+                    <Text style={settings ? styleNavBar.activetextNavBar : styleNavBar.textNavBar}>Ajustes</Text>
                 </TouchableOpacity>
             </View>
         )

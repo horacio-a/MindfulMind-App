@@ -44,6 +44,20 @@ export default function Routine({ Redirect }) {
                 console.log(error);
             });
     }
+
+
+    const AlterTask = async (task) => {
+        console.log(task)
+        const obj = JSON.stringify(task)
+        const response = await axios.post('http://31.220.17.121:3500/completeTask', { obj }, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        console.log(response.data)
+    }
+
+
     if (!fontsLoaded) {
         return <Loading />;
     } else {
@@ -64,7 +78,7 @@ export default function Routine({ Redirect }) {
                                 loading == false
                                     ? (
                                         data.data.map(task => (
-                                            <TouchableOpacity onPress={() => { Redirect('RoutineScreen') }} style={stylesMain.conteinerTask} key={task.id}>
+                                            <TouchableOpacity onPress={() => { AlterTask(task) }} style={stylesMain.conteinerTask} key={task.id}>
                                                 <View style={stylesMain.conteinerImgTaks}>
                                                     {
                                                         task.completed === 1
