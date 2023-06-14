@@ -39,7 +39,10 @@ export default function App({ navigation }) {
 
 
   return (
+
+
     <SesionGlobalState.Provider value={{ session, setsession }} >
+
       <NavigationContainer>
         <Stack.Navigator >
           {session ? (
@@ -59,19 +62,10 @@ export default function App({ navigation }) {
           )}
         </Stack.Navigator>
       </NavigationContainer >
+
     </SesionGlobalState.Provider>
 
 
   );
 }
 
-
-
-
-
-
-{/* <Stack.Screen name="Login" component={ComponetLogin} />
-
-</>)
-: (<>
-  <Stack.Screen name="Home" component={Main} /> */}

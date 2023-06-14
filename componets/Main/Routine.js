@@ -2,7 +2,6 @@ import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity } from 'rea
 import stylesMain from '../../Styles/MainStyle';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-
 import Loading from '../../sreens/Loading'
 
 import {
@@ -13,49 +12,24 @@ import {
 
 
 
-export default function Routine({ Redirect }) {
+export default function Routine({ Redirect, setNotificationVisibility, setdateForNotification, routineData }) {
     let [fontsLoaded] = useFonts({
         Lato_400Regular,
         Lato_700Bold
     });
-
     const [data, setdata] = useState('')
     const [loading, setloading] = useState(true)
-    useEffect(() => {
 
-        axios.get('http://31.220.17.121:3500/task/horacio').then((response) => {
-            setdata(response.data)
-            setloading(false)
-        })
+    useEffect(() => {
+        setdata(routineData)
+        setloading(false)
     }, [])
 
-    const newTask = () => {
-        let obj = {
-            firstName: 'Fred',
-            lastName: 'Flintstone'
-        }
-        console.log('response');
-
-        axios.post('http://31.220.17.121:3500/newtask/token', { obj })
-            .then(function (response) {
-                console.log(response);
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+    const SendAlter = (task) => {
+        setdateForNotification(task)
+        setNotificationVisibility(true)
     }
 
-
-    const AlterTask = async (task) => {
-        console.log(task)
-        const obj = JSON.stringify(task)
-        const response = await axios.post('http://31.220.17.121:3500/completeTask', { obj }, {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-        console.log(response.data)
-    }
 
 
     if (!fontsLoaded) {
@@ -78,7 +52,7 @@ export default function Routine({ Redirect }) {
                                 loading == false
                                     ? (
                                         data.data.map(task => (
-                                            <TouchableOpacity onPress={() => { AlterTask(task) }} style={stylesMain.conteinerTask} key={task.id}>
+                                            <TouchableOpacity onPress={() => { SendAlter(task) }} style={stylesMain.conteinerTask} key={task.id}>
                                                 <View style={stylesMain.conteinerImgTaks}>
                                                     {
                                                         task.completed === 1
