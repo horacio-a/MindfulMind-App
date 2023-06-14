@@ -6,16 +6,23 @@ import {
 } from '@expo-google-fonts/dev';
 import Loading from '../../sreens/Loading'
 import axios from 'axios';
+import { RoutineDateGlobalState } from '../../context/RoutineDataGlobalState';
+import { useContext, useState, useEffect } from 'react';
+import * as SecureStore from 'expo-secure-store';
 
 
 export default function AlterTaskNotification({ setNotificationVisibility, dataForNotification }) {
+    const { routineData, SetRoutineData } = useContext(RoutineDateGlobalState);
+    const [loading, setloading] = useState(true)
     let [fontsLoaded] = useFonts({
         Lato_400Regular,
         Lato_700Bold
     });
+    const [user, setuser] = useState('')
 
     const AlterTask = async (task) => {
-        setNotificationVisibility(false)
+
+        setloading(true)
         console.log(task)
         const obj = JSON.stringify(task)
         const response = await axios.post('http://31.220.17.121:3500/completeTask', { obj }, {
@@ -23,40 +30,55 @@ export default function AlterTaskNotification({ setNotificationVisibility, dataF
                 'Content-Type': 'application/json'
             }
         })
-        console.log(response.data)
+        SetRoutineData(response.data)
+        setNotificationVisibility(false)
+        setloading(true)
     }
+
+    useEffect(() => {
+        async function getuser() {
+            setuser(JSON.parse(await SecureStore.getItemAsync('userToken')))
+        }
+        getuser()
+    }, [])
+
 
     if (!fontsLoaded) {
         return <Loading />;
     } else {
-        return (
-            <View style={stylesHeader.Back}>
-                <View style={stylesHeader.Notification}>
-                    <View style={stylesHeader.ConteinerTitle}>
-                        <Text style={{
-                            color: '#fff',
-                            fontFamily: 'Lato_700Bold',
-                            fontSize: 18,
-                            marginBottom: 5
-                        }}>Espera</Text>
-                        <Text style={{
-                            color: '#fff',
-                            fontFamily: 'Lato_400Regular',
-                            fontSize: 16,
-                        }}>¿Terminaste tu Tarea?</Text>
-                    </View>
-                    <View style={stylesHeader.ConteinerButtom}>
-                        <TouchableOpacity onPress={() => { setNotificationVisibility(false) }} style={stylesHeader.ButtomLeft}>
-                            <Text style={stylesHeader.TextButtom}>No</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => { AlterTask(dataForNotification) }} style={stylesHeader.ButtomRight}>
-                            <Text style={stylesHeader.TextButtom}>Si</Text>
-                        </TouchableOpacity>
-                    </View>
+        if (loading) {
+            <View style={stylesHeader.Back}></View>
+        } else {
+            return (
+                <View style={stylesHeader.Back}>
+                    <View style={stylesHeader.Notification}>
+                        <View style={stylesHeader.ConteinerTitle}>
+                            <Text style={{
+                                color: '#fff',
+                                fontFamily: 'Lato_700Bold',
+                                fontSize: 18,
+                                marginBottom: 5
+                            }}>Espera</Text>
+                            <Text style={{
+                                color: '#fff',
+                                fontFamily: 'Lato_400Regular',
+                                fontSize: 16,
+                            }}>¿Terminaste tu Tarea?</Text>
+                        </View>
+                        <View style={stylesHeader.ConteinerButtom}>
+                            <TouchableOpacity onPress={() => { setNotificationVisibility(false) }} style={stylesHeader.ButtomLeft}>
+                                <Text style={stylesHeader.TextButtom}>No</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => { AlterTask(dataForNotification) }} style={stylesHeader.ButtomRight}>
+                                <Text style={stylesHeader.TextButtom}>Si</Text>
+                            </TouchableOpacity>
+                        </View>
 
+                    </View>
                 </View>
-            </View>
-        )
+            )
+        }
+
     }
 
 }

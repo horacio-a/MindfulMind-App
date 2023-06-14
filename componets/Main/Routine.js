@@ -1,9 +1,9 @@
 import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity } from 'react-native';
 import stylesMain from '../../Styles/MainStyle';
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Loading from '../../sreens/Loading'
-
+import { RoutineDateGlobalState } from '../../context/RoutineDataGlobalState';
 import {
     useFonts,
     Lato_400Regular,
@@ -12,23 +12,15 @@ import {
 
 
 
-export default function Routine({ Redirect, setNotificationVisibility, setdateForNotification, routineData }) {
+export default function Routine({ Redirect, SendAlter }) {
     let [fontsLoaded] = useFonts({
         Lato_400Regular,
         Lato_700Bold
     });
-    const [data, setdata] = useState('')
-    const [loading, setloading] = useState(true)
+    const [loading, setloading] = useState(false)
 
-    useEffect(() => {
-        setdata(routineData)
-        setloading(false)
-    }, [])
 
-    const SendAlter = (task) => {
-        setdateForNotification(task)
-        setNotificationVisibility(true)
-    }
+    const { routineData, SetRoutineData } = useContext(RoutineDateGlobalState);
 
 
 
@@ -51,7 +43,7 @@ export default function Routine({ Redirect, setNotificationVisibility, setdateFo
                             {
                                 loading == false
                                     ? (
-                                        data.data.map(task => (
+                                        routineData.data.map(task => (
                                             <TouchableOpacity onPress={() => { SendAlter(task) }} style={stylesMain.conteinerTask} key={task.id}>
                                                 <View style={stylesMain.conteinerImgTaks}>
                                                     {
@@ -79,7 +71,7 @@ export default function Routine({ Redirect, setNotificationVisibility, setdateFo
                         </View>
                         <View style={stylesMain.BlockTextPorcentaje}>
                             <View style={stylesMain.InnerBlock}>
-                                <Text style={stylesMain.TextPorcentaje}>{data.porcentaje}</Text>
+                                <Text style={stylesMain.TextPorcentaje}>{routineData.porcentaje}</Text>
                             </View>
                         </View>
                     </View>
