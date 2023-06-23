@@ -1,4 +1,4 @@
-import { Text, View, TouchableOpacity } from "react-native";
+import { Text, View, TouchableOpacity, ScrollView } from "react-native";
 import styleTextComp from "../../Styles/TextComStyle";
 import {
     useFonts,
@@ -7,29 +7,30 @@ import {
 } from '@expo-google-fonts/dev';
 import Loading from '../../sreens/Loading'
 import { Icon } from '@rneui/themed';
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import axios from "axios";
-
+import { TextDateGlobalState } from "../../context/DataGlobalState";
 import TextosConteiners from "../util/TextConteiner";
+import LoadingTextComp from "./LoadingTextComp";
+import ContentLoader from "react-native-easy-content-loader";
+
+
 export default function TextComponent() {
     const [loading, setloading] = useState(true)
-
-    const [textos, setTexto] = useState([])
+    const { TextData, SetTextData } = useContext(TextDateGlobalState);
     useEffect(() => {
-        const getTexto = async () => {
-            const response = await axios.get('http://31.220.17.121:3500/text/Horacio')
-            setTexto(response.data)
-            setloading(false)
-
-        }
-        getTexto()
+        setloading(false)
     }, [])
+
     let [fontsLoaded] = useFonts({
         Lato_400Regular,
         Lato_700Bold
     });
     if (!fontsLoaded) {
-        return <Loading />;
+        return (
+            <LoadingTextComp />
+
+        )
     } else {
         return (
             <View style={styleTextComp.MainConteiner}>
@@ -44,14 +45,18 @@ export default function TextComponent() {
                     />
                     <Text style={styleTextComp.textAddNewText}>Agregar un texto</Text>
                 </TouchableOpacity>
-                {
-                    loading === false
-                        ? (textos.map(item => <TextosConteiners
-                            key={item.id}
-                            data={item}
-                        />))
-                        : (<></>)
-                }
+                <ScrollView>
+
+                    {
+                        loading === false
+                            ? (TextData.map(item => <TextosConteiners
+                                key={item.id}
+                                data={item}
+                            />))
+                            : (<></>)
+                    }
+                </ScrollView>
+
 
             </View>
         )

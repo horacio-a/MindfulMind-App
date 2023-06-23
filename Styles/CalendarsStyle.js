@@ -129,7 +129,27 @@ const stylesCalendar = StyleSheet.create({
         height: 5,
         borderRadius: 5,
         backgroundColor: '#1E1E1E',
-    }
+    },
+    LoadingTitleMain: {
+        position: 'relative',
+        overflow: 'hidden',
+        width: '50%',
+        height: '50%',
+        backgroundColor: '#a0a0a0',
+        borderRadius: 5,
+    },
+    LoadingconteinerMain: {
+        position: 'relative',
+        overflow: 'hidden',
+        width: '85%',
+        height: 350,
+        backgroundColor: '#a0a0a0',
+        borderRadius: 10,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+
 
 });
 

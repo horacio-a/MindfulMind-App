@@ -8,16 +8,16 @@ import SettingScreen from './sreens/Settings';
 import { View, Text, Button } from 'react-native';
 import Loading from './sreens/Loading';
 import { useEffect, useState } from 'react';
-import * as React from 'react';
 import * as SecureStore from 'expo-secure-store';
 import Login from './sreens/Login';
 import { SesionGlobalState } from './context/SesionGlobalState';
-import { RoutineDateGlobalState } from './context/RoutineDataGlobalState';
+import { RoutineDateGlobalState, CalendarDateGlobalState, TextDateGlobalState } from './context/DataGlobalState';
 const Stack = createNativeStackNavigator();
+import { EventProvider } from 'react-native-outside-press';
 
 import axios from 'axios';
 export default function App({ navigation }) {
-  const [session, setsession] = React.useState(false);
+  const [session, setsession] = useState(false);
 
   const [isSignedIn, setisSignedIn] = useState()
   const [loading, setloading] = useState(true)
@@ -25,18 +25,6 @@ export default function App({ navigation }) {
   const [routineData, SetRoutineData] = useState([])
   const [CalendarData, SetCalendarData] = useState([])
   const [TextData, SetTextData] = useState([])
-
-  React.useEffect(() => {
-    // Fetch the token from storage then navigate to our appropriate place
-    const IsUserRegister = async () => {
-      const userToken = await SecureStore.getItemAsync('userToken')
-      if (userToken) {
-        setsession(true)
-      }
-    };
-
-    IsUserRegister();
-  }, []);
 
   useEffect(() => {
     const getAllData = async () => {
@@ -64,47 +52,79 @@ export default function App({ navigation }) {
       SetTextData(response.data.TextData)
       setloading(false)
     }
-    getAllData()
-  }, [])
+    // Fetch the token from storage then navigate to our appropriate place
+    const IsUserRegister = async () => {
+      const userToken = await SecureStore.getItemAsync('userToken')
+      if (userToken) {
+        console.log('hola')
+        getAllData()
+        setsession(true)
+
+      } else {
+        console.log('chau')
+        setTimeout(() => {
+          setsession(false)
+          setloading(false)
+        }, 1000);
+
+      }
+    };
+
+    IsUserRegister();
+  }, []);
 
 
-  if (loading) {
-    return (
-      <Loading />
-    )
-  } else {
-    return (
 
 
-      <SesionGlobalState.Provider value={{ session, setsession }} >
-        <RoutineDateGlobalState.Provider value={{ routineData, SetRoutineData }}>
+  return (
+    <>
+      {
+        loading
+          ? (<Loading />)
+          : (
+            <EventProvider style={{ flex: 1 }}>
 
-          <NavigationContainer>
-            <Stack.Navigator >
-              {session ? (
-                <>
-                  <Stack.Screen name="Home" component={Main} options={{ headerShown: false }} />
-                  <Stack.Screen name="RoutineScreen" component={RoutineScreen} options={{ headerShown: false }} />
-                  <Stack.Screen name="CalendarScreen" component={CalendarScreen} options={{ headerShown: false }} />
-                  <Stack.Screen name="TextScreen" component={TextScreen} options={{ headerShown: false }} />
-                  <Stack.Screen name="SettingScreen" component={SettingScreen} options={{ headerShown: false }} />
+              <SesionGlobalState.Provider value={{ session, setsession }} >
+                <RoutineDateGlobalState.Provider value={{ routineData, SetRoutineData }}>
+                  <CalendarDateGlobalState.Provider value={{ CalendarData, SetCalendarData }}>
+                    <TextDateGlobalState.Provider value={{ TextData, SetTextData }}>
+                      <NavigationContainer>
+                        <Stack.Navigator initialRouteName={"Signin"} >
+                          {!session ? (
+                            <>
+                              <Stack.Screen name="SignIn" component={Login} options={{ headerShown: false }} />
+                            </>
 
-                </>
-              ) : (
-                <>
-                  <Stack.Screen name="SignIn" component={Login} options={{ headerShown: false }} />
-                </>
+                          ) : (
+                            <>
+                              <Stack.Screen name="Home" component={Main} options={{ headerShown: false }} />
+                              <Stack.Screen name="RoutineScreen" component={RoutineScreen} options={{ headerShown: false }} />
+                              <Stack.Screen name="CalendarScreen" component={CalendarScreen} options={{ headerShown: false }} />
+                              <Stack.Screen name="TextScreen" component={TextScreen} options={{ headerShown: false }} />
+                              <Stack.Screen name="SettingScreen" component={SettingScreen} options={{ headerShown: false }} />
 
-              )}
-            </Stack.Navigator>
-          </NavigationContainer >
-        </RoutineDateGlobalState.Provider>
-      </SesionGlobalState.Provider>
+                            </>
+
+                          )}
+                        </Stack.Navigator>
+                      </NavigationContainer >
+                    </TextDateGlobalState.Provider>
+                  </CalendarDateGlobalState.Provider>
+                </RoutineDateGlobalState.Provider>
+              </SesionGlobalState.Provider>
+            </EventProvider>
+
+          )
+
+      }
+    </>
 
 
-    );
-  }
 
 
+  );
 }
+
+
+
 

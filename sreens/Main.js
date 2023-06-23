@@ -11,12 +11,17 @@ import * as SecureStore from 'expo-secure-store';
 import { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import Loading from './Loading';
+import styleNavBar from '../Styles/NavBarStyle';
+import CalendarCard from '../componets/util/CalendarCard';
 
 
 export default function Main({ navigation }) {
     const [user, setuser] = useState('')
     const { session, setsession } = useContext(SesionGlobalState);
     const [notificationVisibility, setNotificationVisibility] = useState(false)
+    const [CalendarCardVisibility, setCalendarCardVisibility] = useState(false)
+    const [dataForCalendarCard, setdateForCalendarCard] = useState('')
+
     const [dataForNotification, setdateForNotification] = useState('')
     const [loading, setloading] = useState(true)
 
@@ -25,8 +30,13 @@ export default function Main({ navigation }) {
     }
     useEffect(() => {
         async function getuser() {
-            setuser(JSON.parse(await SecureStore.getItemAsync('userToken')))
-            setloading(false)
+            if (session) {
+                setuser(JSON.parse(await SecureStore.getItemAsync('userToken')))
+                setTimeout(() => {
+                    setloading(false)
+                }, 1000);
+            }
+
         }
         getuser()
     }, [])
@@ -38,52 +48,67 @@ export default function Main({ navigation }) {
         setNotificationVisibility(true)
     }
 
-    if (loading) {
-        return (
-            <Loading />
-        )
-    } else {
-        return (
-            <View style={styles.container}>
-                <Header />
-                <ScrollView style={styles.Width100}>
 
-                    <View style={styles.bigblock}>
-                        <Routine
-                            Redirect={Redirect}
-                            SendAlter={SendAlter}
-                        />
+    return (
+        <>
+            {
+                loading
+                    ? <Loading />
+                    : (
+                        <View style={styles.container}>
+                            <Header />
+                            <ScrollView style={styles.Width100}>
 
-                        {/* <Caledar />
-    
-                        <TextComponent /> */}
+                                <View style={styles.bigblock}>
+                                    <Routine
+                                        Redirect={Redirect}
+                                        SendAlter={SendAlter}
+                                    />
 
+                                    <Caledar setCalendarCardVisibility={setCalendarCardVisibility}
+                                        setdateForCalendarCard={setdateForCalendarCard}
+                                    />
 
-                    </View>
+                                    <TextComponent />
 
-                </ScrollView>
-                <NavBar Redirect={Redirect}
-                    home={true}
-                    routine={false}
-                    calendar={false}
-                    text={false}
-                    settings={false}
-                />
+                                    <View style={styleNavBar.navBar}></View>
+                                </View>
 
-                {
-                    notificationVisibility
-                        ? <AlterTaskNotification
-                            dataForNotification={dataForNotification}
-                            setNotificationVisibility={setNotificationVisibility}
-
-                        />
-                        : <></>
-                }
+                            </ScrollView>
+                            <NavBar Redirect={Redirect}
+                                home={true}
+                                routine={false}
+                                calendar={false}
+                                text={false}
+                                settings={false}
+                            />
 
 
-            </View>
-        );
-    }
+                            {
+                                CalendarCardVisibility
+                                    ? <CalendarCard
+                                        setCalendarCardVisibility={setCalendarCardVisibility}
+                                        dataForCalendarCard={dataForCalendarCard} />
+                                    : <></>
+                            }
+                            {
+                                notificationVisibility
+                                    ? <AlterTaskNotification
+                                        dataForNotification={dataForNotification}
+                                        setNotificationVisibility={setNotificationVisibility}
+
+                                    />
+                                    : <></>
+                            }
+
+
+                        </View>
+                    )
+            }
+        </>
+
+    );
+
 
 }
 

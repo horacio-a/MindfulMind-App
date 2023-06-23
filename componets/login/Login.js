@@ -7,6 +7,9 @@ import * as React from 'react';
 import { SesionGlobalState } from '../../context/SesionGlobalState';
 
 import { Icon } from '@rneui/themed';
+import { TextDateGlobalState } from "../../context/DataGlobalState";
+import { CalendarDateGlobalState } from '../../context/DataGlobalState';
+import { RoutineDateGlobalState } from '../../context/DataGlobalState';
 
 
 
@@ -23,6 +26,10 @@ export default function ComponetLogin({ Redirect, goRegister }) {
     const { session, setsession } = React.useContext(SesionGlobalState);
     const [ErrorUserMsg, setErrorUserMsg] = useState('')
     const [ErrorPasswordMsg, setErrorPasswordMsg] = useState('')
+    const [username, setusername] = useState('')
+    const { routineData, SetRoutineData } = useContext(RoutineDateGlobalState);
+    const { CalendarData, SetCalendarData } = useContext(CalendarDateGlobalState);
+    const { TextData, SetTextData } = useContext(TextDateGlobalState);
 
     const [GeneralErrorMsg, setGeneralErrorMsg] = useState('')
 
@@ -78,7 +85,34 @@ export default function ComponetLogin({ Redirect, goRegister }) {
             })
             if (response.data.authentication === true) {
                 const data = JSON.stringify(response.data)
-                await SecureStore.setItemAsync('userToken', data);
+                await SecureStore.setItemAsync('userToken', data)
+                const getAllData = async () => {
+                    const respuesta = await axios.post('http://31.220.17.121:3500/mainDataInitial', {
+                        "obj": {
+                            "Calendar": {
+                                "user": response.data.user,
+                                "idCalendar": "Calendario Principal"
+                            },
+                            "Tasks": {
+                                "user": response.data.user
+                            },
+                            "Text": {
+                                "user": response.data.user
+                            }
+                        }
+                    }, {
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    })
+                    SetCalendarData(respuesta.data.CalendarData)
+                    SetRoutineData(respuesta.data.TasksData)
+                    SetTextData(respuesta.data.TextData)
+                    console.log(respuesta.data.TextData)
+
+
+                }
+                getAllData()
                 setsession(true)
             } else if (response.data.authentication === false) {
                 setGeneralErrorMsg('No encontramos un usuario con esas credenciales')

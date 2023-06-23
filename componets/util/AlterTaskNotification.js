@@ -6,23 +6,22 @@ import {
 } from '@expo-google-fonts/dev';
 import Loading from '../../sreens/Loading'
 import axios from 'axios';
-import { RoutineDateGlobalState } from '../../context/RoutineDataGlobalState';
+import { RoutineDateGlobalState } from '../../context/DataGlobalState';
 import { useContext, useState, useEffect } from 'react';
 import * as SecureStore from 'expo-secure-store';
 
 
 export default function AlterTaskNotification({ setNotificationVisibility, dataForNotification }) {
     const { routineData, SetRoutineData } = useContext(RoutineDateGlobalState);
-    const [loading, setloading] = useState(true)
+    const [LoadingState, setLoadingState] = useState(false)
     let [fontsLoaded] = useFonts({
         Lato_400Regular,
         Lato_700Bold
     });
     const [user, setuser] = useState('')
-
+    const [msg, setmsg] = useState('')
     const AlterTask = async (task) => {
-
-        setloading(true)
+        setLoadingState(true)
         console.log(task)
         const obj = JSON.stringify(task)
         const response = await axios.post('http://31.220.17.121:3500/completeTask', { obj }, {
@@ -32,7 +31,7 @@ export default function AlterTaskNotification({ setNotificationVisibility, dataF
         })
         SetRoutineData(response.data)
         setNotificationVisibility(false)
-        setloading(true)
+        setLoadingState(false)
     }
 
     useEffect(() => {
@@ -41,45 +40,57 @@ export default function AlterTaskNotification({ setNotificationVisibility, dataF
         }
         getuser()
     }, [])
-
+    useEffect(() => {
+        if (dataForNotification.completed === 1) {
+            setmsg('¿Quieres deshacer tu tarea?')
+        } else if (dataForNotification.completed === 0) {
+            setmsg('¿Terminaste tu Tarea?')
+        }
+    }, [])
 
     if (!fontsLoaded) {
         return <Loading />;
     } else {
-        if (loading) {
-            <View style={stylesHeader.Back}></View>
-        } else {
-            return (
-                <View style={stylesHeader.Back}>
-                    <View style={stylesHeader.Notification}>
-                        <View style={stylesHeader.ConteinerTitle}>
-                            <Text style={{
-                                color: '#fff',
-                                fontFamily: 'Lato_700Bold',
-                                fontSize: 18,
-                                marginBottom: 5
-                            }}>Espera</Text>
-                            <Text style={{
-                                color: '#fff',
-                                fontFamily: 'Lato_400Regular',
-                                fontSize: 16,
-                            }}>¿Terminaste tu Tarea?</Text>
-                        </View>
-                        <View style={stylesHeader.ConteinerButtom}>
-                            <TouchableOpacity onPress={() => { setNotificationVisibility(false) }} style={stylesHeader.ButtomLeft}>
-                                <Text style={stylesHeader.TextButtom}>No</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity onPress={() => { AlterTask(dataForNotification) }} style={stylesHeader.ButtomRight}>
-                                <Text style={stylesHeader.TextButtom}>Si</Text>
-                            </TouchableOpacity>
-                        </View>
+        return (
+            <>
+                {
+                    LoadingState
+                        ? (<View style={stylesHeader.Back}>
+                        </View >)
+                        : (<View style={stylesHeader.Back}>
+                            <View style={stylesHeader.Notification}>
+                                <View style={stylesHeader.ConteinerTitle}>
+                                    <Text style={{
+                                        color: '#fff',
+                                        fontFamily: 'Lato_700Bold',
+                                        fontSize: 18,
+                                        marginBottom: 5
+                                    }}>Espera</Text>
+                                    <Text style={{
+                                        color: '#fff',
+                                        fontFamily: 'Lato_400Regular',
+                                        fontSize: 16,
+                                    }}>{msg}</Text>
+                                </View>
+                                <View style={stylesHeader.ConteinerButtom}>
+                                    <TouchableOpacity onPress={() => { setNotificationVisibility(false) }} style={stylesHeader.ButtomLeft}>
+                                        <Text style={stylesHeader.TextButtom}>No</Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity onPress={() => { AlterTask(dataForNotification) }} style={stylesHeader.ButtomRight}>
+                                        <Text style={stylesHeader.TextButtom}>Si</Text>
+                                    </TouchableOpacity>
+                                </View>
 
-                    </View>
-                </View>
-            )
-        }
+                            </View>
+                        </View>)
 
+                }
+            </>
+
+        )
     }
+
+
 
 }
 

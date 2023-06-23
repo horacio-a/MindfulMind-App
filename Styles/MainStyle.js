@@ -112,8 +112,33 @@ const stylesMain = StyleSheet.create({
         backgroundColor: '#1E1E1E',
         marginTop: 10,
         borderRadius: 10,
+    },
+    LoadingTitle: {
+        position: 'relative',
+        overflow: 'hidden',
+        width: '50%',
+        height: '50%',
+        backgroundColor: '#a0a0a0',
+        borderRadius: 5,
+    },
+    LoadingSmallBlock: {
+        position: 'relative',
+        overflow: 'hidden',
 
-    }
+        width: '45%',
+        height: '100%',
+        backgroundColor: '#a0a0a0',
+        borderRadius: 10,
+    },
+    LoadingAddBlock: {
+        position: 'relative',
+        overflow: 'hidden',
+        width: '100%',
+        height: 60,
+        backgroundColor: '#a0a0a0',
+        marginTop: 10,
+        borderRadius: 10,
+    },
 });
 
 export default stylesMain
