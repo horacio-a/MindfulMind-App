@@ -25,14 +25,8 @@ export default function Caledar({ setCalendarCardVisibility, setdateForCalendarC
         Lato_700Bold
     });
     useEffect(() => {
-        const getCalendar = async () => {
-            const response = await axios.get('http://31.220.17.121:3500/calendar/Horacio/Calendario%20Principal')
-            // console.log(response.data)
+        setloading(false)
 
-            SetCalendarData(response.data)
-            setloading(false)
-        }
-        getCalendar()
     }, [])
     if (!fontsLoaded) {
         return <LoadingCalendar />;

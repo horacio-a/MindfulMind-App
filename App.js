@@ -47,6 +47,7 @@ export default function App({ navigation }) {
           'Content-Type': 'application/json'
         }
       })
+      console.log(response.data.CalendarData.days[9])
       SetCalendarData(response.data.CalendarData)
       SetRoutineData(response.data.TasksData)
       SetTextData(response.data.TextData)
@@ -56,12 +57,10 @@ export default function App({ navigation }) {
     const IsUserRegister = async () => {
       const userToken = await SecureStore.getItemAsync('userToken')
       if (userToken) {
-        console.log('hola')
         getAllData()
         setsession(true)
 
       } else {
-        console.log('chau')
         setTimeout(() => {
           setsession(false)
           setloading(false)
@@ -72,6 +71,7 @@ export default function App({ navigation }) {
 
     IsUserRegister();
   }, []);
+
 
 
 

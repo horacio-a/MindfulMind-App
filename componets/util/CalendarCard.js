@@ -4,6 +4,7 @@ import OutsidePressHandler from 'react-native-outside-press';
 
 
 export default function CalendarCard({ setCalendarCardVisibility, dataForCalendarCard }) {
+    console.log(dataForCalendarCard)
     return (
         <View style={stylesHeader.Back}>
             <View style={stylesHeader.conteiner}></View>
