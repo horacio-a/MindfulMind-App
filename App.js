@@ -47,7 +47,6 @@ export default function App({ navigation }) {
           'Content-Type': 'application/json'
         }
       })
-      console.log(response.data.CalendarData.days[9])
       SetCalendarData(response.data.CalendarData)
       SetRoutineData(response.data.TasksData)
       SetTextData(response.data.TextData)
@@ -73,7 +72,22 @@ export default function App({ navigation }) {
   }, []);
 
 
+  const forFade = ({ current, next }) => {
+    const opacity = Animated.add(
+      current.progress,
+      next ? next.progress : 0
+    ).interpolate({
+      inputRange: [0, 1, 2],
+      outputRange: [0, 1, 0],
+    });
 
+    return {
+      leftButtonStyle: { opacity },
+      rightButtonStyle: { opacity },
+      titleStyle: { opacity },
+      backgroundStyle: { opacity },
+    };
+  };
 
 
   return (
@@ -82,37 +96,48 @@ export default function App({ navigation }) {
         loading
           ? (<Loading />)
           : (
-            <EventProvider style={{ flex: 1 }}>
 
-              <SesionGlobalState.Provider value={{ session, setsession }} >
-                <RoutineDateGlobalState.Provider value={{ routineData, SetRoutineData }}>
-                  <CalendarDateGlobalState.Provider value={{ CalendarData, SetCalendarData }}>
-                    <TextDateGlobalState.Provider value={{ TextData, SetTextData }}>
-                      <NavigationContainer>
-                        <Stack.Navigator initialRouteName={"Signin"} >
-                          {!session ? (
-                            <>
-                              <Stack.Screen name="SignIn" component={Login} options={{ headerShown: false }} />
-                            </>
+            <SesionGlobalState.Provider value={{ session, setsession }} >
+              <RoutineDateGlobalState.Provider value={{ routineData, SetRoutineData }}>
+                <CalendarDateGlobalState.Provider value={{ CalendarData, SetCalendarData }}>
+                  <TextDateGlobalState.Provider value={{ TextData, SetTextData }}>
+                    <NavigationContainer>
+                      <Stack.Navigator initialRouteName={"Signin"} >
+                        {!session ? (
+                          <>
+                            <Stack.Screen name="SignIn" component={Login} options={{
+                              headerShown: false, headerStyleInterpolator: forFade
+                            }} />
+                          </>
 
-                          ) : (
-                            <>
-                              <Stack.Screen name="Home" component={Main} options={{ headerShown: false }} />
-                              <Stack.Screen name="RoutineScreen" component={RoutineScreen} options={{ headerShown: false }} />
-                              <Stack.Screen name="CalendarScreen" component={CalendarScreen} options={{ headerShown: false }} />
-                              <Stack.Screen name="TextScreen" component={TextScreen} options={{ headerShown: false }} />
-                              <Stack.Screen name="SettingScreen" component={SettingScreen} options={{ headerShown: false }} />
+                        ) : (
+                          <>
+                            <Stack.Screen name="Home" component={Main} options={{
+                              headerShown: false,
+                              headerStyleInterpolator: forFade
+                            }} />
+                            <Stack.Screen name="RoutineScreen" component={RoutineScreen} options={{
+                              headerShown: false, headerStyleInterpolator: forFade
+                            }} />
+                            <Stack.Screen name="CalendarScreen" component={CalendarScreen} options={{
+                              headerShown: false, headerStyleInterpolator: forFade
+                            }} />
+                            <Stack.Screen name="TextScreen" component={TextScreen} options={{
+                              headerShown: false, headerStyleInterpolator: forFade
+                            }} />
+                            <Stack.Screen name="SettingScreen" component={SettingScreen} options={{
+                              headerShown: false, headerStyleInterpolator: forFade
+                            }} />
 
-                            </>
+                          </>
 
-                          )}
-                        </Stack.Navigator>
-                      </NavigationContainer >
-                    </TextDateGlobalState.Provider>
-                  </CalendarDateGlobalState.Provider>
-                </RoutineDateGlobalState.Provider>
-              </SesionGlobalState.Provider>
-            </EventProvider>
+                        )}
+                      </Stack.Navigator>
+                    </NavigationContainer >
+                  </TextDateGlobalState.Provider>
+                </CalendarDateGlobalState.Provider>
+              </RoutineDateGlobalState.Provider>
+            </SesionGlobalState.Provider>
 
           )
 
