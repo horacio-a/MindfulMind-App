@@ -5,6 +5,7 @@ import Header from '../componets/Header';
 import NavBar from '../componets/navBar';
 import { SesionGlobalState } from '../context/SesionGlobalState';
 import { useContext } from 'react';
+import { Icon } from '@rneui/themed';
 
 export default function SettingScreen({ navigation }) {
     const { session, setsession } = useContext(SesionGlobalState);
@@ -19,13 +20,20 @@ export default function SettingScreen({ navigation }) {
     return (
         <>
             <Header />
-            <Text>settings</Text>
-            <TouchableOpacity onPress={() => { ExitSession() }} style={styles.exitButton}>
-                <Text style={{ color: '#fff' }}>
-                    Exit Button
 
-                </Text>
-            </TouchableOpacity>
+            <View style={styles.MainConteiner}>
+
+                <TouchableOpacity onPress={() => { ExitSession() }} style={styles.exitButton}>
+                    <Icon
+                        name={'logout'}
+                        color={'#fff'}
+                        style={{ marginLeft: 25 }} />
+                    <Text style={{ color: '#fff', fontSize: 16, marginLeft: 10 }}>
+                        Cerrar Session
+                    </Text>
+                </TouchableOpacity>
+            </View>
+
             <NavBar
                 Redirect={Redirect}
                 home={false}
@@ -38,10 +46,11 @@ export default function SettingScreen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
-    container: {
+    MainConteiner: {
         flex: 1,
         backgroundColor: '#fff',
         alignItems: 'center',
+        justifyContent: 'flex-end'
     },
 
     bigblock: {
@@ -56,12 +65,13 @@ const styles = StyleSheet.create({
     exitButton: {
         margin: 3,
         width: '85%',
-        height: 100,
-        backgroundColor: '#1E1E1E',
+        height: 50,
+        backgroundColor: '#D01B13',
         color: '#fff',
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
         alignItems: 'center',
+        borderRadius: 5
     }
 });

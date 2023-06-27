@@ -11,7 +11,8 @@ export default function CalendarScreen({ navigation }) {
     return (
         <>
             <Header />
-            <Text>Calendar</Text>
+            <View style={styles.MainConteiner}>
+            </View>
             <NavBar
                 Redirect={Redirect}
                 home={false}
@@ -21,3 +22,11 @@ export default function CalendarScreen({ navigation }) {
                 settings={false} />
         </>)
 }
+const styles = StyleSheet.create({
+    MainConteiner: {
+        flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'flex-end'
+    }
+});

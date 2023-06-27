@@ -10,7 +10,9 @@ export default function RoutineScreen({ navigation }) {
     return (
         <>
             <Header />
-            <Text>Routine</Text>
+            <View style={styles.MainConteiner}>
+            </View>
+
             <NavBar
                 Redirect={Redirect}
                 home={false}
@@ -22,3 +24,12 @@ export default function RoutineScreen({ navigation }) {
 
     )
 }
+
+const styles = StyleSheet.create({
+    MainConteiner: {
+        flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'flex-end'
+    }
+});

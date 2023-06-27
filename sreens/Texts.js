@@ -10,7 +10,8 @@ export default function TextScreen({ navigation }) {
     return (
         <>
             <Header />
-            <Text>Texts</Text>
+            <View style={styles.MainConteiner}>
+            </View>
             <NavBar
                 Redirect={Redirect}
                 home={false}
@@ -18,5 +19,15 @@ export default function TextScreen({ navigation }) {
                 calendar={false}
                 text={true}
                 settings={false} />
-        </>)
+        </>
+    )
 }
+
+const styles = StyleSheet.create({
+    MainConteiner: {
+        flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'flex-end'
+    }
+});
