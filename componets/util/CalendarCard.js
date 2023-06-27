@@ -1,26 +1,104 @@
 
-import { StyleSheet, Button, Text, View, FlatList, ScrollView, SafeAreaView, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
+import { StyleSheet, Button, Text, TextInput, View, FlatList, ScrollView, SafeAreaView, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
 import OutsidePressHandler from 'react-native-outside-press';
+import {
+    useFonts,
+    Lato_400Regular,
+    Lato_700Bold,
+} from '@expo-google-fonts/dev';
+import { useState } from 'react';
+import TaskCalendar from './TaskCalendar';
 
 
 export default function CalendarCard({ setCalendarCardVisibility, dataForCalendarCard }) {
-    console.log(dataForCalendarCard)
-    return (
-        <View style={stylesHeader.Back}>
-            <View style={stylesHeader.conteiner}></View>
-            <View style={stylesHeader.card}>
-                <Text></Text>
+    const [loading, setloading] = useState(true)
+    let [fontsLoaded] = useFonts({
+        Lato_400Regular,
+        Lato_700Bold
+    });
+
+    if (!fontsLoaded) {
+        return <></>;
+    } else {
+
+        return (
+            <View style={stylesHeader.Back}>
+                <View style={stylesHeader.conteiner}></View>
+                <View style={stylesHeader.card}>
+                    <View style={stylesHeader.titleCardConteiner}>
+                        <Text style={[stylesHeader.titleCard, { fontFamily: 'Lato_700Bold', fontSize: 24, }]}>{dataForCalendarCard.number}</Text>
+                        <Text style={[stylesHeader.titleCard, {}]}>{dataForCalendarCard.diaSemana}</Text>
+                    </View>
+                    <View style={stylesHeader.LineaTitle}></View>
+                    <View style={stylesHeader.MainContent}>
+
+                        {
+                            dataForCalendarCard.Tasks
+                                ? (
+                                    dataForCalendarCard.Tasks.map(Tasks => (
+                                        <TaskCalendar
+                                            key={Tasks.id}
+                                            data={Tasks} />
+                                    ))
+                                )
+                                : <Text>Goal</Text>
+                        }
+                    </View>
+                    <View style={stylesHeader.AddBar}>
+                        <></>
+                    </View>
+                </View>
+                <TouchableWithoutFeedback onPress={() => { setCalendarCardVisibility(false) }} >
+                    <View style={stylesHeader.CloserWidthMax} ></View>
+                </TouchableWithoutFeedback>
             </View>
-            <TouchableWithoutFeedback onPress={() => { setCalendarCardVisibility(false) }} >
-                <View style={stylesHeader.CloserWidthMax} ></View>
-            </TouchableWithoutFeedback>
-        </View>
-    )
+        )
+    }
 }
 
 const stylesHeader = StyleSheet.create({
-    conteiner: {
+    AddBar: {
+        width: '100%',
+        height: '10%',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
 
+    },
+    singleTask: {
+        width: '100%',
+        height: '15%',
+        backgroundColor: '#fff',
+        marginTop: 5
+    },
+    MainContent: {
+        width: '85%',
+        height: '70%',
+        display: 'flex',
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
+
+    },
+    titleCard: {
+        fontFamily: 'Lato_400Regular',
+        color: '#FFFFFF',
+        fontSize: 22,
+        marginLeft: 5,
+        textTransform: 'capitalize'
+    },
+    LineaTitle: {
+        width: '85%',
+        height: 1,
+        backgroundColor: '#fff',
+    },
+    titleCardConteiner: {
+        width: '85%',
+        height: '20%',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
     },
     Back: {
         width: '100%',
@@ -38,7 +116,10 @@ const stylesHeader = StyleSheet.create({
         width: '85%',
         height: '55%',
         borderRadius: 10,
-        backgroundColor: '#1E1E1E',
+        backgroundColor: 'rgba(30, 30, 30, 1)',
+        display: 'flex',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
     },
     CloserWidthMax: {
         width: '100%',
