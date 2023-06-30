@@ -2,7 +2,7 @@ import { StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
 import stylesCalendar from '../../Styles/CalendarsStyle';
 import { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
-import Loading from '../../sreens/Loading'
+import Loading from '../../screen/Loading'
 import CalendarNumber from '../util/CalendarNumber';
 import CalendarDays from '../util/CalendarDays';
 import {

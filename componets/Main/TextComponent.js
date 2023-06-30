@@ -5,7 +5,7 @@ import {
     Lato_400Regular,
     Lato_700Bold,
 } from '@expo-google-fonts/dev';
-import Loading from '../../sreens/Loading'
+import Loading from '../../screen/Loading'
 import { Icon } from '@rneui/themed';
 import { useContext, useEffect, useState } from "react";
 import axios from "axios";

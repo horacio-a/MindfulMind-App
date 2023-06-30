@@ -4,7 +4,7 @@ import {
     Lato_400Regular,
     Lato_700Bold,
 } from '@expo-google-fonts/dev';
-import Loading from '../../sreens/Loading'
+import Loading from '../../screen/Loading'
 import axios from 'axios';
 import { RoutineDateGlobalState } from '../../context/DataGlobalState';
 import { useContext, useState, useEffect } from 'react';

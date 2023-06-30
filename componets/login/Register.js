@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, ScrollView, TouchableWithoutFeedback } from 'react-native';
 import { useState } from 'react';
 import stylesLogin from '../../Styles/LoginStyle';
-import Main from '../../sreens/Main';
+import Main from '../../screen/Main';
 
 import {
     useFonts,

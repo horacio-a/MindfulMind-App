@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity, Animated }
 import stylesMain from '../../Styles/MainStyle';
 import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
-import Loading from '../../sreens/Loading'
+import Loading from '../../screen/Loading'
 import { RoutineDateGlobalState } from '../../context/DataGlobalState';
 import {
     useFonts,
@@ -11,7 +11,6 @@ import {
 } from '@expo-google-fonts/dev';
 import LoadingRoutine from './LoadingRoutine';
 import ContentLoader from "react-native-easy-content-loader";
-
 
 export default function Routine({ Redirect, SendAlter }) {
     const [fakeLoading, setFakeLoading] = useState(false)
@@ -42,6 +41,7 @@ export default function Routine({ Redirect, SendAlter }) {
             )
         ).start();
     }, []);
+
 
 
     if (!fontsLoaded) {

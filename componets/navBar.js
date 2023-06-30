@@ -6,7 +6,7 @@ import {
     Lato_400Regular,
     Lato_700Bold,
 } from '@expo-google-fonts/dev';
-import Loading from '../sreens/Loading'
+import Loading from '../screen/Loading'
 import { useState } from 'react';
 
 export default function NavBar({ Redirect, home, routine, calendar, text, settings }) {
