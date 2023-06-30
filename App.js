@@ -1,21 +1,23 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Main from './sreens/Main';
-import RoutineScreen from './sreens/Routine';
-import CalendarScreen from './sreens/Calendar';
-import TextScreen from './sreens/Texts';
-import SettingScreen from './sreens/Settings';
+import Main from './screen/Main';
+import RoutineScreen from './screen/Routine';
+import CalendarScreen from './screen/Calendar';
+import TextScreen from './screen/Texts';
+import SettingScreen from './screen/Settings';
 import { View, Text, Button } from 'react-native';
-import Loading from './sreens/Loading';
+import Loading from './screen/Loading';
 import { useEffect, useState } from 'react';
 import * as SecureStore from 'expo-secure-store';
-import Login from './sreens/Login';
+import Login from './screen/Login';
 import { SesionGlobalState } from './context/SesionGlobalState';
 import { RoutineDateGlobalState, CalendarDateGlobalState, TextDateGlobalState } from './context/DataGlobalState';
 const Stack = createNativeStackNavigator();
-import { EventProvider } from 'react-native-outside-press';
-
 import axios from 'axios';
+import EndOfDay from './context/EndOfDay';
+
+
+
 export default function App({ navigation }) {
   const [session, setsession] = useState(false);
 
@@ -71,23 +73,39 @@ export default function App({ navigation }) {
     IsUserRegister();
   }, []);
 
+  useEffect(() => {
 
-  const forFade = ({ current, next }) => {
-    const opacity = Animated.add(
-      current.progress,
-      next ? next.progress : 0
-    ).interpolate({
-      inputRange: [0, 1, 2],
-      outputRange: [0, 1, 0],
-    });
+    const interval = setInterval(() => {
+      const now = new Date();
+      if (now.getHours() === 24 && now.getMinutes() === 0) {
+        // Lógica de la función que deseas ejecutar a las 12:00
+        console.log('Es mediodía!');
+      }
+    }, 60000); // Intervalo de verificación cada 1 minuto (ajusta según tus necesidades)
 
-    return {
-      leftButtonStyle: { opacity },
-      rightButtonStyle: { opacity },
-      titleStyle: { opacity },
-      backgroundStyle: { opacity },
-    };
+    // Limpieza del intervalo cuando el componente se desmonta
+    return () => clearInterval(interval);
+  }, [])
+
+
+  const config = {
+    animation: 'spring',
+    config: {
+      stiffness: 1000,
+      damping: 500,
+      mass: 3,
+      overshootClamping: true,
+      restDisplacementThreshold: 0.01,
+      restSpeedThreshold: 0.01,
+    },
   };
+
+
+  const forFade = ({ current }) => ({
+    cardStyle: {
+      opacity: current.progress,
+    },
+  });
 
 
   return (
@@ -106,27 +124,26 @@ export default function App({ navigation }) {
                         {!session ? (
                           <>
                             <Stack.Screen name="SignIn" component={Login} options={{
-                              headerShown: false, headerStyleInterpolator: forFade
+                              headerShown: false, cardStyleInterpolator: forFade
                             }} />
                           </>
 
                         ) : (
                           <>
                             <Stack.Screen name="Home" component={Main} options={{
-                              headerShown: false,
-                              headerStyleInterpolator: forFade
+                              headerShown: false, cardStyleInterpolator: forFade
                             }} />
                             <Stack.Screen name="RoutineScreen" component={RoutineScreen} options={{
-                              headerShown: false, headerStyleInterpolator: forFade
+                              headerShown: false, cardStyleInterpolator: forFade
                             }} />
                             <Stack.Screen name="CalendarScreen" component={CalendarScreen} options={{
-                              headerShown: false, headerStyleInterpolator: forFade
+                              headerShown: false, cardStyleInterpolator: forFade
                             }} />
                             <Stack.Screen name="TextScreen" component={TextScreen} options={{
-                              headerShown: false, headerStyleInterpolator: forFade
+                              headerShown: false, cardStyleInterpolator: forFade
                             }} />
                             <Stack.Screen name="SettingScreen" component={SettingScreen} options={{
-                              headerShown: false, headerStyleInterpolator: forFade
+                              headerShown: false, cardStyleInterpolator: forFade
                             }} />
 
                           </>
