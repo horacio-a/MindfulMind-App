@@ -1,14 +1,23 @@
 import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
+import { useContext, useEffect } from 'react';
 
 import Header from '../componets/Header';
 import NavBar from '../componets/navBar';
 import { SesionGlobalState } from '../context/SesionGlobalState';
-import { useContext } from 'react';
 import { Icon } from '@rneui/themed';
+import { BackPageState } from '../context/BackPageState';
 
 export default function SettingScreen({ navigation }) {
     const { session, setsession } = useContext(SesionGlobalState);
+
+
+    const { BackPage, setBackPage } = useContext(BackPageState)
+    useEffect(() => {
+        setBackPage('SettingScreen')
+    }, [])
+
+
 
     const Redirect = (url) => {
         navigation.navigate(url)

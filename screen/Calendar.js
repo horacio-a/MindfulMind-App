@@ -1,4 +1,6 @@
 import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity } from 'react-native';
+import { useContext, useEffect } from 'react';
+import { BackPageState } from '../context/BackPageState';
 
 
 import Header from '../componets/Header';
@@ -8,6 +10,10 @@ export default function CalendarScreen({ navigation }) {
     const Redirect = (url) => {
         navigation.navigate(url)
     }
+    const { BackPage, setBackPage } = useContext(BackPageState)
+    useEffect(() => {
+        setBackPage('CalendarScreen')
+    }, [])
     return (
         <>
             <Header />

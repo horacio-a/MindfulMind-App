@@ -13,9 +13,8 @@ import axios from 'axios';
 import Loading from './Loading';
 import styleNavBar from '../Styles/NavBarStyle';
 import CalendarCard from '../componets/util/CalendarCard';
-import { CalendarDateGlobalState } from '../context/DataGlobalState';
-import { RoutineDateGlobalState } from '../context/DataGlobalState';
-import { TextDateGlobalState } from "../context/DataGlobalState";
+import { RoutineDateGlobalState, CalendarDateGlobalState, TextDateGlobalState } from '../context/DataGlobalState';
+import { BackPageState } from '../context/BackPageState';
 
 
 export default function Main({ navigation }) {
@@ -23,6 +22,7 @@ export default function Main({ navigation }) {
     const { CalendarData, SetCalendarData } = useContext(CalendarDateGlobalState);
     const { routineData, SetRoutineData } = useContext(RoutineDateGlobalState);
     const { TextData, SetTextData } = useContext(TextDateGlobalState);
+    const { BackPage, setBackPage } = useContext(BackPageState)
 
 
     const onRefresh = useCallback(() => {
@@ -84,7 +84,9 @@ export default function Main({ navigation }) {
         getuser()
     }, [])
 
-
+    useEffect(() => {
+        setBackPage('Home')
+    }, [])
 
     const SendAlter = (task) => {
         setdateForNotification(task)
@@ -134,7 +136,9 @@ export default function Main({ navigation }) {
                                 CalendarCardVisibility
                                     ? <CalendarCard
                                         setCalendarCardVisibility={setCalendarCardVisibility}
-                                        dataForCalendarCard={dataForCalendarCard} />
+                                        dataForCalendarCard={dataForCalendarCard}
+                                        Redirect={Redirect} />
+
                                     : <></>
                             }
                             {
