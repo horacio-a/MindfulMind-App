@@ -6,11 +6,13 @@ import {
     Lato_400Regular,
     Lato_700Bold,
 } from '@expo-google-fonts/dev';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import TaskCalendar from './TaskCalendar';
+import { Icon } from '@rneui/themed';
+import { DayNewTasks } from '../../context/DayNewTasks';
 
-
-export default function CalendarCard({ setCalendarCardVisibility, dataForCalendarCard }) {
+export default function CalendarCard({ setCalendarCardVisibility, dataForCalendarCard, Redirect }) {
+    const { DayTasks, setDayTasks } = useContext(DayNewTasks)
     const [loading, setloading] = useState(true)
     let [fontsLoaded] = useFonts({
         Lato_400Regular,
@@ -22,15 +24,15 @@ export default function CalendarCard({ setCalendarCardVisibility, dataForCalenda
     } else {
 
         return (
-            <View style={stylesHeader.Back}>
-                <View style={stylesHeader.conteiner}></View>
-                <View style={stylesHeader.card}>
-                    <View style={stylesHeader.titleCardConteiner}>
-                        <Text style={[stylesHeader.titleCard, { fontFamily: 'Lato_700Bold', fontSize: 24, }]}>{dataForCalendarCard.number}</Text>
-                        <Text style={[stylesHeader.titleCard, {}]}>{dataForCalendarCard.diaSemana}</Text>
+            <View style={style.Back}>
+                <View style={style.conteiner}></View>
+                <View style={style.card}>
+                    <View style={style.titleCardConteiner}>
+                        <Text style={[style.titleCard, { fontFamily: 'Lato_700Bold', fontSize: 24, }]}>{dataForCalendarCard.number}</Text>
+                        <Text style={[style.titleCard, {}]}>{dataForCalendarCard.diaSemana}</Text>
                     </View>
-                    <View style={stylesHeader.LineaTitle}></View>
-                    <View style={stylesHeader.MainContent}>
+                    <View style={style.LineaTitle}></View>
+                    <View style={style.MainContent}>
 
                         {
                             dataForCalendarCard.Tasks
@@ -41,28 +43,57 @@ export default function CalendarCard({ setCalendarCardVisibility, dataForCalenda
                                             data={Tasks} />
                                     ))
                                 )
-                                : <Text>Goal</Text>
+                                : <View style={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                    <Text style={{ color: '#FFFFFF', fontSize: 18 }}>Aun no tienes tareas </Text>
+                                </View>
                         }
                     </View>
-                    <View style={stylesHeader.AddBar}>
-                        <></>
+                    <View style={style.AddBar}>
+                        <TouchableOpacity onPress={() => { Redirect('CreateCalendarTask'); setDayTasks(dataForCalendarCard.fecha) }} style={style.ButtomAdd}>
+                            <Icon
+                                name='pluscircleo'
+                                type="antdesign"
+                                color='#fff'
+                                size={18}
+                            />
+                            <Text style={style.textAddNewText}>Crear un Recordatorio</Text>
+                        </TouchableOpacity>
                     </View>
                 </View>
                 <TouchableWithoutFeedback onPress={() => { setCalendarCardVisibility(false) }} >
-                    <View style={stylesHeader.CloserWidthMax} ></View>
+                    <View style={style.CloserWidthMax} ></View>
                 </TouchableWithoutFeedback>
             </View>
         )
     }
 }
 
-const stylesHeader = StyleSheet.create({
+const style = StyleSheet.create({
+    textAddNewText: {
+        marginLeft: 5,
+        color: '#fff',
+        fontFamily: 'Lato_400Regular',
+        fontSize: 13,
+
+    },
+    ButtomAdd: {
+        width: '85%',
+        height: '80%',
+        borderRadius: 10,
+        borderWidth: 1,
+        borderColor: '#FFFFFF',
+        marginBottom: '5%',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
     AddBar: {
         width: '100%',
         height: '10%',
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'flex-start',
+        justifyContent: 'center',
         alignItems: 'center',
 
     },
@@ -124,7 +155,6 @@ const stylesHeader = StyleSheet.create({
     CloserWidthMax: {
         width: '100%',
         height: '100%',
-
     },
 
     ConteinerTitle: {
