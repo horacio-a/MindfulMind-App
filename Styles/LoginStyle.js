@@ -8,7 +8,6 @@ const stylesLogin = StyleSheet.create({
         backgroundColor: '#1E1E1E',
         display: 'flex',
         alignItems: 'center',
-        marginTop: Constants.statusBarHeight,
     },
     ConteinerInputs: {
         width: '100%',
