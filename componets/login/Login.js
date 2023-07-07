@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, TouchableWithoutFeedback, BackHandler, Alert } from 'react-native';
 import { useContext, useState } from 'react';
 import stylesLogin from '../../Styles/LoginStyle';
 import Main from '../../screen/Main';
@@ -10,7 +10,7 @@ import { Icon } from '@rneui/themed';
 import { TextDateGlobalState } from "../../context/DataGlobalState";
 import { CalendarDateGlobalState } from '../../context/DataGlobalState';
 import { RoutineDateGlobalState } from '../../context/DataGlobalState';
-
+import { BackPageState } from '../../context/BackPageState';
 
 
 import {
@@ -19,10 +19,12 @@ import {
     Lato_700Bold,
 } from '@expo-google-fonts/dev';
 import axios from 'axios';
+import { useEffect } from 'react';
 
 
 
 export default function ComponetLogin({ Redirect, goRegister }) {
+    const { BackPage, setBackPage } = useContext(BackPageState)
     const { session, setsession } = React.useContext(SesionGlobalState);
     const [ErrorUserMsg, setErrorUserMsg] = useState('')
     const [ErrorPasswordMsg, setErrorPasswordMsg] = useState('')
@@ -76,6 +78,11 @@ export default function ComponetLogin({ Redirect, goRegister }) {
         return true
     }
 
+
+    const PasswordForgot = () => {
+        setStatePasswordForgot(false)
+    }
+
     const LoginFuntion = async () => {
         if (FormCheck() === true) {
             const response = await axios.post('http://31.220.17.121:3500/login', { user: User, password: Password }, {
@@ -125,6 +132,8 @@ export default function ComponetLogin({ Redirect, goRegister }) {
 
     }
 
+
+
     if (!fontsLoaded) {
         return <Main />;
     } else {
@@ -159,7 +168,7 @@ export default function ComponetLogin({ Redirect, goRegister }) {
                 <View style={stylesLogin.conteinerInputError}>
                     <Text maxFontSizeMultiplier={1.2} style={stylesLogin.textInputError}>{ErrorPasswordMsg}</Text>
                 </View>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={() => { Redirect('ForgetPassword'); setBackPage('SignIn') }}>
                     <Text style={[stylesLogin.TextForgotPassword, { fontFamily: 'Lato_700Bold' }]}>
                         ¿Olvidaste tu Contraseña?
                     </Text>
