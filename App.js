@@ -5,6 +5,7 @@ import RoutineScreen from './screen/Routine';
 import CalendarScreen from './screen/Calendar';
 import TextScreen from './screen/Texts';
 import SettingScreen from './screen/Settings';
+import CreateCalendarTask from './screen/CreateCalendarTask';
 import { View, Text, Button } from 'react-native';
 import Loading from './screen/Loading';
 import { useEffect, useState } from 'react';
@@ -12,14 +13,19 @@ import * as SecureStore from 'expo-secure-store';
 import Login from './screen/Login';
 import { SesionGlobalState } from './context/SesionGlobalState';
 import { RoutineDateGlobalState, CalendarDateGlobalState, TextDateGlobalState } from './context/DataGlobalState';
+import { DayNewTasks } from './context/DayNewTasks';
+import { BackPageState } from './context/BackPageState';
 const Stack = createNativeStackNavigator();
 import axios from 'axios';
 import EndOfDay from './context/EndOfDay';
-
+import ForgetPassword from './screen/ForgetPassword';
 
 
 export default function App({ navigation }) {
   const [session, setsession] = useState(false);
+
+  const [BackPage, setBackPage] = useState('')
+  const [DayTasks, setDayTasks] = useState('')
 
   const [isSignedIn, setisSignedIn] = useState()
   const [loading, setloading] = useState(true)
@@ -115,47 +121,55 @@ export default function App({ navigation }) {
           ? (<Loading />)
           : (
 
-            <SesionGlobalState.Provider value={{ session, setsession }} >
-              <RoutineDateGlobalState.Provider value={{ routineData, SetRoutineData }}>
-                <CalendarDateGlobalState.Provider value={{ CalendarData, SetCalendarData }}>
-                  <TextDateGlobalState.Provider value={{ TextData, SetTextData }}>
-                    <NavigationContainer>
-                      <Stack.Navigator initialRouteName={"Signin"} >
-                        {!session ? (
-                          <>
-                            <Stack.Screen name="SignIn" component={Login} options={{
-                              headerShown: false, cardStyleInterpolator: forFade
-                            }} />
-                          </>
+            <BackPageState.Provider value={{ BackPage, setBackPage }}>
+              <SesionGlobalState.Provider value={{ session, setsession }} >
+                <RoutineDateGlobalState.Provider value={{ routineData, SetRoutineData }}>
+                  <CalendarDateGlobalState.Provider value={{ CalendarData, SetCalendarData }}>
+                    <TextDateGlobalState.Provider value={{ TextData, SetTextData }}>
+                      <DayNewTasks.Provider value={{ DayTasks, setDayTasks }}>
+                        <NavigationContainer>
+                          <Stack.Navigator initialRouteName={"Signin"} >
+                            {!session ? (
+                              <>
+                                <Stack.Screen name="SignIn" component={Login} options={{
+                                  headerShown: false, cardStyleInterpolator: forFade
+                                }} />
+                                <Stack.Screen name="ForgetPassword" component={ForgetPassword} options={{
+                                  headerShown: false, cardStyleInterpolator: forFade
+                                }} />
+                              </>
 
-                        ) : (
-                          <>
-                            <Stack.Screen name="Home" component={Main} options={{
-                              headerShown: false, cardStyleInterpolator: forFade
-                            }} />
-                            <Stack.Screen name="RoutineScreen" component={RoutineScreen} options={{
-                              headerShown: false, cardStyleInterpolator: forFade
-                            }} />
-                            <Stack.Screen name="CalendarScreen" component={CalendarScreen} options={{
-                              headerShown: false, cardStyleInterpolator: forFade
-                            }} />
-                            <Stack.Screen name="TextScreen" component={TextScreen} options={{
-                              headerShown: false, cardStyleInterpolator: forFade
-                            }} />
-                            <Stack.Screen name="SettingScreen" component={SettingScreen} options={{
-                              headerShown: false, cardStyleInterpolator: forFade
-                            }} />
+                            ) : (
+                              <>
+                                <Stack.Screen name="Home" component={Main} options={{
+                                  headerShown: false, cardStyleInterpolator: forFade
+                                }} />
+                                <Stack.Screen name="RoutineScreen" component={RoutineScreen} options={{
+                                  headerShown: false, cardStyleInterpolator: forFade
+                                }} />
+                                <Stack.Screen name="CalendarScreen" component={CalendarScreen} options={{
+                                  headerShown: false, cardStyleInterpolator: forFade
+                                }} />
+                                <Stack.Screen name="TextScreen" component={TextScreen} options={{
+                                  headerShown: false, cardStyleInterpolator: forFade
+                                }} />
+                                <Stack.Screen name="SettingScreen" component={SettingScreen} options={{
+                                  headerShown: false, cardStyleInterpolator: forFade
+                                }} />
+                                <Stack.Screen name="CreateCalendarTask" component={CreateCalendarTask} options={{
+                                  headerShown: false, cardStyleInterpolator: forFade
+                                }} />
+                              </>
 
-                          </>
-
-                        )}
-                      </Stack.Navigator>
-                    </NavigationContainer >
-                  </TextDateGlobalState.Provider>
-                </CalendarDateGlobalState.Provider>
-              </RoutineDateGlobalState.Provider>
-            </SesionGlobalState.Provider>
-
+                            )}
+                          </Stack.Navigator>
+                        </NavigationContainer >
+                      </DayNewTasks.Provider>
+                    </TextDateGlobalState.Provider>
+                  </CalendarDateGlobalState.Provider>
+                </RoutineDateGlobalState.Provider>
+              </SesionGlobalState.Provider>
+            </BackPageState.Provider>
           )
 
       }
