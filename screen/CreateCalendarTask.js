@@ -10,7 +10,9 @@ import { Icon } from '@rneui/themed';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { DayNewTasks } from '../context/DayNewTasks';
 import SelectComponet from '../componets/util/SelectComponet';
-
+import * as SecureStore from 'expo-secure-store';
+import axios from 'axios';
+import { CalendarDateGlobalState } from '../context/DataGlobalState';
 
 
 
@@ -19,12 +21,15 @@ export default function CreateCalendarTask({ navigation }) {
     const [Note, setNote] = useState('')
     const { DayTasks, setDayTasks } = useContext(DayNewTasks)
     const [Fecha, setFecha] = useState('')
-    const dataList = ['Al momento', '10 minutos antes', '1 hora antes', '1 dia antes']
+    const [Title, setTitle] = useState('')
 
-    const [openSelect, setOpenSelect] = useState(false)
-    const [openSelect2, setOpenSelect2] = useState(false)
+    const { CalendarData, SetCalendarData } = useContext(CalendarDateGlobalState);
 
 
+    const [NotificacionTime, setNotificacionTime] = useState('Al momento')
+    const [RepeatTime, setRepeatTime] = useState('Nunca')
+
+    const [DataNotification, setDataNotification] = useState([])
 
     useEffect(() => {
         var fecha = new Date(DayTasks);
@@ -57,11 +62,14 @@ export default function CreateCalendarTask({ navigation }) {
     const [modeFrom, setModeFrom] = useState('date');
     const [showFrom, setShowFrom] = useState(false);
     const [stringTimeFrom, setStringTimeFrom] = useState('08:00');
+    const [intialHour, setintialHour] = useState('')
 
     const [dateTo, setDateTo] = useState(new Date());
     const [modeTo, setModeTo] = useState('date');
     const [showTo, setShowTo] = useState(false);
     const [stringTimeTo, setStringTimeTo] = useState('08:00');
+    const [finishHour, setfinishHour] = useState('')
+
 
     const showMode = (currentMode) => {
         setShowFrom(true);
@@ -119,171 +127,293 @@ export default function CreateCalendarTask({ navigation }) {
         Lato_700Bold
     });
 
+
+
+    const CreateTasks = async () => {
+        let user = JSON.parse(await SecureStore.getItemAsync('userToken'))
+
+
+        const response = await axios.post('http://31.220.17.121:3500/AddCalendarTask', {
+            data: {
+                "user": user.user,
+                "Title": Title,
+                "intialHour": dateFrom,
+                "finishHour": dateTo,
+                "idCalendar": "Calendario Principal",
+                "description": Note,
+                "date": DayTasks,
+                "colorHex": colorSelect,
+                "category": "principal"
+            },
+            info: {
+                Allday: Allday,
+
+            }
+        }, {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        if (response.data.request = true) {
+            const respuesta = await axios.get(`http://31.220.17.121:3500/calendar/${user.user}/Calendario Principal`)
+            SetCalendarData(respuesta.data)
+            Redirect('Home')
+        }
+    }
+
     if (!fontsLoaded) {
         return <></>;
     } else {
         return (
-            <View style={style.MainConteiner}>
+            <>
                 <Header back={true} Redirect={Redirect} />
-                <View style={style.Content}>
-                    <View style={style.conteinerTitle}>
+                <View style={{ flex: 1, backgroundColor: '#000000' }} >
+                    <View style={[style.Content, { borderBottomLeftRadius: 20, borderBottomRightRadius: 20 }]}>
+                        <View style={style.conteinerTitle}>
 
-                        <TextInput style={[style.input, { fontFamily: 'Lato_400Regular' }]}
-                            placeholder="Titulo"
-                            keyboardType="default"
-                            placeholderTextColor="rgba(245, 240, 240, 0.75)"
-                        />
-                        <TouchableOpacity style={[style.ButtonColorPicker, { backgroundColor: colorSelect }]}
-                            onPress={() => {
-                                if (colorPickerVisi === false) {
-                                    setcolorPickerVisi(true)
-                                } else {
-                                    setcolorPickerVisi(false)
-                                }
-                            }}>
-                        </TouchableOpacity>
+                            <TextInput style={[style.input, { fontFamily: 'Lato_400Regular' }]}
+                                placeholder="Titulo"
+                                keyboardType="default"
+                                placeholderTextColor="rgba(245, 240, 240, 0.75)"
+                                onChangeText={setTitle}
+                            />
+                            <TouchableOpacity style={[style.ButtonColorPicker, { backgroundColor: colorSelect }]}
+                                onPress={() => {
+                                    if (colorPickerVisi === false) {
+                                        setcolorPickerVisi(true)
+                                    } else {
+                                        setcolorPickerVisi(false)
+                                    }
+                                }}>
+                            </TouchableOpacity>
 
-                    </View>
-                    {
-                        colorPickerVisi
-                            ? <View style={style.ConteinerColorPicker}>
-                                <TouchableOpacity onPress={() => { setColorSelect('#E71818'); setcolorPickerVisi(false) }} style={[style.UnitColorPicker, { backgroundColor: '#E71818' }]}></TouchableOpacity>
-                                <TouchableOpacity onPress={() => { setColorSelect('#E7AD18'); setcolorPickerVisi(false) }} style={[style.UnitColorPicker, { backgroundColor: '#E7AD18' }]}></TouchableOpacity>
-                                <TouchableOpacity onPress={() => { setColorSelect('#B1E718'); setcolorPickerVisi(false) }} style={[style.UnitColorPicker, { backgroundColor: '#B1E718' }]}></TouchableOpacity>
-                                <TouchableOpacity onPress={() => { setColorSelect('#18E79C'); setcolorPickerVisi(false) }} style={[style.UnitColorPicker, { backgroundColor: '#18E79C' }]}></TouchableOpacity>
-                                <TouchableOpacity onPress={() => { setColorSelect('#18A9E7'); setcolorPickerVisi(false) }} style={[style.UnitColorPicker, { backgroundColor: '#18A9E7' }]}></TouchableOpacity>
-                                <TouchableOpacity onPress={() => { setColorSelect('#1845E7'); setcolorPickerVisi(false) }} style={[style.UnitColorPicker, { backgroundColor: '#1845E7' }]}></TouchableOpacity>
-                                <TouchableOpacity onPress={() => { setColorSelect('#6718E7'); setcolorPickerVisi(false) }} style={[style.UnitColorPicker, { backgroundColor: '#6718E7' }]}></TouchableOpacity>
-                                <TouchableOpacity onPress={() => { setColorSelect('#A418E7'); setcolorPickerVisi(false) }} style={[style.UnitColorPicker, { backgroundColor: '#A418E7' }]}></TouchableOpacity>
+                        </View>
+                        {
+                            colorPickerVisi
+                                ? <View style={style.ConteinerColorPicker}>
+                                    <TouchableOpacity onPress={() => { setColorSelect('#E71818'); setcolorPickerVisi(false) }} style={[style.UnitColorPicker, { backgroundColor: '#E71818' }]}></TouchableOpacity>
+                                    <TouchableOpacity onPress={() => { setColorSelect('#E7AD18'); setcolorPickerVisi(false) }} style={[style.UnitColorPicker, { backgroundColor: '#E7AD18' }]}></TouchableOpacity>
+                                    <TouchableOpacity onPress={() => { setColorSelect('#B1E718'); setcolorPickerVisi(false) }} style={[style.UnitColorPicker, { backgroundColor: '#B1E718' }]}></TouchableOpacity>
+                                    <TouchableOpacity onPress={() => { setColorSelect('#18E79C'); setcolorPickerVisi(false) }} style={[style.UnitColorPicker, { backgroundColor: '#18E79C' }]}></TouchableOpacity>
+                                    <TouchableOpacity onPress={() => { setColorSelect('#18A9E7'); setcolorPickerVisi(false) }} style={[style.UnitColorPicker, { backgroundColor: '#18A9E7' }]}></TouchableOpacity>
+                                    <TouchableOpacity onPress={() => { setColorSelect('#1845E7'); setcolorPickerVisi(false) }} style={[style.UnitColorPicker, { backgroundColor: '#1845E7' }]}></TouchableOpacity>
+                                    <TouchableOpacity onPress={() => { setColorSelect('#6718E7'); setcolorPickerVisi(false) }} style={[style.UnitColorPicker, { backgroundColor: '#6718E7' }]}></TouchableOpacity>
+                                    <TouchableOpacity onPress={() => { setColorSelect('#A418E7'); setcolorPickerVisi(false) }} style={[style.UnitColorPicker, { backgroundColor: '#A418E7' }]}></TouchableOpacity>
+                                </View>
+                                : <></>
+                        }
+                        <View style={style.ConteinerSelectDate}>
+                            <View style={style.TitleSelectDate}>
+                                <Icon
+                                    name='access-time'
+                                    type='material'
+                                    color={'#fff'}
+                                    size={20}
+                                />
+                                <Text style={style.textTitleSelectDate}>{Allday ? 'Seleciona el horario' : 'Todo el dia'}</Text>
+                                <Switch
+                                    trackColor={{ false: '#767577', true: colorSelect }}
+                                    thumbColor={Allday ? '#f4f3f4' : '#f4f3f4'}
+                                    ios_backgroundColor="#3e3e3e"
+                                    onValueChange={toggleSwitch}
+                                    value={Allday}
+                                    style={{ marginLeft: 75 }}
+                                />
                             </View>
-                            : <></>
-                    }
-                    <View style={style.ConteinerSelectDate}>
-                        <View style={style.TitleSelectDate}>
+                            {
+                                Allday
+                                    ?
+                                    <View style={style.ConteinerDay}>
+                                        <View style={style.TitleDay}>
+                                            <Text style={{ color: '#FFFFFF', fontSize: 18 }}>
+                                                {Fecha}
+                                            </Text>
+                                        </View>
+                                        <View style={style.DaysHour}>
+                                            <View style={style.DaysHourUnit}>
+                                                <TouchableOpacity onPress={showTimepickerFrom}  >
+                                                    <Text style={{ color: '#FFFFFF', fontSize: 18 }}>
+                                                        {stringTimeFrom}
+                                                    </Text>
+                                                    {showFrom && (
+                                                        <DateTimePicker
+                                                            testID="dateTimePicker"
+                                                            value={dateFrom}
+                                                            mode={modeFrom}
+                                                            is24Hour={true}
+                                                            onChange={onChangeFrom}
+                                                        />
+                                                    )}
+                                                </TouchableOpacity>
+                                            </View>
+                                            <View style={style.DaysHourUnit}>
+                                                <TouchableOpacity onPress={showTimepickerTo}  >
+                                                    <Text style={{ color: '#FFFFFF', fontSize: 18 }}>
+                                                        {stringTimeTo}
+                                                    </Text>
+                                                    {showTo && (
+                                                        <DateTimePicker
+                                                            testID="dateTimePicker"
+                                                            value={dateTo}
+                                                            mode={modeTo}
+                                                            is24Hour={true}
+                                                            onChange={onChangeTo}
+                                                        />
+                                                    )}
+                                                </TouchableOpacity>
+                                            </View>
+                                        </View>
+
+                                    </View>
+                                    : <View>
+                                        <View style={style.TitleDay}>
+                                            <Text style={{ color: '#FFFFFF', fontSize: 18 }}>
+                                                {Fecha}
+                                            </Text>
+                                        </View>
+                                    </View>
+                            }
+                        </View>
+
+                        <View style={style.conteinerNofitify}>
                             <Icon
-                                name='access-time'
+                                name='note-text-outline'
+                                type='material-community'
+                                color={'#fff'}
+                                size={20}
+                            />
+                            <TextInput
+                                placeholderTextColor="rgba(245, 240, 240, 0.75)"
+                                placeholder='Descripcion'
+                                multiline={true}
+                                numberOfLines={4}
+                                onChangeText={setNote}
+                                style={[style.TextArea]} />
+                        </View>
+                        <View style={style.conteinerNofitify}>
+                            <Icon
+                                name='notifications-none'
                                 type='material'
                                 color={'#fff'}
                                 size={20}
                             />
-                            <Text style={style.textTitleSelectDate}>{Allday ? 'Seleciona el horario' : 'Todo el dia'}</Text>
-                            <Switch
-                                trackColor={{ false: '#767577', true: colorSelect }}
-                                thumbColor={Allday ? '#f4f3f4' : '#f4f3f4'}
-                                ios_backgroundColor="#3e3e3e"
-                                onValueChange={toggleSwitch}
-                                value={Allday}
-                                style={{ marginLeft: 75 }}
-                            />
+                            <TouchableOpacity style={style.TouchableOpenNotification} onPress={() => { setitsOpenNotification(true); setDataNotification({ Title: 'Notificacion', Data: ['Al momento', '10 minutos antes', '1 hora antes', '1 dia antes'] }) }}>
+                                <Text style={[style.TextArea]}>{NotificacionTime}</Text>
+                            </TouchableOpacity>
                         </View>
-                        {
-                            Allday
-                                ?
-                                <View style={style.ConteinerDay}>
-                                    <View style={style.TitleDay}>
-                                        <Text style={{ color: '#FFFFFF', fontSize: 18 }}>
-                                            {Fecha}
-                                        </Text>
-                                    </View>
-                                    <View style={style.DaysHour}>
-                                        <View style={style.DaysHourUnit}>
-                                            <TouchableOpacity onPress={showTimepickerFrom}  >
-                                                <Text style={{ color: '#FFFFFF', fontSize: 18 }}>
-                                                    {stringTimeFrom}
-                                                </Text>
-                                                {showFrom && (
-                                                    <DateTimePicker
-                                                        testID="dateTimePicker"
-                                                        value={dateFrom}
-                                                        mode={modeFrom}
-                                                        is24Hour={true}
-                                                        onChange={onChangeFrom}
-                                                    />
-                                                )}
-                                            </TouchableOpacity>
-                                        </View>
-                                        <View style={style.DaysHourUnit}>
-                                            <TouchableOpacity onPress={showTimepickerTo}  >
-                                                <Text style={{ color: '#FFFFFF', fontSize: 18 }}>
-                                                    {stringTimeTo}
-                                                </Text>
-                                                {showTo && (
-                                                    <DateTimePicker
-                                                        testID="dateTimePicker"
-                                                        value={dateTo}
-                                                        mode={modeTo}
-                                                        is24Hour={true}
-                                                        onChange={onChangeTo}
-                                                    />
-                                                )}
-                                            </TouchableOpacity>
-                                        </View>
-                                    </View>
 
-                                </View>
-                                : <View>
-                                    <View style={style.TitleDay}>
-                                        <Text style={{ color: '#FFFFFF', fontSize: 18 }}>
-                                            {Fecha}
-                                        </Text>
-                                    </View>
-                                </View>
-                        }
-                    </View>
-                    <View style={style.conteinerNofitify}>
-                        <Icon
-                            name='note-text-outline'
-                            type='material-community'
-                            color={'#fff'}
-                            size={20}
-                        />
-                        <TextInput
-                            placeholderTextColor="rgba(245, 240, 240, 0.75)"
-                            placeholder='Nota'
-                            multiline={true}
-                            numberOfLines={4}
-                            style={[style.TextArea]} />
-                    </View>
+                        <View style={style.conteinerNofitify}>
+                            <Icon
+                                name='repeat'
+                                type='Feather'
+                                color={'#fff'}
+                                size={20}
+                            />
+                            <TouchableOpacity style={style.TouchableOpenNotification} onPress={() => { setitsOpenNotification(true); setDataNotification({ Title: 'Repeticion', Data: ['Nunca', 'Todos los dias', 'Todas las semanas', 'Todos los meses', 'Todos los años'] }) }}>
+                                <Text style={[style.TextArea]}>{RepeatTime}</Text>
+                            </TouchableOpacity>
 
-                    <View style={style.conteinerNofitify}>
-                        <Icon
-                            name='notifications-none'
-                            type='material'
-                            color={'#fff'}
-                            size={20}
-                        />
+                        </View>
 
                     </View>
+                    <View style={{ width: '100%', height: '7.5%', flexDirection: 'row' }}>
+                        <TouchableOpacity onPress={() => { Redirect('Home') }} style={{ width: '50%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                            <Text style={{ color: '#FFFFFF', fontSize: 18, fontFamily: 'Lato_700Bold' }}>Cancelar</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => { CreateTasks() }} style={{ width: '50%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                            <Text style={{ color: '#FFFFFF', fontSize: 18, fontFamily: 'Lato_700Bold' }}>Guardar</Text>
 
-                    <View style={style.conteinerNofitify}>
-                        <Icon
-                            name='repeat'
-                            type='Feather'
-                            color={'#fff'}
-                            size={20}
-                        />
+                        </TouchableOpacity>
 
                     </View>
                 </View>
 
+
+
+
+
+
                 {itsOpenNotification
                     ? <View style={style.MainNotificacion}>
                         <View style={style.NotificacionContent}>
-                            <Text></Text>
+                            <View style={style.NotificacionTitle}>
+                                <Text style={{ color: '#fff', fontSize: 22, fontFamily: 'Lato_700Bold' }}> {DataNotification.Title}</Text>
+                            </View>
+                            <View style={{ height: '70%' }}>
+
+                                {
+                                    DataNotification.Data.map(data => (
+                                        <TouchableOpacity key={data} onPress={() => {
+                                            DataNotification.Title === 'Notificacion' ? setNotificacionTime(data) : setRepeatTime(data)
+                                        }} style={style.NotificacionUnit}>
+                                            <Text style={{ color: '#ffffff', width: '85%' }} >{data}</Text>
+                                            <View style={{ width: 20, height: 20, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                                {
+                                                    DataNotification.Title === 'Notificacion'
+                                                        ? (
+                                                            data === NotificacionTime
+                                                                ? <View style={{ width: 10, height: 10, borderRadius: 100, backgroundColor: '#fff' }}></View>
+                                                                : <></>
+                                                        )
+                                                        : (
+                                                            data === RepeatTime
+                                                                ? <View style={{ width: 10, height: 10, borderRadius: 100, backgroundColor: '#fff' }}></View>
+                                                                : <></>
+                                                        )
+                                                }
+
+                                                <View style={style.BorderCheck}></View>
+
+                                            </View>
+                                        </TouchableOpacity>
+                                    ))
+                                }
+                            </View>
+
+
+                            <TouchableOpacity onPress={() => { setitsOpenNotification(false) }} style={{ borderBottomLeftRadius: 10, borderBottomEndRadius: 10, backgroundColor: '#2C2C2C', width: '100%', height: '15%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                <Text style={{ color: '#fff', }}>Hecho</Text>
+                            </TouchableOpacity>
                         </View>
-                        <TouchableWithoutFeedback onPress={() => { console.log('hola') }} >
+                        <TouchableWithoutFeedback onPress={() => { setitsOpenNotification(false) }} >
                             <View style={style.CloserWidthMax} ></View>
                         </TouchableWithoutFeedback>
                     </View>
                     : <></>
                 }
 
-            </View>
+            </>
         )
     }
 }
 
 const style = StyleSheet.create({
+    TouchableOpenNotification: {
+        width: '50%'
+    },
+    BorderCheck: {
+        position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, justifyContent: 'center', alignItems: 'center',
+        width: 20, height: 20,
+        borderWidth: 2,
+        borderColor: '#fff',
+        borderRadius: 100,
+
+    },
+    NotificacionTitle: {
+        width: '100%',
+        height: '15%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    NotificacionUnit: {
+        width: '90%',
+        height: '10%',
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+    },
     NotificacionContent: {
         position: 'absolute',
         zIndex: 10,
@@ -292,7 +422,7 @@ const style = StyleSheet.create({
         borderRadius: 10,
         backgroundColor: 'rgba(30, 30, 30, 1)',
         display: 'flex',
-        justifyContent: 'flex-start',
+        justifyContent: 'space-between',
         alignItems: 'center',
     },
     CloserWidthMax: {
@@ -334,17 +464,13 @@ const style = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    MainConteiner: {
-        flex: 1,
-        alignItems: 'center',
-    },
+
     Content: {
         backgroundColor: '#1E1E1E',
         width: '100%',
-        height: '90%',
+        height: '91.5%',
         paddingRight: '5%',
         paddingLeft: '5%',
-
     },
     conteinerTitle: {
         width: '100%',
