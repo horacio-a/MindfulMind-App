@@ -1,7 +1,6 @@
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, TouchableWithoutFeedback, BackHandler, Alert } from 'react-native';
 import { useContext, useState } from 'react';
 import stylesLogin from '../../Styles/LoginStyle';
-import Main from '../../screen/Main';
 import * as SecureStore from 'expo-secure-store';
 import * as React from 'react';
 import { SesionGlobalState } from '../../context/SesionGlobalState';
@@ -135,7 +134,7 @@ export default function ComponetLogin({ Redirect, goRegister }) {
 
 
     if (!fontsLoaded) {
-        return <Main />;
+        return <></>;
     } else {
         return (
             <View style={stylesLogin.ConteinerInputs}>

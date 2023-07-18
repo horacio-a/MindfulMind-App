@@ -1,7 +1,6 @@
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, ScrollView, TouchableWithoutFeedback } from 'react-native';
 import { useState } from 'react';
 import stylesLogin from '../../Styles/LoginStyle';
-import Main from '../../screen/Main';
 
 import {
     useFonts,
@@ -135,7 +134,7 @@ export default function ComponetRegister({ Redirect, goLogin }) {
 
 
     if (!fontsLoaded) {
-        return <Main />;
+        return <></>
     } else {
         return (
             <ScrollView>
