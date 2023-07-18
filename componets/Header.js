@@ -8,6 +8,8 @@ import { useContext, useEffect } from 'react';
 export default function Header({ back, Redirect, script }) {
     const { BackPage, setBackPage } = useContext(BackPageState)
 
+
+
     const backFuntion = () => {
         if (script !== undefined) {
             script()
