@@ -112,6 +112,10 @@ const stylesMain = StyleSheet.create({
         backgroundColor: '#1E1E1E',
         marginTop: 10,
         borderRadius: 10,
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     LoadingTitle: {
         position: 'relative',
