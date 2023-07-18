@@ -5,18 +5,23 @@ import { BackPageState } from '../context/BackPageState';
 import { useContext, useEffect } from 'react';
 
 
-export default function Header({ back, Redirect }) {
+export default function Header({ back, Redirect, script }) {
     const { BackPage, setBackPage } = useContext(BackPageState)
 
-
-
+    const backFuntion = () => {
+        if (script !== undefined) {
+            script()
+        } else {
+            Redirect(BackPage)
+        }
+    }
 
 
     return (
         <View style={stylesHeader.header}>
             {
                 back
-                    ? <TouchableOpacity style={stylesHeader.conteinerMenuHeader} onPress={() => { Redirect(BackPage) }}>
+                    ? <TouchableOpacity style={stylesHeader.conteinerMenuHeader} onPress={() => { backFuntion() }}>
                         <Icon
                             name='arrow-back-ios'
                             color='#fff'
