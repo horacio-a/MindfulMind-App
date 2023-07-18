@@ -8,6 +8,9 @@ import {
 } from '@expo-google-fonts/dev';
 import Loading from '../screen/Loading'
 import { useState } from 'react';
+import { BackPageState } from '../context/BackPageState';
+import { useContext } from 'react';
+
 
 export default function NavBar({ Redirect, home, routine, calendar, text, settings }) {
     let [fontsLoaded] = useFonts({
@@ -21,7 +24,7 @@ export default function NavBar({ Redirect, home, routine, calendar, text, settin
         text: text,
         settings: settings
     })
-
+    const { BackPage, setBackPage } = useContext(BackPageState)
 
 
 
@@ -31,7 +34,7 @@ export default function NavBar({ Redirect, home, routine, calendar, text, settin
     } else {
         return (
             <View style={styleNavBar.navBar}>
-                <TouchableOpacity onPress={() => { Redirect('Home') }} style={styleNavBar.IconConteiner}>
+                <TouchableOpacity onPress={() => { Redirect('Home'); setBackPage('Home') }} style={styleNavBar.IconConteiner}>
                     <Icon
                         name='home-filled'
                         type='material'
@@ -41,7 +44,7 @@ export default function NavBar({ Redirect, home, routine, calendar, text, settin
                     <Text style={home ? styleNavBar.activetextNavBar : styleNavBar.textNavBar}>Incio</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={() => { Redirect('RoutineScreen') }} style={styleNavBar.IconConteiner}>
+                <TouchableOpacity onPress={() => { Redirect('RoutineScreen'); setBackPage('RoutineScreen') }} style={styleNavBar.IconConteiner}>
                     <Icon
                         name='format-list-bulleted'
                         type='material-community'
@@ -51,7 +54,7 @@ export default function NavBar({ Redirect, home, routine, calendar, text, settin
                     <Text style={routine ? styleNavBar.activetextNavBar : styleNavBar.textNavBar}>Rutina</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={() => { Redirect('CalendarScreen') }} style={styleNavBar.IconConteiner}>
+                <TouchableOpacity onPress={() => { Redirect('CalendarScreen'); setBackPage('CalendarScreen') }} style={styleNavBar.IconConteiner}>
                     <Icon
                         name='calendar-today'
                         type='material'
@@ -61,7 +64,7 @@ export default function NavBar({ Redirect, home, routine, calendar, text, settin
                     <Text style={calendar ? styleNavBar.activetextNavBar : styleNavBar.textNavBar}>Calendario</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={() => { Redirect('TextScreen') }} style={styleNavBar.IconConteiner}>
+                <TouchableOpacity onPress={() => { Redirect('TextScreen'); setBackPage('TextScreen') }} style={styleNavBar.IconConteiner}>
                     <Icon
                         name='book'
                         type='material'
@@ -71,7 +74,7 @@ export default function NavBar({ Redirect, home, routine, calendar, text, settin
                     <Text style={text ? styleNavBar.activetextNavBar : styleNavBar.textNavBar}>Tus textos</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={() => { Redirect('SettingScreen') }} style={styleNavBar.IconConteiner}>
+                <TouchableOpacity onPress={() => { Redirect('SettingScreen'); setBackPage('SettingScreen') }} style={styleNavBar.IconConteiner}>
                     <Icon
                         name='settings'
                         type='material'
