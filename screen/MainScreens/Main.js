@@ -15,6 +15,7 @@ import styleNavBar from '../../Styles/NavBarStyle';
 import CalendarCard from '../../componets/util/CalendarCard';
 import { RoutineDateGlobalState, CalendarDateGlobalState, TextDateGlobalState } from '../../context/DataGlobalState';
 import { BackPageState } from '../../context/BackPageState';
+import { GetAllDataFuntion } from '../../context/GetAllData';
 
 
 export default function Main({ navigation }) {
@@ -25,36 +26,14 @@ export default function Main({ navigation }) {
     const { BackPage, setBackPage } = useContext(BackPageState)
 
 
-    const onRefresh = useCallback(() => {
+    const onRefresh = useCallback(async () => {
         setRefreshing(true);
-        const getAllData = async () => {
-            let user = JSON.parse(await SecureStore.getItemAsync('userToken'))
-            const response = await axios.post('http://31.220.17.121:3500/mainDataInitial', {
-                "obj": {
-                    "Calendar": {
-                        "user": user.user,
-                        "idCalendar": "Calendario Principal"
-                    },
-                    "Tasks": {
-                        "user": user.user
-                    },
-                    "Text": {
-                        "user": user.user
-                    }
-                }
-            }, {
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-            console.log(response.data)
-            SetCalendarData(response.data.CalendarData)
-            SetRoutineData(response.data.TasksData)
-            SetTextData(response.data.TextData)
-            setRefreshing(false);
-        }
-        getAllData()
+        const response = (await GetAllDataFuntion())
+        SetRoutineData(response.TasksData)
+        SetCalendarData(response.CalendarData)
+        SetTextData(response.TextData)
 
+        setRefreshing(false);
     }, []);
 
 
@@ -103,6 +82,7 @@ export default function Main({ navigation }) {
                         <View style={styles.container}>
                             <Header />
                             <ScrollView style={styles.Width100}
+                                nestedScrollEnabled={true}
                                 refreshControl={
                                     <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
                                 }>
@@ -123,13 +103,13 @@ export default function Main({ navigation }) {
                                 </View>
 
                             </ScrollView>
-                            <NavBar Redirect={Redirect}
+                            {/* <NavBar Redirect={Redirect}
                                 home={true}
                                 routine={false}
                                 calendar={false}
                                 text={false}
                                 settings={false}
-                            />
+                            /> */}
 
 
                             {
