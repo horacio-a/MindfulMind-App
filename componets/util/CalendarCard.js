@@ -33,23 +33,24 @@ export default function CalendarCard({ setCalendarCardVisibility, dataForCalenda
                     </View>
                     <View style={style.LineaTitle}></View>
                     <View style={style.MainContent}>
-
                         {
                             dataForCalendarCard.Tasks
                                 ? (
-                                    dataForCalendarCard.Tasks.map(Tasks => (
-                                        <TaskCalendar
-                                            key={Tasks.id}
-                                            data={Tasks} />
-                                    ))
+                                    <FlatList
+                                        style={{ width: '100%' }}
+                                        data={dataForCalendarCard.Tasks}
+                                        renderItem={({ item }) => <TaskCalendar data={item} />}
+                                        key={item => item.id}
+                                    />
                                 )
                                 : <View style={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                                     <Text style={{ color: '#FFFFFF', fontSize: 18 }}>Aun no tienes tareas </Text>
                                 </View>
+
                         }
                     </View>
                     <View style={style.AddBar}>
-                        <TouchableOpacity onPress={() => { Redirect('CreateCalendarTask'); setDayTasks(dataForCalendarCard.fecha) }} style={style.ButtomAdd}>
+                        <TouchableOpacity onPress={() => { Redirect('CreateCalendarTask'); setDayTasks(dataForCalendarCard.fecha); setCalendarCardVisibility(false) }} style={style.ButtomAdd}>
                             <Icon
                                 name='pluscircleo'
                                 type="antdesign"
@@ -77,6 +78,8 @@ const style = StyleSheet.create({
 
     },
     ButtomAdd: {
+        backgroundColor: 'rgba(30, 30, 30, 1)',
+
         width: '85%',
         height: '80%',
         borderRadius: 10,
