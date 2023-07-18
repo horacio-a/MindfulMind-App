@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity, Animated } from 'react-native';
+import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity, Animated, TouchableWithoutFeedback } from 'react-native';
 import stylesMain from '../../Styles/MainStyle';
 import axios from 'axios';
 import { useContext, useEffect, useState } from 'react';
@@ -21,6 +21,7 @@ export default function Routine({ Redirect, SendAlter }) {
         Lato_400Regular,
         Lato_700Bold
     });
+
 
     const [spinValue] = useState(new Animated.Value(0));
 
@@ -61,8 +62,9 @@ export default function Routine({ Redirect, SendAlter }) {
                             <Text allowFontScaling={false} style={[stylesMain.TitleBlock]}>Lista</Text>
                         </View>
 
-                        <ScrollView nestedScrollEnabled={true}>
 
+
+                        <ScrollView nestedScrollEnabled={true}>
                             {
                                 loading == false
                                     ? (
@@ -85,6 +87,7 @@ export default function Routine({ Redirect, SendAlter }) {
                                     : (<></>)
 
                             }
+
                         </ScrollView>
 
                     </View>
@@ -102,8 +105,8 @@ export default function Routine({ Redirect, SendAlter }) {
                     </View>
                 </View>
 
-                <TouchableOpacity style={stylesMain.AddBlock}>
-
+                <TouchableOpacity onPress={() => { Redirect('AdminRoutine') }} style={stylesMain.AddBlock}>
+                    <Text style={styles.Text}>Editar tu rutina</Text>
                 </TouchableOpacity>
             </View>
         )
@@ -116,4 +119,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    Text: {
+        color: '#fff',
+        fontSize: 15,
+        fontFamily: 'Lato_400Regular'
+    }
 });
+
+
+
