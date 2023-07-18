@@ -1,5 +1,6 @@
 {
   "expo": {
+    "owner": "horacio.dev",
     "name": "MindfulMind-app",
     "slug": "MindfulMind-app",
     "version": "1.0.0",
