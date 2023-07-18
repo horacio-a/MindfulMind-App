@@ -1,12 +1,12 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Main from './screen/Main';
-import RoutineScreen from './screen/Routine';
-import CalendarScreen from './screen/Calendar';
-import TextScreen from './screen/Texts';
-import SettingScreen from './screen/Settings';
+import Main from './screen/MainScreens/Main';
+import RoutineScreen from './screen/MainScreens/Routine';
+import CalendarScreen from './screen/MainScreens/Calendar';
+import TextScreen from './screen/MainScreens/Texts';
+import SettingScreen from './screen/MainScreens/Settings';
 import CreateCalendarTask from './screen/CreateCalendarTask';
-import { View, Text, Button } from 'react-native';
+import { View, Text, Button, Platform } from 'react-native';
 import Loading from './screen/Loading';
 import { useEffect, useState } from 'react';
 import * as SecureStore from 'expo-secure-store';
@@ -19,9 +19,18 @@ const Stack = createNativeStackNavigator();
 import axios from 'axios';
 import EndOfDay from './context/EndOfDay';
 import ForgetPassword from './screen/ForgetPassword';
+import AdministraRoutine from './screen/AdmistarRoutine';
+import { GetAllDataFuntion } from './context/GetAllData';
+
+
 
 
 export default function App({ navigation }) {
+  const [expoPushToken, setExpoPushToken] = useState('');
+
+
+
+
   const [session, setsession] = useState(false);
 
   const [BackPage, setBackPage] = useState('')
@@ -34,37 +43,40 @@ export default function App({ navigation }) {
   const [CalendarData, SetCalendarData] = useState([])
   const [TextData, SetTextData] = useState([])
 
+
+  // const getAllData = async () => {
+  //   let user = JSON.parse(await SecureStore.getItemAsync('userToken'))
+  //   const response = await axios.post('http://31.220.17.121:3500/mainDataInitial', {
+  //     "obj": {
+  //       "Calendar": {
+  //         "user": user.user,
+  //         "idCalendar": "Calendario Principal"
+  //       },
+  //       "Tasks": {
+  //         "user": user.user
+  //       },
+  //       "Text": {
+  //         "user": user.user
+  //       }
+  //     }
+  //   }, {
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     }
+  //   })
+
+  // }
   useEffect(() => {
-    const getAllData = async () => {
-      let user = JSON.parse(await SecureStore.getItemAsync('userToken'))
-      const response = await axios.post('http://31.220.17.121:3500/mainDataInitial', {
-        "obj": {
-          "Calendar": {
-            "user": user.user,
-            "idCalendar": "Calendario Principal"
-          },
-          "Tasks": {
-            "user": user.user
-          },
-          "Text": {
-            "user": user.user
-          }
-        }
-      }, {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })
-      SetCalendarData(response.data.CalendarData)
-      SetRoutineData(response.data.TasksData)
-      SetTextData(response.data.TextData)
-      setloading(false)
-    }
+
     // Fetch the token from storage then navigate to our appropriate place
     const IsUserRegister = async () => {
       const userToken = await SecureStore.getItemAsync('userToken')
       if (userToken) {
-        getAllData()
+        const response = (await GetAllDataFuntion())
+        SetCalendarData(response.CalendarData)
+        SetRoutineData(response.TasksData)
+        SetTextData(response.TextData)
+        setloading(false)
         setsession(true)
 
       } else {
@@ -144,6 +156,10 @@ export default function App({ navigation }) {
                                 <Stack.Screen name="Home" component={Main} options={{
                                   headerShown: false, cardStyleInterpolator: forFade
                                 }} />
+                                <Stack.Screen name="AdminRoutine" component={AdministraRoutine} options={{
+                                  headerShown: false, cardStyleInterpolator: forFade
+                                }} />
+
                                 <Stack.Screen name="RoutineScreen" component={RoutineScreen} options={{
                                   headerShown: false, cardStyleInterpolator: forFade
                                 }} />
@@ -180,7 +196,4 @@ export default function App({ navigation }) {
 
   );
 }
-
-
-
 
