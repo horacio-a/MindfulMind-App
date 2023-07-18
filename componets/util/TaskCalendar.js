@@ -5,10 +5,16 @@ import {
     Lato_700Bold,
 } from '@expo-google-fonts/dev';
 import { useState } from 'react';
+import { useEffect } from 'react';
 
 export default function TaskCalendar({ data }) {
-
-    const time = new Date(data.date).toLocaleTimeString('es-AR').slice(0, 5)
+    const [allDay, setAllDay] = useState(false)
+    const time = new Date(data.intialHour).toLocaleTimeString('es-AR').slice(0, 5)
+    useEffect(() => {
+        if (data.intialHour.split('T')[1] === '00:00:00.000Z' && data.finishHour.split('T')[1] === '23:59:59.999Z') {
+            setAllDay(true)
+        }
+    }, [])
     let [fontsLoaded] = useFonts({
         Lato_400Regular,
         Lato_700Bold
@@ -18,19 +24,31 @@ export default function TaskCalendar({ data }) {
         return <></>;
     } else {
         return (
-            <View style={Styles.ConteinerMain}>
-                <Text style={Styles.Text}> {time}</Text>
-                <View style={[Styles.separador, { backgroundColor: data.colorHex }]}></View>
-                <Text style={Styles.Text}>{data.title}</Text>
-            </View>
+            allDay ?
+                (
+                    <View style={Styles.ConteinerMain} >
+                        <Text style={Styles.Text}> Todo el dia</Text>
+                        <View style={[Styles.separador, { backgroundColor: data.colorHex }]}></View>
+                        <Text style={Styles.Text}>{data.title}</Text>
+                    </View>
+                )
+                : (
+                    <View style={Styles.ConteinerMain}>
+                        <Text style={Styles.Text}> {time}</Text>
+                        <View style={[Styles.separador, { backgroundColor: data.colorHex }]}></View>
+                        <Text style={Styles.Text}>{data.title}</Text>
+                    </View>
+                )
+
         )
     }
 }
 const Styles = StyleSheet.create({
     ConteinerMain: {
         width: '100%',
-        height: '15%',
+        height: 50,
         marginTop: 5,
+
         display: 'flex',
         flexDirection: 'row',
 
