@@ -11,6 +11,7 @@ import {
 } from '@expo-google-fonts/dev';
 import LoadingRoutine from './LoadingRoutine';
 import ContentLoader from "react-native-easy-content-loader";
+import * as SecureStore from 'expo-secure-store';
 
 export default function Routine({ Redirect, SendAlter }) {
     const [fakeLoading, setFakeLoading] = useState(false)
@@ -44,6 +45,12 @@ export default function Routine({ Redirect, SendAlter }) {
     }, []);
 
 
+    const EditRoutine = async () => {
+        await SecureStore.setItemAsync('routineDataCopy', JSON.stringify(routineData))
+        Redirect('AdminRoutine')
+    }
+
+
 
     if (!fontsLoaded) {
         return (
@@ -62,8 +69,6 @@ export default function Routine({ Redirect, SendAlter }) {
                             <Text allowFontScaling={false} style={[stylesMain.TitleBlock]}>Lista</Text>
                         </View>
 
-
-
                         <ScrollView nestedScrollEnabled={true}>
                             {
                                 loading == false
@@ -78,19 +83,17 @@ export default function Routine({ Redirect, SendAlter }) {
                                                     }
                                                 </View>
                                                 <View style={stylesMain.conteinerTextTaks}>
-                                                    <Text maxFontSizeMultiplier={1.25} style={stylesMain.TextTask}>
+                                                    <Text maxFontSizeMultiplier={1.25} numberOfLines={1} style={stylesMain.TextTask}>
                                                         {task.tasksName}
                                                     </Text>
                                                 </View>
                                             </TouchableOpacity>
                                         )))
                                     : (<></>)
-
                             }
-
                         </ScrollView>
-
                     </View>
+
                     <View style={stylesMain.SmallBlock}>
                         <View style={stylesMain.BlockTitle}>
                             <Text allowFontScaling={false} style={[stylesMain.TitleBlock, { fontSize: 14 }]}>El porcentaje del dia</Text>
@@ -105,7 +108,7 @@ export default function Routine({ Redirect, SendAlter }) {
                     </View>
                 </View>
 
-                <TouchableOpacity onPress={() => { Redirect('AdminRoutine') }} style={stylesMain.AddBlock}>
+                <TouchableOpacity onPress={() => { EditRoutine() }} style={stylesMain.AddBlock}>
                     <Text style={styles.Text}>Editar tu rutina</Text>
                 </TouchableOpacity>
             </View>
@@ -122,7 +125,7 @@ const styles = StyleSheet.create({
     Text: {
         color: '#fff',
         fontSize: 15,
-        fontFamily: 'Lato_400Regular'
+        fontFamily: 'Lato_700Bold'
     }
 });
 
