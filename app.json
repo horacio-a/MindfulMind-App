@@ -2,11 +2,23 @@
   "expo": {
     "owner": "horacio.dev",
     "name": "MindfulMind-app",
-    "slug": "MindfulMind-app",
+    "slug": "mindfulmind-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
+    "notification": {
+      "icon": "./assets/s-white.png"
+    },
     "userInterfaceStyle": "light",
+    "plugins": [
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/s-white.png",
+          "color": "#ffffff"
+        }
+      ]
+    ],
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -26,6 +38,11 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "49a4d4a0-80f7-4e53-ae42-d34494b9c746"
+      }
     }
   }
 }
