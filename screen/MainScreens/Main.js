@@ -16,7 +16,8 @@ import CalendarCard from '../../componets/util/CalendarCard';
 import { RoutineDateGlobalState, CalendarDateGlobalState, TextDateGlobalState } from '../../context/DataGlobalState';
 import { BackPageState } from '../../context/BackPageState';
 import { GetAllDataFuntion } from '../../context/GetAllData';
-
+import { Icon } from '@rneui/themed';
+import styleTextComp from '../../Styles/TextComStyle';
 
 export default function Main({ navigation }) {
     const [refreshing, setRefreshing] = useState(false);
@@ -97,9 +98,21 @@ export default function Main({ navigation }) {
                                         setdateForCalendarCard={setdateForCalendarCard}
                                     />
 
+
                                     <TextComponent />
 
-                                    <View style={styleNavBar.navBar}></View>
+                                    <View style={{ width: '85%', marginTop: 50, marginBottom: 10 }}>
+                                        <TouchableOpacity onPress={() => Redirect('SettingScreen')} style={styleTextComp.addnewText}>
+                                            <Icon
+                                                name='settings'
+                                                type="AntDesign"
+                                                color='#fff'
+                                            />
+                                            <Text style={styleTextComp.textAddNewText}>Configuraciones</Text>
+                                        </TouchableOpacity>
+                                    </View>
+
+
                                 </View>
 
                             </ScrollView>
@@ -157,7 +170,6 @@ const styles = StyleSheet.create({
 
     bigblock: {
         width: '100%',
-        height: 'auto',
         alignItems: 'center',
 
     },
