@@ -9,7 +9,7 @@ import { useContext, useState, useEffect } from 'react';
 import * as SecureStore from 'expo-secure-store';
 
 
-export default function NotificationTasks({ setvisibilityNotification, DataForDelete, CancelOrden, Title }) {
+export default function NotificationTasks({ setvisibilityNotification, deleteTasks, CancelOrden, Title }) {
     const [LoadingState, setLoadingState] = useState(false)
     let [fontsLoaded] = useFonts({
         Lato_400Regular,
@@ -17,9 +17,6 @@ export default function NotificationTasks({ setvisibilityNotification, DataForDe
     });
     const [user, setuser] = useState('')
 
-    const deleteTasks = () => {
-
-    }
 
 
     if (!fontsLoaded) {
