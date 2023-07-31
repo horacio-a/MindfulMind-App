@@ -91,6 +91,7 @@ export default function ComponetLogin({ Redirect, goRegister }) {
             })
             if (response.data.authentication === true) {
                 const data = JSON.stringify(response.data)
+                console.log(data)
                 await SecureStore.setItemAsync('userToken', data)
                 const getAllData = async () => {
                     const respuesta = await axios.post('http://31.220.17.121:3500/mainDataInitial', {
@@ -120,7 +121,7 @@ export default function ComponetLogin({ Redirect, goRegister }) {
                 getAllData()
                 setsession(true)
             } else if (response.data.authentication === false) {
-                setGeneralErrorMsg('No encontramos un usuario con esas credenciales')
+                setGeneralErrorMsg(response.data.errMsg)
                 setTimeout(() => {
                     setGeneralErrorMsg('')
                 }, 3500);
