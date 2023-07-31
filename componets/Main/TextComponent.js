@@ -29,36 +29,41 @@ export default function TextComponent() {
     if (!fontsLoaded) {
         return (
             <LoadingTextComp />
-
         )
     } else {
         return (
-            <View style={styleTextComp.MainConteiner}>
-                <View style={styleTextComp.ConteinerTitle}>
-                    <Text style={[styleTextComp.title]}>Tus textos</Text>
+            <>
+                <View style={styleTextComp.MainConteiner}>
+                    <View style={styleTextComp.ConteinerTitle}>
+                        <Text style={[styleTextComp.title]}>Tus textos</Text>
+                    </View>
+                    <TouchableOpacity style={styleTextComp.addnewText}>
+                        <Icon
+                            name='pluscircleo'
+                            type="antdesign"
+                            color='#fff'
+                        />
+                        <Text style={styleTextComp.textAddNewText}>Agregar un texto</Text>
+                    </TouchableOpacity>
+                    <View style={{ height: 345, marginTop: 20 }}>
+                        <ScrollView
+                            nestedScrollEnabled={true}>
+                            {
+                                loading === false
+                                    ? (TextData.map(item => <TextosConteiners
+                                        key={item.id}
+                                        data={item}
+                                    />))
+                                    : (<></>)
+                            }
+
+                        </ScrollView>
+                    </View>
+
                 </View>
-                <TouchableOpacity style={styleTextComp.addnewText}>
-                    <Icon
-                        name='pluscircleo'
-                        type="antdesign"
-                        color='#fff'
-                    />
-                    <Text style={styleTextComp.textAddNewText}>Agregar un texto</Text>
-                </TouchableOpacity>
-                <ScrollView>
 
-                    {
-                        loading === false
-                            ? (TextData.map(item => <TextosConteiners
-                                key={item.id}
-                                data={item}
-                            />))
-                            : (<></>)
-                    }
-                </ScrollView>
+            </>
 
-
-            </View>
         )
     }
 
