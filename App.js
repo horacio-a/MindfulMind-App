@@ -6,9 +6,9 @@ import CalendarScreen from './screen/MainScreens/Calendar';
 import TextScreen from './screen/MainScreens/Texts';
 import SettingScreen from './screen/MainScreens/Settings';
 import CreateCalendarTask from './screen/CreateCalendarTask';
-import { View, Text, Button, Platform } from 'react-native';
+import { View, Text, Button, Platform, BackHandler, Alert } from 'react-native';
 import Loading from './screen/Loading';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import * as SecureStore from 'expo-secure-store';
 import Login from './screen/Login';
 import { SesionGlobalState } from './context/SesionGlobalState';
@@ -16,20 +16,29 @@ import { RoutineDateGlobalState, CalendarDateGlobalState, TextDateGlobalState } 
 import { DayNewTasks } from './context/DayNewTasks';
 import { BackPageState } from './context/BackPageState';
 const Stack = createNativeStackNavigator();
-import axios from 'axios';
-import EndOfDay from './context/EndOfDay';
 import ForgetPassword from './screen/ForgetPassword';
 import AdministraRoutine from './screen/AdmistarRoutine';
 import { GetAllDataFuntion } from './context/GetAllData';
+import * as Device from 'expo-device';
+import * as Notifications from 'expo-notifications';
 
 
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
+});
 
 
 export default function App({ navigation }) {
   const [expoPushToken, setExpoPushToken] = useState('');
 
 
-
+  useEffect(() => {
+    registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
+  }, []);
 
   const [session, setsession] = useState(false);
 
@@ -43,29 +52,6 @@ export default function App({ navigation }) {
   const [CalendarData, SetCalendarData] = useState([])
   const [TextData, SetTextData] = useState([])
 
-
-  // const getAllData = async () => {
-  //   let user = JSON.parse(await SecureStore.getItemAsync('userToken'))
-  //   const response = await axios.post('http://31.220.17.121:3500/mainDataInitial', {
-  //     "obj": {
-  //       "Calendar": {
-  //         "user": user.user,
-  //         "idCalendar": "Calendario Principal"
-  //       },
-  //       "Tasks": {
-  //         "user": user.user
-  //       },
-  //       "Text": {
-  //         "user": user.user
-  //       }
-  //     }
-  //   }, {
-  //     headers: {
-  //       'Content-Type': 'application/json'
-  //     }
-  //   })
-
-  // }
   useEffect(() => {
 
     // Fetch the token from storage then navigate to our appropriate place
@@ -91,19 +77,7 @@ export default function App({ navigation }) {
     IsUserRegister();
   }, []);
 
-  useEffect(() => {
 
-    const interval = setInterval(() => {
-      const now = new Date();
-      if (now.getHours() === 24 && now.getMinutes() === 0) {
-        // Lógica de la función que deseas ejecutar a las 12:00
-        console.log('Es mediodía!');
-      }
-    }, 60000); // Intervalo de verificación cada 1 minuto (ajusta según tus necesidades)
-
-    // Limpieza del intervalo cuando el componente se desmonta
-    return () => clearInterval(interval);
-  }, [])
 
 
   const config = {
@@ -124,7 +98,26 @@ export default function App({ navigation }) {
       opacity: current.progress,
     },
   });
+  useEffect(() => {
+    const backAction = () => {
+      Alert.alert('Espera', '¿Estas seguro que quieres salir?', [
+        { text: 'Si', onPress: () => BackHandler.exitApp() },
+        {
+          text: 'No',
+          onPress: () => null,
+          style: 'cancel',
+        },
+      ]);
+      return true;
+    };
 
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
+    );
+
+    return () => backHandler.remove();
+  }, []);
 
   return (
     <>
@@ -144,36 +137,36 @@ export default function App({ navigation }) {
                             {!session ? (
                               <>
                                 <Stack.Screen name="SignIn" component={Login} options={{
-                                  headerShown: false, cardStyleInterpolator: forFade
+                                  headerShown: false, cardStyleInterpolator: config
                                 }} />
                                 <Stack.Screen name="ForgetPassword" component={ForgetPassword} options={{
-                                  headerShown: false, cardStyleInterpolator: forFade
+                                  headerShown: false, cardStyleInterpolator: config
                                 }} />
                               </>
 
                             ) : (
                               <>
                                 <Stack.Screen name="Home" component={Main} options={{
-                                  headerShown: false, cardStyleInterpolator: forFade
+                                  headerShown: false, cardStyleInterpolator: config
                                 }} />
                                 <Stack.Screen name="AdminRoutine" component={AdministraRoutine} options={{
-                                  headerShown: false, cardStyleInterpolator: forFade
+                                  headerShown: false, cardStyleInterpolator: config
                                 }} />
 
                                 <Stack.Screen name="RoutineScreen" component={RoutineScreen} options={{
-                                  headerShown: false, cardStyleInterpolator: forFade
+                                  headerShown: false, cardStyleInterpolator: config
                                 }} />
                                 <Stack.Screen name="CalendarScreen" component={CalendarScreen} options={{
-                                  headerShown: false, cardStyleInterpolator: forFade
+                                  headerShown: false, cardStyleInterpolator: config
                                 }} />
                                 <Stack.Screen name="TextScreen" component={TextScreen} options={{
-                                  headerShown: false, cardStyleInterpolator: forFade
+                                  headerShown: false, cardStyleInterpolator: config
                                 }} />
                                 <Stack.Screen name="SettingScreen" component={SettingScreen} options={{
-                                  headerShown: false, cardStyleInterpolator: forFade
+                                  headerShown: false, cardStyleInterpolator: config
                                 }} />
                                 <Stack.Screen name="CreateCalendarTask" component={CreateCalendarTask} options={{
-                                  headerShown: false, cardStyleInterpolator: forFade
+                                  headerShown: false, cardStyleInterpolator: config
                                 }} />
                               </>
 
@@ -197,3 +190,35 @@ export default function App({ navigation }) {
   );
 }
 
+async function registerForPushNotificationsAsync() {
+  let token;
+
+  if (Platform.OS === 'android') {
+    await Notifications.setNotificationChannelAsync('default', {
+      name: 'default',
+      importance: Notifications.AndroidImportance.MAX,
+      vibrationPattern: [0, 250, 250, 250],
+      lightColor: '#FF231F7C',
+    });
+  }
+
+  if (Device.isDevice) {
+    const { status: existingStatus } = await Notifications.getPermissionsAsync();
+    let finalStatus = existingStatus;
+    if (existingStatus !== 'granted') {
+      const { status } = await Notifications.requestPermissionsAsync();
+      finalStatus = status;
+    }
+    if (finalStatus !== 'granted') {
+      alert('Failed to get push token for push notification!');
+      return;
+    }
+    token = (await Notifications.getExpoPushTokenAsync({
+      projectId: '49a4d4a0-80f7-4e53-ae42-d34494b9c746',
+    })).data;
+  } else {
+    alert('Must use physical device for Push Notifications');
+  }
+
+  return token;
+}
