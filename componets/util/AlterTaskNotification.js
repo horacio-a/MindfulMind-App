@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
 import {
     useFonts,
     Lato_400Regular,
@@ -20,6 +20,7 @@ export default function AlterTaskNotification({ setNotificationVisibility, dataF
     });
     const [user, setuser] = useState('')
     const [msg, setmsg] = useState('')
+
     const AlterTask = async (task) => {
         setLoadingState(true)
         console.log(task)
@@ -82,6 +83,9 @@ export default function AlterTaskNotification({ setNotificationVisibility, dataF
                                 </View>
 
                             </View>
+                            <TouchableWithoutFeedback onPress={() => { setNotificationVisibility(false) }} >
+                                <View style={stylesHeader.CloserWidthMax} ></View>
+                            </TouchableWithoutFeedback>
                         </View>)
 
                 }
@@ -96,6 +100,11 @@ export default function AlterTaskNotification({ setNotificationVisibility, dataF
 
 
 const stylesHeader = StyleSheet.create({
+    CloserWidthMax: {
+        width: '100%',
+        height: '100%',
+        position: 'absolute'
+    },
     Back: {
         width: '100%',
         height: '100%',
@@ -110,7 +119,8 @@ const stylesHeader = StyleSheet.create({
         height: '20%',
         borderRadius: 10,
         backgroundColor: '#1E1E1E',
-
+        position: 'absolute',
+        zIndex: 100
     },
     ConteinerTitle: {
         width: '100%',
