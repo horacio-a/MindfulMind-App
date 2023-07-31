@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { TouchableOpacity, Keyboard, Vibration, StyleSheet, Button, Text, View, FlatList, ScrollView, SafeAreaView, RefreshControl } from "react-native";
+import { TouchableOpacity, Keyboard, Vibration, StyleSheet, Button, Text, View, BackHandler, Alert, FlatList, ScrollView, SafeAreaView, RefreshControl } from "react-native";
 import DragList, { DragListRenderItemInfo } from "react-native-draglist";
 import Header from "../componets/Header";
 import { RoutineDateGlobalState } from "../context/DataGlobalState";
@@ -20,14 +20,22 @@ export default function AdministraRoutine({ navigation }) {
     const [visibilityNotification, setvisibilityNotification] = useState(false)
     const [DataForDelete, setDataForDelete] = useState(false)
     const [TitleForNotification, setTitleForNotification] = useState('')
+    const [routineDataCopy, setroutineDataCopy] = useState()
+
+    useEffect(() => {
+        const getCopy = async () => {
+            setroutineDataCopy(JSON.parse(await SecureStore.getItemAsync('routineDataCopy')))
+        }
+
+        getCopy()
+    }, [])
 
     const [sometingChange, setSometingChange] = useState(false)
 
     const backScript = () => {
-        console.log(sometingChange)
         if (sometingChange) {
             setvisibilityNotification(true)
-            setTitleForNotification('¿Seguro quieres salir?')
+            setTitleForNotification('¿Seguro quieres no guardar tu nuevo orden?')
         } else {
             Redirect('Home')
         }
@@ -40,9 +48,11 @@ export default function AdministraRoutine({ navigation }) {
         }
 
         const deleteButton = () => {
+
             setvisibilityNotification(true)
             setDataForDelete(item)
             setTitleForNotification('¿Seguro quieres eliminar esta tarea?')
+            console.log(item)
         }
 
 
@@ -85,15 +95,27 @@ export default function AdministraRoutine({ navigation }) {
         );
     }
 
+    useEffect(() => {
+        const backAction = () => {
+
+            () => null
+            return true;
+        };
+
+        const backHandler = BackHandler.addEventListener(
+            'hardwareBackPress',
+            backAction,
+        );
+
+        return () => backHandler.remove();
+    }, []);
 
     const { routineData, SetRoutineData } = useContext(RoutineDateGlobalState);
-    let copyRoutineData = JSON.stringify(routineData)
-
-
 
 
     const [inputAdd, setinputAdd] = useState(false)
     const [InputTitle, onChangeInputTitle] = useState('')
+    const [errorMsg, seterrorMsg] = useState('')
     const refInput = React.useRef(null);
 
     const openInput = () => {
@@ -102,6 +124,7 @@ export default function AdministraRoutine({ navigation }) {
     }
 
     const closeInput = () => {
+        seterrorMsg('')
         setinputAdd(false)
         refInput.current.clear()
         Keyboard.dismiss()
@@ -109,20 +132,31 @@ export default function AdministraRoutine({ navigation }) {
     }
 
     async function CreateTasksRoutine() {
-        let user = JSON.parse(await SecureStore.getItemAsync('userToken'))
-        const response = await axios.post('http://31.220.17.121:3500/newtask/token', {
-            "user": user.user,
-            "title": InputTitle
-        }, {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
-        console.log(response)
-        const copy = routineData
-        copy.data.push(response.data)
-        SetRoutineData(copy)
-        closeInput()
+        if (InputTitle === '') {
+            seterrorMsg('Completa el campo para crear una tarea')
+            setTimeout(() => {
+                seterrorMsg('')
+            }, 2500);
+        } else {
+            let user = JSON.parse(await SecureStore.getItemAsync('userToken'))
+            const response = await axios.post('http://31.220.17.121:3500/newtask/token', {
+                "user": user.user,
+                "title": InputTitle
+            }, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            closeInput()
+            onChangeInputTitle('')
+            const copyOfCopy = routineDataCopy
+            const copy = routineData
+            copy.data.push(response.data)
+            copyOfCopy.data.push(response.data)
+            setroutineDataCopy(copyOfCopy)
+            SetRoutineData(copy)
+        }
+
     }
 
 
@@ -157,17 +191,26 @@ export default function AdministraRoutine({ navigation }) {
             }
         }
         )
-        console.log(response.data)
         SetRoutineData(response.data)
         Redirect('Home')
     }
 
 
-    const CancelOrden = () => {
-        console.log(JSON.parse(copyRoutineData))
-        SetRoutineData(JSON.parse(copyRoutineData))
+    const deleteTasks = async () => {
+        console.log(DataForDelete)
+        const response = await axios.delete('http://31.220.17.121:3500/DeleteTasks', { data: DataForDelete })
+        SetRoutineData(response.data)
+        console.log(response.data)
+
         setvisibilityNotification(false)
-        // Redirect('Home')
+    }
+
+
+    const CancelOrden = async () => {
+        SetRoutineData(routineDataCopy)
+        setvisibilityNotification(false)
+        Redirect('Home')
+        await SecureStore.deleteItemAsync('routineDataCopy')
 
     }
 
@@ -223,6 +266,20 @@ export default function AdministraRoutine({ navigation }) {
                             />
                             <Text style={style.textButton}>Agregar una tarea</Text>
                         </TouchableOpacity>
+
+                        <View style={{
+                            width: '90%',
+                            height: 35,
+                            display: 'flex',
+                            justifyContent: 'flex-end',
+                            alignItems: 'center',
+                        }}>
+
+                            <Text style={errorMsg !== '' ? { color: '#1e1e1e', fontFamily: 'Lato_700Bold', backgroundColor: '#fff', padding: 7.5, borderRadius: 5, } : {}}>
+                                {errorMsg}
+                            </Text>
+                        </View>
+
                         <View style={{ height: '75%', width: '85%', marginBottom: 15, marginTop: 15 }}>
 
                             <DragList
@@ -236,7 +293,7 @@ export default function AdministraRoutine({ navigation }) {
                     </View>
 
                     <View style={{ width: '100%', height: '10%', flexDirection: 'row' }}>
-                        <TouchableOpacity onPress={() => { CancelOrden() }} style={{ width: '50%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                        <TouchableOpacity onPress={() => { backScript() }} style={{ width: '50%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                             <Text style={{ color: '#FFFFFF', fontSize: 18, fontFamily: 'Lato_700Bold' }}>Cancelar</Text>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => { saveOrder() }} style={{ width: '50%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
@@ -250,9 +307,9 @@ export default function AdministraRoutine({ navigation }) {
 
                         ? <NotificationTasks
                             setvisibilityNotification={setvisibilityNotification}
-                            DataForDelete={DataForDelete}
                             Title={TitleForNotification}
                             CancelOrden={CancelOrden}
+                            deleteTasks={deleteTasks}
 
                         />
                         : <></>
@@ -262,6 +319,8 @@ export default function AdministraRoutine({ navigation }) {
         );
     }
 }
+
+
 const style = StyleSheet.create({
     conteinerButtonAddDesactive: {
         display: 'none'
