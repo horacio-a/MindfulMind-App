@@ -15,6 +15,8 @@ import axios from 'axios';
 
 
 export default function ComponetRegister({ Redirect, goLogin }) {
+    const [RegisterMsg, setRegisterMsg] = useState(false)
+
     const [secureState1, setsecureState1] = useState(true)
     const [secureState2, setsecureState2] = useState(true)
     const [icon1, setIcon1] = useState('visibility-off')
@@ -92,11 +94,12 @@ export default function ComponetRegister({ Redirect, goLogin }) {
         if (Password != '' && ConfirmPassword != '' && Email != '' && User != '') {
 
             if (Password == ConfirmPassword) {
-                let obj = JSON.stringify({
+                let obj = {
                     user: User,
                     password: Password,
                     email: Email
-                })
+                }
+                console.log(typeof obj === 'string')
                 const data = await axios.post('http://31.220.17.121:3500/register', { obj }, {
                     headers: {
                         'Content-Type': 'application/json'
@@ -116,6 +119,10 @@ export default function ComponetRegister({ Redirect, goLogin }) {
                         }, 4000);
                     }
                 }
+                if (data.data.userCreate === true) {
+                    setRegisterMsg(true)
+                }
+
             } else {
                 setPasswordError('Las Contraseñas no coinciden')
                 setConfirmPasswordError('Las Contraseñas no coinciden')
@@ -137,82 +144,96 @@ export default function ComponetRegister({ Redirect, goLogin }) {
         return <></>
     } else {
         return (
-            <ScrollView>
-                <View style={[stylesLogin.ConteinerInputs, { marginTop: 0 }]}>
-                    <TextInput style={[stylesLogin.input, { fontFamily: 'Lato_400Regular' }]}
-                        onChangeText={onChangeEmail}
-                        placeholder="Email"
-                        keyboardType="email-address"
-                        placeholderTextColor="rgba(245, 240, 240, 0.75)"
-                    />
-                    <View style={stylesLogin.conteinerInputError}>
-                        <Text style={stylesLogin.textInputError}>{emailError}</Text>
-                    </View>
-                    <TextInput style={[stylesLogin.input, { fontFamily: 'Lato_400Regular' }]}
-                        onChangeText={onChangeUser}
-                        placeholder="Usuario"
-                        keyboardType="default"
-                        placeholderTextColor="rgba(245, 240, 240, 0.75)"
-                    />
-                    <View style={stylesLogin.conteinerInputError}>
-                        <Text style={stylesLogin.textInputError}>{UserError}</Text>
-                    </View>
-                    <View style={stylesLogin.conteinerInputPassword}>
-                        <TextInput style={[stylesLogin.inputPassword, { fontFamily: 'Lato_400Regular' }]}
-                            onChangeText={onChangePassword}
-                            placeholder="Contraseña"
-                            keyboardType="default"
-                            placeholderTextColor="rgba(245, 240, 240, 0.75)"
-                            secureTextEntry={secureState1}
-                        />
+            <>
+                {
+                    RegisterMsg
+                        ? <View style={{ width: '85%', height: '65%', display: 'flex', justifyContent: 'center', alignContent: 'center' }}>
+                            <View style={{ width: '100%', height: '55%', backgroundColor: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center', borderRadius: 20 }}>
+                                <Text style={{ fontFamily: 'Lato_700Bold', textAlign: 'center', fontSize: 18, padding: 5, marginBottom: '5%' }}>Genial tu cuenta fue creada, solo queda confirmarla con el link que te enviamos a tu email.</Text>
+                                <TouchableOpacity onPress={() => { goLogin() }} style={{ width: '50%', height: '10%', textAlign: 'center', borderColor: '#1e1e1e', borderWidth: 1, display: 'flex', justifyContent: 'center', alignContent: 'center', }}>
+                                    <Text style={{ textAlign: 'center', fontFamily: 'Lato_700Bold', }}>Ir a iniciar sesion</Text>
+                                </TouchableOpacity>
+                            </View>
+                        </View >
+                        : <ScrollView>
+                            <View style={[stylesLogin.ConteinerInputs, { marginTop: 0 }]}>
+                                <TextInput style={[stylesLogin.input, { fontFamily: 'Lato_400Regular' }]}
+                                    onChangeText={onChangeEmail}
+                                    placeholder="Email"
+                                    keyboardType="email-address"
+                                    placeholderTextColor="rgba(245, 240, 240, 0.75)"
+                                />
+                                <View style={stylesLogin.conteinerInputError}>
+                                    <Text style={stylesLogin.textInputError}>{emailError}</Text>
+                                </View>
+                                <TextInput style={[stylesLogin.input, { fontFamily: 'Lato_400Regular' }]}
+                                    onChangeText={onChangeUser}
+                                    placeholder="Usuario"
+                                    keyboardType="default"
+                                    placeholderTextColor="rgba(245, 240, 240, 0.75)"
+                                />
+                                <View style={stylesLogin.conteinerInputError}>
+                                    <Text style={stylesLogin.textInputError}>{UserError}</Text>
+                                </View>
+                                <View style={stylesLogin.conteinerInputPassword}>
+                                    <TextInput style={[stylesLogin.inputPassword, { fontFamily: 'Lato_400Regular' }]}
+                                        onChangeText={onChangePassword}
+                                        placeholder="Contraseña"
+                                        keyboardType="default"
+                                        placeholderTextColor="rgba(245, 240, 240, 0.75)"
+                                        secureTextEntry={secureState1}
+                                    />
 
-                        <View style={stylesLogin.ChangeVisibility}>
-                            <TouchableWithoutFeedback onPress={ChangeVisibility1}>
-                                <Icon
-                                    name={icon1}
-                                    color={'#fff'} />
-                            </TouchableWithoutFeedback>
-                        </View>
-                    </View>
-                    <View style={stylesLogin.conteinerInputError}>
-                        <Text style={stylesLogin.textInputError}>{PasswordError}</Text>
-                    </View>
+                                    <View style={stylesLogin.ChangeVisibility}>
+                                        <TouchableWithoutFeedback onPress={ChangeVisibility1}>
+                                            <Icon
+                                                name={icon1}
+                                                color={'#fff'} />
+                                        </TouchableWithoutFeedback>
+                                    </View>
+                                </View>
+                                <View style={stylesLogin.conteinerInputError}>
+                                    <Text style={stylesLogin.textInputError}>{PasswordError}</Text>
+                                </View>
 
-                    <View style={stylesLogin.conteinerInputPassword}>
-                        <TextInput style={[stylesLogin.inputPassword, { fontFamily: 'Lato_400Regular' }]}
-                            onChangeText={onChangeConfirmPassword}
-                            placeholder="Confirma Contraseña"
-                            name='user'
-                            keyboardType="default"
-                            placeholderTextColor="rgba(245, 240, 240, 0.75)"
-                            secureTextEntry={secureState2}
-                        />
-                        <View style={stylesLogin.ChangeVisibility}>
-                            <TouchableWithoutFeedback onPress={ChangeVisibility2}>
-                                <Icon
-                                    name={icon2}
-                                    color={'#fff'} />
-                            </TouchableWithoutFeedback>
-                        </View>
-                    </View>
-                    <View style={stylesLogin.conteinerInputError}>
-                        <Text style={stylesLogin.textInputError}>{ConfirmPasswordError}</Text>
-                    </View>
+                                <View style={stylesLogin.conteinerInputPassword}>
+                                    <TextInput style={[stylesLogin.inputPassword, { fontFamily: 'Lato_400Regular' }]}
+                                        onChangeText={onChangeConfirmPassword}
+                                        placeholder="Confirma Contraseña"
+                                        name='user'
+                                        keyboardType="default"
+                                        placeholderTextColor="rgba(245, 240, 240, 0.75)"
+                                        secureTextEntry={secureState2}
+                                    />
+                                    <View style={stylesLogin.ChangeVisibility}>
+                                        <TouchableWithoutFeedback onPress={ChangeVisibility2}>
+                                            <Icon
+                                                name={icon2}
+                                                color={'#fff'} />
+                                        </TouchableWithoutFeedback>
+                                    </View>
+                                </View>
+                                <View style={stylesLogin.conteinerInputError}>
+                                    <Text style={stylesLogin.textInputError}>{ConfirmPasswordError}</Text>
+                                </View>
 
-                    <TouchableOpacity onPress={() => { goLogin() }}>
-                        <Text style={[stylesLogin.TextForgotPassword, { fontFamily: 'Lato_700Bold' }]}>
-                            Ya tengo una cuenta
-                        </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => { sendRegister() }} style={stylesLogin.ButtonSend}>
-                        <Text style={[stylesLogin.TextButtonSend, { fontFamily: 'Lato_700Bold' }]}>
-                            Enviar
-                        </Text>
-                    </TouchableOpacity>
-                </View>
-                <View style={stylesLogin.ConteinerScroll}></View>
+                                <TouchableOpacity onPress={() => { goLogin() }}>
+                                    <Text style={[stylesLogin.TextForgotPassword, { fontFamily: 'Lato_700Bold' }]}>
+                                        Ya tengo una cuenta
+                                    </Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={() => { sendRegister() }} style={stylesLogin.ButtonSend}>
+                                    <Text style={[stylesLogin.TextButtonSend, { fontFamily: 'Lato_700Bold' }]}>
+                                        Enviar
+                                    </Text>
+                                </TouchableOpacity>
+                            </View>
+                            <View style={stylesLogin.ConteinerScroll}></View>
 
-            </ScrollView>
+                        </ScrollView>
+                }
+            </>
+
 
         )
     }
