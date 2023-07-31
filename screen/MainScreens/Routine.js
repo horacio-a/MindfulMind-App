@@ -1,48 +1,21 @@
-import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity } from 'react-native';
-
-import Header from '../../componets/Header';
-import NavBar from '../../componets/navBar';
-import { useContext, useEffect, useState } from 'react';
-import { BackPageState } from '../../context/BackPageState';
-
-export default function RoutineScreen({ navigation }) {
-    const { BackPage, setBackPage } = useContext(BackPageState)
-    const [selectedLanguage, setSelectedLanguage] = useState();
+import { useState, useEffect, useRef } from 'react';
+import { Text, View, Button, Platform } from 'react-native';
 
 
-    useEffect(() => {
-        setBackPage('RoutineScreen')
-    }, [])
 
+export default function App() {
 
-    const Redirect = (url) => {
-        navigation.navigate(url)
-    }
 
     return (
-        <>
-            <Header />
-            <View style={styles.MainConteiner}>
+        <View
+            style={{
+                flex: 1,
+                alignItems: 'center',
+                justifyContent: 'space-around',
+            }}>
 
-            </View >
-
-            <NavBar
-                Redirect={Redirect}
-                home={false}
-                routine={true}
-                calendar={false}
-                text={false}
-                settings={false} />
-        </>
-
-    )
+        </View>
+    );
 }
 
-const styles = StyleSheet.create({
-    MainConteiner: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'flex-end'
-    }
-});
+
