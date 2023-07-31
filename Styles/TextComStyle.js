@@ -4,9 +4,8 @@ import Constants from 'expo-constants';
 const styleTextComp = StyleSheet.create({
     MainConteiner: {
         width: '85%',
-        height: 'auto',
+        height: 500,
         marginTop: 25,
-        marginBottom: 75,
 
     },
     title: {
@@ -25,7 +24,7 @@ const styleTextComp = StyleSheet.create({
     },
     addnewText: {
         width: '100%',
-        height: 75,
+        height: 60,
         backgroundColor: '#1E1E1E',
         borderRadius: 10,
         display: 'flex',
@@ -39,7 +38,6 @@ const styleTextComp = StyleSheet.create({
         color: '#fff',
         fontFamily: 'Lato_700Bold',
         fontSize: 16,
-
     },
     ConteinerText: {
         width: '100%',
@@ -47,6 +45,9 @@ const styleTextComp = StyleSheet.create({
         backgroundColor: '#1E1E1E',
         borderRadius: 10,
         marginTop: 25,
+        display: 'flex',
+        justifyContent: 'space-around',
+        alignItems: 'center'
     },
     titleText: {
         color: '#ffff',
@@ -88,6 +89,14 @@ const styleTextComp = StyleSheet.create({
         borderRadius: 10,
         marginTop: 25,
     },
+
+
+    Text: {
+        width: '80%',
+        height: 100,
+        color: '#FFFFFF',
+
+    }
 });
 
 export default styleTextComp
