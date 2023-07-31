@@ -17,11 +17,11 @@ import { CalendarDateGlobalState } from '../context/DataGlobalState';
 
 
 export default function CreateCalendarTask({ navigation }) {
-    const [selectedLanguage, setSelectedLanguage] = useState();
     const [Note, setNote] = useState('')
     const { DayTasks, setDayTasks } = useContext(DayNewTasks)
     const [Fecha, setFecha] = useState('')
     const [Title, setTitle] = useState('')
+    const [titleMsgErr, settitleMsgErr] = useState('');
 
     const { CalendarData, SetCalendarData } = useContext(CalendarDateGlobalState);
 
@@ -131,14 +131,21 @@ export default function CreateCalendarTask({ navigation }) {
 
     const CreateTasks = async () => {
         let user = JSON.parse(await SecureStore.getItemAsync('userToken'))
+        if (Title === '') {
+            settitleMsgErr('Para crear una tarea necesitas escribir un titulo')
+            setTimeout(() => {
+                settitleMsgErr('')
+            }, 2500);
+            return
+        }
 
 
         const response = await axios.post('http://31.220.17.121:3500/AddCalendarTask', {
             data: {
                 "user": user.user,
                 "Title": Title,
-                "intialHour": dateFrom,
-                "finishHour": dateTo,
+                "intialHour": DayTasks.split('T')[0] + 'T' + dateFrom.toISOString().split('T')[1],
+                "finishHour": DayTasks.split('T')[0] + 'T' + dateTo.toISOString().split('T')[1],
                 "idCalendar": "Calendario Principal",
                 "description": Note,
                 "date": DayTasks,
@@ -147,7 +154,8 @@ export default function CreateCalendarTask({ navigation }) {
             },
             info: {
                 Allday: Allday,
-
+                repeat: RepeatTime,
+                NotificacionTime: NotificacionTime
             }
         }, {
             headers: {
@@ -187,6 +195,9 @@ export default function CreateCalendarTask({ navigation }) {
                                 }}>
                             </TouchableOpacity>
 
+                        </View>
+                        <View style={{ width: '100%', height: 30, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                            <Text style={{ textAlign: 'center', color: '#fff', fontFamily: 'Lato_700Bold' }}>{titleMsgErr}</Text>
                         </View>
                         {
                             colorPickerVisi
@@ -309,7 +320,7 @@ export default function CreateCalendarTask({ navigation }) {
                                 color={'#fff'}
                                 size={20}
                             />
-                            <TouchableOpacity style={style.TouchableOpenNotification} onPress={() => { setitsOpenNotification(true); setDataNotification({ Title: 'Repeticion', Data: ['Nunca', 'Todos los dias', 'Todas las semanas', 'Todos los meses', 'Todos los años'] }) }}>
+                            <TouchableOpacity style={style.TouchableOpenNotification} onPress={() => { setitsOpenNotification(true); setDataNotification({ Title: 'Repeticion', Data: ['Nunca', 'Todas las semanas', 'Todos los meses', 'Todos los años'] }) }}>
                                 <Text style={[style.TextArea]}>{RepeatTime}</Text>
                             </TouchableOpacity>
 
@@ -468,7 +479,7 @@ const style = StyleSheet.create({
     Content: {
         backgroundColor: '#1E1E1E',
         width: '100%',
-        height: '91.5%',
+        height: 650,
         paddingRight: '5%',
         paddingLeft: '5%',
     },
