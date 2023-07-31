@@ -45,7 +45,7 @@ const stylesMain = StyleSheet.create({
     },
     conteinerTask: {
         width: '100%',
-        height: 30,
+        height: 35,
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'center',
@@ -83,7 +83,7 @@ const stylesMain = StyleSheet.create({
         borderRadius: 10,
     },
     conteinerImgTaks: {
-        width: '35%',
+        width: '20%',
         height: '100%',
         display: 'flex',
         flexDirection: 'row',
@@ -91,7 +91,7 @@ const stylesMain = StyleSheet.create({
         alignItems: 'center',
     },
     conteinerTextTaks: {
-        width: '65%',
+        width: '80%',
         height: '100%',
         display: 'flex',
         flexDirection: 'row',
