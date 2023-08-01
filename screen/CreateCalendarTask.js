@@ -1,4 +1,4 @@
-import { StyleSheet, Switch, Text, View, FlatList, TextInput, SafeAreaView, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
+import { StyleSheet, Switch, Text, View, FlatList, TextInput, SafeAreaView, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import Header from '../componets/Header';
 import {
     useFonts,
@@ -308,7 +308,7 @@ export default function CreateCalendarTask({ navigation }) {
                                 color={'#fff'}
                                 size={20}
                             />
-                            <TouchableOpacity style={style.TouchableOpenNotification} onPress={() => { setitsOpenNotification(true); setDataNotification({ Title: 'Notificacion', Data: ['Al momento', '10 minutos antes', '1 hora antes', '1 dia antes'] }) }}>
+                            <TouchableOpacity style={style.TouchableOpenNotification} onPress={() => { Keyboard.dismiss(); setitsOpenNotification(true); setDataNotification({ Title: 'Notificacion', Data: ['Al momento', '10 minutos antes', '1 hora antes', '1 dia antes'] }) }}>
                                 <Text style={[style.TextArea]}>{NotificacionTime}</Text>
                             </TouchableOpacity>
                         </View>
@@ -320,7 +320,8 @@ export default function CreateCalendarTask({ navigation }) {
                                 color={'#fff'}
                                 size={20}
                             />
-                            <TouchableOpacity style={style.TouchableOpenNotification} onPress={() => { setitsOpenNotification(true); setDataNotification({ Title: 'Repeticion', Data: ['Nunca', 'Todas las semanas', 'Todos los meses', 'Todos los años'] }) }}>
+
+                            <TouchableOpacity style={style.TouchableOpenNotification} onPress={() => { Keyboard.dismiss(); setitsOpenNotification(true); setDataNotification({ Title: 'Repeticion', Data: ['Nunca', 'Todas las semanas', 'Todos los meses', 'Todos los años'] }) }}>
                                 <Text style={[style.TextArea]}>{RepeatTime}</Text>
                             </TouchableOpacity>
 
