@@ -44,7 +44,7 @@ export default function Caledar({ setCalendarCardVisibility, setdateForCalendarC
                             </View>
                             <View style={stylesCalendar.BlockDays}>
                                 <CalendarDays day={'Domingo'} />
-                                <CalendarDays day={'lunes'} />
+                                <CalendarDays day={'Lunes'} />
                                 <CalendarDays day={'Martes'} />
                                 <CalendarDays day={'Miercoles'} />
                                 <CalendarDays day={'Jueves'} />
