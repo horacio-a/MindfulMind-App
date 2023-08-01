@@ -23,7 +23,6 @@ export default function AlterTaskNotification({ setNotificationVisibility, dataF
 
     const AlterTask = async (task) => {
         setLoadingState(true)
-        console.log(task)
         const obj = JSON.stringify(task)
         const response = await axios.post('http://31.220.17.121:3500/completeTask', { obj }, {
             headers: {
@@ -71,6 +70,8 @@ export default function AlterTaskNotification({ setNotificationVisibility, dataF
                                         color: '#fff',
                                         fontFamily: 'Lato_400Regular',
                                         fontSize: 16,
+                                        textAlign: 'center'
+
                                     }}>{msg}</Text>
                                 </View>
                                 <View style={stylesHeader.ConteinerButtom}>
