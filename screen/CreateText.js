@@ -69,7 +69,6 @@ export default function CreateText({ navigation }) {
             colorHex: colorSelect,
             date: date
         }
-        console.log(data)
         const respones = await axios.post('http://31.220.17.121:3500/createtext', { data }, {
             headers: {
                 'Content-Type': 'application/json'
