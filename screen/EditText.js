@@ -14,6 +14,7 @@ import { TextSelect } from "../context/TextSelect";
 import { TextDateGlobalState } from '../context/DataGlobalState';
 
 export default function EditText({ navigation }) {
+    const [NotificationVisibility, setNotificationVisibility] = useState(false)
     const { TextData, SetTextData } = useContext(TextDateGlobalState);
     const { SelectedText, setSelectedText } = useContext(TextSelect)
     const [Texto, setTexto] = useState(SelectedText.text)
@@ -180,7 +181,7 @@ export default function EditText({ navigation }) {
                                             color={'#ffffff'}
                                         />
                                     </TouchableOpacity>
-                                    <TouchableOpacity style={{ marginLeft: 15 }} onPress={() => { DeleteTasks() }}>
+                                    <TouchableOpacity style={{ marginLeft: 15 }} onPress={() => { setNotificationVisibility(true) }}>
                                         <Icon
                                             name='delete'
                                             type="material-community"
@@ -205,6 +206,41 @@ export default function EditText({ navigation }) {
                         </View>
                 }
 
+                {
+                    NotificationVisibility
+                        ?
+                        <View style={stylesHeader.Back}>
+                            <View style={stylesHeader.Notification}>
+                                <View style={stylesHeader.ConteinerTitle}>
+                                    <Text style={{
+                                        color: '#fff',
+                                        fontFamily: 'Lato_700Bold',
+                                        fontSize: 18,
+                                        marginBottom: 5
+                                    }}>Espera</Text>
+                                    <Text style={{
+                                        color: '#fff',
+                                        fontFamily: 'Lato_400Regular',
+                                        fontSize: 16,
+                                        textAlign: 'center'
+                                    }}>¿Estas seguro que quieres eliminar este Texto?</Text>
+                                </View>
+                                <View style={stylesHeader.ConteinerButtom}>
+                                    <TouchableOpacity onPress={() => { setNotificationVisibility(false) }} style={stylesHeader.ButtomLeft}>
+                                        <Text style={stylesHeader.TextButtom}>No</Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity onPress={() => { DeleteTasks() }} style={stylesHeader.ButtomRight}>
+                                        <Text style={stylesHeader.TextButtom}>Si</Text>
+                                    </TouchableOpacity>
+                                </View>
+
+                            </View>
+                            <TouchableWithoutFeedback onPress={() => { setNotificationVisibility(false) }} >
+                                <View style={stylesHeader.CloserWidthMax} ></View>
+                            </TouchableWithoutFeedback>
+                        </View>
+                        : <></>
+                }
 
                 {
                     colorPickerVisi
@@ -412,3 +448,69 @@ const style = StyleSheet.create({
 
 
 
+const stylesHeader = StyleSheet.create({
+    CloserWidthMax: {
+        width: '100%',
+        height: '100%',
+        position: 'absolute'
+    },
+    Back: {
+        width: '100%',
+        height: '100%',
+        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+        position: 'absolute',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    Notification: {
+        width: '65%',
+        height: '20%',
+        borderRadius: 10,
+        backgroundColor: '#1E1E1E',
+        position: 'absolute',
+        zIndex: 100
+    },
+    ConteinerTitle: {
+        width: '100%',
+        height: '70%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    ConteinerButtom: {
+        width: '100%',
+        height: '30%',
+        display: 'flex',
+        flexDirection: 'row'
+    },
+    ButtomLeft: {
+        width: '50%',
+        height: '100%',
+        borderRightColor: '#747272',
+        borderRightWidth: 1,
+        borderTopColor: '#747272',
+        borderTopWidth: 1,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    ButtomRight: {
+        width: '50%',
+        height: '100%',
+        borderLeftColor: '#747272',
+        borderLeftWidth: 1,
+        borderTopColor: '#747272',
+        borderTopWidth: 1,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    TextButtom: {
+        color: '#fff',
+        fontFamily: 'Lato_400Regular',
+        fontSize: 16,
+    }
+
+
+});
