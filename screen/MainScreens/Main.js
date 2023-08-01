@@ -99,7 +99,7 @@ export default function Main({ navigation }) {
                                     />
 
 
-                                    <TextComponent />
+                                    <TextComponent Redirect={Redirect} />
 
                                     <View style={{ width: '85%', marginTop: 50, marginBottom: 10 }}>
                                         <TouchableOpacity onPress={() => Redirect('SettingScreen')} style={styleTextComp.addnewText}>
