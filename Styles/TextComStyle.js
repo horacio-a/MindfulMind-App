@@ -41,7 +41,7 @@ const styleTextComp = StyleSheet.create({
     },
     ConteinerText: {
         width: '100%',
-        height: 150,
+        height: 200,
         backgroundColor: '#1E1E1E',
         borderRadius: 10,
         marginTop: 25,
@@ -49,15 +49,23 @@ const styleTextComp = StyleSheet.create({
         justifyContent: 'space-around',
         alignItems: 'center'
     },
+    titleTextConteiner: {
+        width: '80%',
+        height: 25,
+        marginTop: 15,
+        flexDirection: 'row'
+    },
     titleText: {
         color: '#ffff',
-        width: '100%',
-        height: 15,
-        textAlign: 'center',
-        marginTop: 15,
+        marginLeft: 5,
         fontFamily: 'Lato_700Bold',
         fontSize: 18,
 
+    },
+    circleText: {
+        width: 20,
+        height: 20,
+        borderRadius: 100,
     },
     LoadingTitle: {
         position: 'relative',
@@ -96,6 +104,13 @@ const styleTextComp = StyleSheet.create({
         height: 100,
         color: '#FFFFFF',
 
+    },
+
+    dateText: {
+        color: '#959696',
+        textAlign: 'left',
+        width: '80%',
+        height: '10%'
     }
 });
 
