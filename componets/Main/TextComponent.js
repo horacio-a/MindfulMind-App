@@ -15,7 +15,7 @@ import LoadingTextComp from "./LoadingTextComp";
 import ContentLoader from "react-native-easy-content-loader";
 
 
-export default function TextComponent() {
+export default function TextComponent({ Redirect }) {
     const [loading, setloading] = useState(true)
     const { TextData, SetTextData } = useContext(TextDateGlobalState);
     useEffect(() => {
@@ -37,7 +37,7 @@ export default function TextComponent() {
                     <View style={styleTextComp.ConteinerTitle}>
                         <Text style={[styleTextComp.title]}>Tus textos</Text>
                     </View>
-                    <TouchableOpacity style={styleTextComp.addnewText}>
+                    <TouchableOpacity onPress={() => { Redirect('CreateText') }} style={styleTextComp.addnewText}>
                         <Icon
                             name='pluscircleo'
                             type="antdesign"
@@ -53,6 +53,7 @@ export default function TextComponent() {
                                     ? (TextData.map(item => <TextosConteiners
                                         key={item.id}
                                         data={item}
+                                        Redirect={Redirect}
                                     />))
                                     : (<></>)
                             }
