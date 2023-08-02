@@ -120,14 +120,14 @@ export default function SettingScreen({ navigation }) {
 
                         </TouchableOpacity>
 
-                        <Text style={{ width: '100%', color: '#1E1E1E', textAlign: 'center', fontSize: 26, fontFamily: 'Lato_700Bold', marginVertical: '5%' }}>
+                        <Text maxFontSizeMultiplier={1.5} style={{ width: '100%', color: '#1E1E1E', textAlign: 'center', fontSize: 26, fontFamily: 'Lato_700Bold', marginVertical: '5%' }}>
                             {user}
                         </Text>
                         <TouchableOpacity onPress={() => setChangeUsernameContent(true)} style={{ width: '100%', height: 50, backgroundColor: '#1e1e1e', marginTop: 15, borderRadius: 5, display: 'flex', justifyContent: 'center' }}>
-                            <Text style={{ color: '#fff', fontFamily: 'Lato_700Bold', fontSize: 16, marginLeft: 10 }}>Cambiar tu nombre</Text>
+                            <Text maxFontSizeMultiplier={1.5} style={{ color: '#fff', fontFamily: 'Lato_700Bold', fontSize: 16, marginLeft: 10 }}>Cambiar tu nombre</Text>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => setChangePassContent(true)} style={{ width: '100%', height: 50, backgroundColor: '#1e1e1e', marginTop: 15, borderRadius: 5, display: 'flex', justifyContent: 'center' }}>
-                            <Text style={{ color: '#fff', fontFamily: 'Lato_700Bold', fontSize: 16, marginLeft: 10 }}>Cambiar contraseña</Text>
+                            <Text maxFontSizeMultiplier={1.5} style={{ color: '#fff', fontFamily: 'Lato_700Bold', fontSize: 16, marginLeft: 10 }}>Cambiar contraseña</Text>
                         </TouchableOpacity>
 
                         <TouchableOpacity onPress={() => { CuestionExitSession() }} style={styles.exitButton}>
@@ -135,7 +135,7 @@ export default function SettingScreen({ navigation }) {
                                 name={'logout'}
                                 color={'#fff'}
                                 style={{ marginLeft: 25 }} />
-                            <Text style={{ color: '#fff', fontSize: 16, marginLeft: 10 }}>
+                            <Text maxFontSizeMultiplier={1.5} style={{ color: '#fff', fontSize: 16, marginLeft: 10 }}>
                                 Cerrar Session
                             </Text>
                         </TouchableOpacity>
