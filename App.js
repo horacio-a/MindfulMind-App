@@ -24,7 +24,7 @@ import * as Notifications from 'expo-notifications';
 import CreateText from './screen/CreateText';
 import EditText from './screen/EditText';
 import { TextSelect } from './context/TextSelect';
-
+import TutorialForNewUser from './screen/TutorialForNewUser';
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -78,6 +78,8 @@ export default function App({ navigation }) {
 
     IsUserRegister();
   }, []);
+
+
 
   const config = {
     animation: 'spring',
@@ -135,15 +137,19 @@ export default function App({ navigation }) {
                       <TextDateGlobalState.Provider value={{ TextData, SetTextData }}>
                         <DayNewTasks.Provider value={{ DayTasks, setDayTasks }}>
                           <NavigationContainer>
-                            <Stack.Navigator initialRouteName={"Signin"} >
+                            <Stack.Navigator initialRouteName={"SignIn"} >
                               {!session ? (
                                 <>
+                                  <Stack.Screen name="TutorialForNewUser" component={TutorialForNewUser} options={{
+                                    headerShown: false, cardStyleInterpolator: config
+                                  }} />
                                   <Stack.Screen name="SignIn" component={Login} options={{
                                     headerShown: false, cardStyleInterpolator: config
                                   }} />
                                   <Stack.Screen name="ForgetPassword" component={ForgetPassword} options={{
                                     headerShown: false, cardStyleInterpolator: config
                                   }} />
+
                                 </>
 
                               ) : (
