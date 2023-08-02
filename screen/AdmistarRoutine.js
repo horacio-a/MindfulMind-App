@@ -46,18 +46,11 @@ export default function AdministraRoutine({ navigation }) {
         const Drag = () => {
             Vibration.vibrate(0.15 * 1000)
         }
-
         const deleteButton = () => {
-
             setvisibilityNotification(true)
             setDataForDelete(item)
             setTitleForNotification('¿Seguro quieres eliminar esta tarea?')
-            console.log(item)
         }
-
-
-
-
         return (
             <View key={item.id}
                 style={{
@@ -71,7 +64,6 @@ export default function AdministraRoutine({ navigation }) {
                     borderRadius: 10
                 }}>
 
-
                 <TouchableOpacity onPress={() => { deleteButton() }}>
                     <Icon
                         name='delete'
@@ -82,7 +74,7 @@ export default function AdministraRoutine({ navigation }) {
 
                 </TouchableOpacity>
 
-                <Text style={{ width: '80%', color: isActive ? '#1e1e1e' : '#fff', fontFamily: 'Lato_700Bold', textAlign: 'center' }}>{item.tasksName}</Text>
+                <Text maxFontSizeMultiplier={1.5} style={{ width: '80%', color: isActive ? '#1e1e1e' : '#fff', fontFamily: 'Lato_700Bold', textAlign: 'center' }}>{item.tasksName}</Text>
 
                 <TouchableOpacity onPressIn={onDragStart} onPressOut={() => { onDragEnd, Drag() }}>
                     <Icon
@@ -232,6 +224,7 @@ export default function AdministraRoutine({ navigation }) {
                     <View style={{ height: 650, backgroundColor: '#1E1E1E', alignItems: 'center', justifyContent: 'center', borderBottomLeftRadius: 20, borderBottomRightRadius: 20 }}>
                         <View style={inputAdd ? style.conteinerInput : style.conteinerButtonAddDesactive}>
                             <TextInput placeholder="Titulo"
+                                maxFontSizeMultiplier={1.5}
                                 keyboardType="default"
                                 placeholderTextColor="rgba(245, 240, 240, 0.75)"
                                 ref={refInput}
@@ -264,7 +257,7 @@ export default function AdministraRoutine({ navigation }) {
                                 color='#1E1E1E'
                                 size={16}
                             />
-                            <Text style={style.textButton}>Agregar una tarea</Text>
+                            <Text maxFontSizeMultiplier={1.5} style={style.textButton}>Agregar una tarea</Text>
                         </TouchableOpacity>
 
                         <View style={{
@@ -275,7 +268,7 @@ export default function AdministraRoutine({ navigation }) {
                             alignItems: 'center',
                         }}>
 
-                            <Text style={errorMsg !== '' ? { color: '#1e1e1e', fontFamily: 'Lato_700Bold', backgroundColor: '#fff', padding: 7.5, borderRadius: 5, } : {}}>
+                            <Text maxFontSizeMultiplier={1.3} style={errorMsg !== '' ? { color: '#1e1e1e', fontFamily: 'Lato_700Bold', backgroundColor: '#fff', padding: 7.5, borderRadius: 5, } : {}}>
                                 {errorMsg}
                             </Text>
                         </View>
@@ -294,10 +287,10 @@ export default function AdministraRoutine({ navigation }) {
 
                     <View style={{ width: '100%', height: '10%', flexDirection: 'row' }}>
                         <TouchableOpacity onPress={() => { backScript() }} style={{ width: '50%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                            <Text style={{ color: '#FFFFFF', fontSize: 18, fontFamily: 'Lato_700Bold' }}>Cancelar</Text>
+                            <Text maxFontSizeMultiplier={1.5} style={{ color: '#FFFFFF', fontSize: 18, fontFamily: 'Lato_700Bold' }}>Cancelar</Text>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => { saveOrder() }} style={{ width: '50%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                            <Text style={{ color: '#FFFFFF', fontSize: 18, fontFamily: 'Lato_700Bold' }}>Guardar</Text>
+                            <Text maxFontSizeMultiplier={1.5} style={{ color: '#FFFFFF', fontSize: 18, fontFamily: 'Lato_700Bold' }}>Guardar</Text>
                         </TouchableOpacity>
 
                     </View>
