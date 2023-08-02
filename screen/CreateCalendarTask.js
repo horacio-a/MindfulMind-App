@@ -180,6 +180,7 @@ export default function CreateCalendarTask({ navigation }) {
                         <View style={style.conteinerTitle}>
 
                             <TextInput style={[style.input, { fontFamily: 'Lato_400Regular' }]}
+                                maxFontSizeMultiplier={1.5}
                                 placeholder="Titulo"
                                 keyboardType="default"
                                 placeholderTextColor="rgba(245, 240, 240, 0.75)"
@@ -197,7 +198,7 @@ export default function CreateCalendarTask({ navigation }) {
 
                         </View>
                         <View style={{ width: '100%', height: 30, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                            <Text style={{ textAlign: 'center', color: '#fff', fontFamily: 'Lato_700Bold' }}>{titleMsgErr}</Text>
+                            <Text maxFontSizeMultiplier={1.5} style={{ textAlign: 'center', color: '#fff', fontFamily: 'Lato_700Bold' }}>{titleMsgErr}</Text>
                         </View>
                         {
                             colorPickerVisi
@@ -221,7 +222,7 @@ export default function CreateCalendarTask({ navigation }) {
                                     color={'#fff'}
                                     size={20}
                                 />
-                                <Text style={style.textTitleSelectDate}>{Allday ? 'Seleciona el horario' : 'Todo el dia'}</Text>
+                                <Text maxFontSizeMultiplier={1.5} style={style.textTitleSelectDate}>{Allday ? 'Seleciona el horario' : 'Todo el dia'}</Text>
                                 <Switch
                                     trackColor={{ false: '#767577', true: colorSelect }}
                                     thumbColor={Allday ? '#f4f3f4' : '#f4f3f4'}
@@ -236,7 +237,7 @@ export default function CreateCalendarTask({ navigation }) {
                                     ?
                                     <View style={style.ConteinerDay}>
                                         <View style={style.TitleDay}>
-                                            <Text style={{ color: '#FFFFFF', fontSize: 18 }}>
+                                            <Text maxFontSizeMultiplier={1.5} style={{ color: '#FFFFFF', fontSize: 18 }}>
                                                 {Fecha}
                                             </Text>
                                         </View>
@@ -278,7 +279,8 @@ export default function CreateCalendarTask({ navigation }) {
                                     </View>
                                     : <View>
                                         <View style={style.TitleDay}>
-                                            <Text style={{ color: '#FFFFFF', fontSize: 18 }}>
+                                            <Text maxFontSizeMultiplier={1.5}
+                                                style={{ color: '#FFFFFF', fontSize: 18 }}>
                                                 {Fecha}
                                             </Text>
                                         </View>
@@ -294,6 +296,8 @@ export default function CreateCalendarTask({ navigation }) {
                                 size={20}
                             />
                             <TextInput
+                                maxFontSizeMultiplier={1.5}
+
                                 placeholderTextColor="rgba(245, 240, 240, 0.75)"
                                 placeholder='Descripcion'
                                 multiline={true}
@@ -309,7 +313,8 @@ export default function CreateCalendarTask({ navigation }) {
                                 size={20}
                             />
                             <TouchableOpacity style={style.TouchableOpenNotification} onPress={() => { Keyboard.dismiss(); setitsOpenNotification(true); setDataNotification({ Title: 'Notificacion', Data: ['Al momento', '10 minutos antes', '1 hora antes', '1 dia antes'] }) }}>
-                                <Text style={[style.TextArea]}>{NotificacionTime}</Text>
+                                <Text maxFontSizeMultiplier={1.5}
+                                    style={[style.TextArea]}>{NotificacionTime}</Text>
                             </TouchableOpacity>
                         </View>
 
@@ -322,18 +327,21 @@ export default function CreateCalendarTask({ navigation }) {
                             />
 
                             <TouchableOpacity style={style.TouchableOpenNotification} onPress={() => { Keyboard.dismiss(); setitsOpenNotification(true); setDataNotification({ Title: 'Repeticion', Data: ['Nunca', 'Todas las semanas', 'Todos los meses', 'Todos los años'] }) }}>
-                                <Text style={[style.TextArea]}>{RepeatTime}</Text>
+                                <Text maxFontSizeMultiplier={1.5}
+                                    style={[style.TextArea]}>{RepeatTime}</Text>
                             </TouchableOpacity>
 
                         </View>
 
                     </View>
                     <View style={{ width: '100%', height: '7.5%', flexDirection: 'row' }}>
-                        <TouchableOpacity onPress={() => { Redirect('Home') }} style={{ width: '50%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                            <Text style={{ color: '#FFFFFF', fontSize: 18, fontFamily: 'Lato_700Bold' }}>Cancelar</Text>
+                        <TouchableOpacity
+                            onPress={() => { Redirect('Home') }} style={{ width: '50%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                            <Text maxFontSizeMultiplier={1.5} style={{ color: '#FFFFFF', fontSize: 18, fontFamily: 'Lato_700Bold' }}>Cancelar</Text>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => { CreateTasks() }} style={{ width: '50%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                            <Text style={{ color: '#FFFFFF', fontSize: 18, fontFamily: 'Lato_700Bold' }}>Guardar</Text>
+                            <Text maxFontSizeMultiplier={1.5}
+                                style={{ color: '#FFFFFF', fontSize: 18, fontFamily: 'Lato_700Bold' }}>Guardar</Text>
 
                         </TouchableOpacity>
 
@@ -349,7 +357,7 @@ export default function CreateCalendarTask({ navigation }) {
                     ? <View style={style.MainNotificacion}>
                         <View style={style.NotificacionContent}>
                             <View style={style.NotificacionTitle}>
-                                <Text style={{ color: '#fff', fontSize: 22, fontFamily: 'Lato_700Bold' }}> {DataNotification.Title}</Text>
+                                <Text maxFontSizeMultiplier={1.5} style={{ color: '#fff', fontSize: 22, fontFamily: 'Lato_700Bold' }}> {DataNotification.Title}</Text>
                             </View>
                             <View style={{ height: '70%' }}>
 
@@ -358,7 +366,7 @@ export default function CreateCalendarTask({ navigation }) {
                                         <TouchableOpacity key={data} onPress={() => {
                                             DataNotification.Title === 'Notificacion' ? setNotificacionTime(data) : setRepeatTime(data)
                                         }} style={style.NotificacionUnit}>
-                                            <Text style={{ color: '#ffffff', width: '85%' }} >{data}</Text>
+                                            <Text maxFontSizeMultiplier={1.5} style={{ color: '#ffffff', width: '85%' }} >{data}</Text>
                                             <View style={{ width: 20, height: 20, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                                                 {
                                                     DataNotification.Title === 'Notificacion'
@@ -384,7 +392,7 @@ export default function CreateCalendarTask({ navigation }) {
 
 
                             <TouchableOpacity onPress={() => { setitsOpenNotification(false) }} style={{ borderBottomLeftRadius: 10, borderBottomEndRadius: 10, backgroundColor: '#2C2C2C', width: '100%', height: '15%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                                <Text style={{ color: '#fff', }}>Hecho</Text>
+                                <Text maxFontSizeMultiplier={1.5} style={{ color: '#fff', }}>Hecho</Text>
                             </TouchableOpacity>
                         </View>
                         <TouchableWithoutFeedback onPress={() => { setitsOpenNotification(false) }} >
