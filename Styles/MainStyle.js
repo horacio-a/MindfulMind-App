@@ -6,7 +6,7 @@ const stylesMain = StyleSheet.create({
         width: '85%',
         height: 350,
         marginTop: 25,
-
+        justifyContent: 'center'
     },
     ConteinerTitle: {
         width: '100%',
@@ -34,6 +34,15 @@ const stylesMain = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         marginTop: 25,
+    },
+    ConteinerTitleForEmpty: {
+        width: '100%',
+        height: '20%',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginVertical: 25,
+
     },
     BlockTitle: {
         width: '100%',
