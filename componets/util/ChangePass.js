@@ -80,7 +80,7 @@ export default function ChangePass({ setChangePassContent, ChangeProfilePicture,
                 email: user.email,
                 user: user.user
             }
-            const respose = await axios.post('http://31.220.17.121:3500/changePasswordWithPass', { data }, {
+            const respose = await axios.post(`${process.env.EXPO_PUBLIC_API_URL}/UserSetting/changePasswordWithPass`, { data }, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
