@@ -99,6 +99,7 @@ export default function ForgetPassword({ navigation }) {
                 setmsgGeneral(true)
             }
         } else {
+            console.log('hola')
             seterrorMsg('Las contraseñas no coinciden')
         }
     }
@@ -141,31 +142,34 @@ export default function ForgetPassword({ navigation }) {
                                     msgGeneral
                                         ?
                                         <View style={[style.conteinerMain, , { display: 'flex', justifyContent: 'center', alignItems: 'center' }]}>
-                                            <Text style={{ color: '#FFF', fontFamily: 'Lato_700Bold', fontSize: 20 }}>Felicitaciones, tu contraseña fue cambiada</Text>
+                                            <Text maxFontSizeMultiplier={1.5} style={{ color: '#FFF', fontFamily: 'Lato_700Bold', fontSize: 20, textAlign: 'center' }}>Felicitaciones, tu contraseña fue cambiada</Text>
                                             <TouchableOpacity onPress={() => { Redirect('SignIn') }} style={[style.ButtonSend, { height: 55, marginBottom: 50 }]}>
-                                                <Text style={[style.TextButtonSend, { fontFamily: 'Lato_700Bold' }]}>
+                                                <Text maxFontSizeMultiplier={1.5} style={[style.TextButtonSend, { fontFamily: 'Lato_700Bold', textAlign: 'center' }]}>
                                                     Volver al login
                                                 </Text>
                                             </TouchableOpacity>
                                         </View>
 
                                         : <View style={style.conteinerMain}>
-                                            <Text style={style.Title}>Ingrese su nueva contraseña</Text>
+                                            <Text maxFontSizeMultiplier={1.5} style={style.Title}>Ingrese su nueva contraseña</Text>
                                             <View style={style.ConteinerInput}>
-                                                <TextInput style={[style.inputPassword,]}
+                                                <TextInput maxFontSizeMultiplier={1.5} style={[style.inputPassword,]}
                                                     onChangeText={setNewPassword}
                                                     placeholder="Nueva contraseña"
                                                     keyboardType="default"
                                                     placeholderTextColor="rgba(245, 240, 240, 0.75)"
                                                 />
-                                                <TextInput style={[style.inputPassword,]}
+                                                <TextInput maxFontSizeMultiplier={1.5} style={[style.inputPassword,]}
                                                     onChangeText={setConfirmNewPassword}
                                                     placeholder="Confirme su contraseña"
                                                     keyboardType="default"
                                                     placeholderTextColor="rgba(245, 240, 240, 0.75)"
                                                 />
+                                                <View style={style.conteinerTextError}>
+                                                    <Text maxFontSizeMultiplier={1.5} style={style.TextError}>{errorMsg}</Text>
+                                                </View>
                                                 <TouchableOpacity onPress={() => { changePassword() }} style={style.ButtonSend}>
-                                                    <Text style={[style.TextButtonSend, { fontFamily: 'Lato_700Bold' }]}>
+                                                    <Text maxFontSizeMultiplier={1.5} style={[style.TextButtonSend, { fontFamily: 'Lato_700Bold' }]}>
                                                         Enviar
                                                     </Text>
                                                 </TouchableOpacity>
@@ -173,18 +177,18 @@ export default function ForgetPassword({ navigation }) {
                                         </View>
                                 )
                                 : <View style={style.conteinerMain}>
-                                    <Text style={style.Title}>Ingrese el codigo que fue enviando a tu Email</Text>
+                                    <Text maxFontSizeMultiplier={1.5} style={style.Title}>Ingrese el codigo que fue enviando a tu Email</Text>
                                     <View style={style.ConteinerInput}>
-                                        <TextInput style={[style.inputPassword,]}
+                                        <TextInput maxFontSizeMultiplier={1.5} style={[style.inputPassword,]}
                                             onChangeText={setCod}
                                             placeholder="Codigo de autenticacion"
                                             keyboardType="default"
                                             placeholderTextColor="rgba(245, 240, 240, 0.75)"
                                         />
                                         <View style={style.conteinerTextError}>
-                                            <Text style={style.TextError}>{errorMsg}</Text>
+                                            <Text maxFontSizeMultiplier={1.5} style={style.TextError}>{errorMsg}</Text>
                                         </View>
-                                        <TouchableOpacity onPress={() => { CheckAuthCode() }} style={style.ButtonSend}>
+                                        <TouchableOpacity maxFontSizeMultiplier={1.5} onPress={() => { CheckAuthCode() }} style={style.ButtonSend}>
                                             <Text style={[style.TextButtonSend, { fontFamily: 'Lato_700Bold' }]}>
                                                 Enviar
                                             </Text>
@@ -193,20 +197,21 @@ export default function ForgetPassword({ navigation }) {
                                 </View>
                         )
                         : <View style={style.conteinerMain}>
-                            <Text style={style.Title}>Ingrese su Email para recuperar tu cuenta</Text>
+                            <Text maxFontSizeMultiplier={1.5} style={style.Title}>Ingrese su Email para recuperar tu cuenta</Text>
                             <View style={style.ConteinerInput}>
-                                <TextInput style={[style.inputPassword,]}
+                                <TextInput maxFontSizeMultiplier={1.5} style={[style.inputPassword,]}
                                     onChangeText={setEmail}
                                     placeholder="Email"
                                     keyboardType="default"
                                     placeholderTextColor="rgba(245, 240, 240, 0.75)"
                                 />
                                 <View style={style.conteinerTextError}>
-                                    <Text style={style.TextError}>{errorMsg}</Text>
+
+                                    <Text maxFontSizeMultiplier={1.5} style={style.TextError}>{errorMsg}</Text>
 
                                 </View>
                                 <TouchableOpacity onPress={() => { sendEmail() }} style={style.ButtonSend}>
-                                    <Text style={[style.TextButtonSend, { fontFamily: 'Lato_700Bold' }]}>
+                                    <Text maxFontSizeMultiplier={1.5} style={[style.TextButtonSend, { fontFamily: 'Lato_700Bold' }]}>
                                         Enviar
                                     </Text>
                                 </TouchableOpacity>
