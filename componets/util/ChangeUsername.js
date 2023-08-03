@@ -53,7 +53,7 @@ export default function ChangeUsername({ setChangeUsernameContent, setUser }) {
             email: user.email,
             user: user.user
         }
-        const respose = await axios.post('http://31.220.17.121:3500/changeUsername', { data }, {
+        const respose = await axios.post(`${process.env.EXPO_PUBLIC_API_URL}/UserSetting/changeUsername`, { data }, {
             headers: {
                 'Content-Type': 'application/json'
             }
