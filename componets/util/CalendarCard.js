@@ -28,8 +28,8 @@ export default function CalendarCard({ setCalendarCardVisibility, dataForCalenda
                 <View style={style.conteiner}></View>
                 <View style={style.card}>
                     <View style={style.titleCardConteiner}>
-                        <Text style={[style.titleCard, { fontFamily: 'Lato_700Bold', fontSize: 24, }]}>{dataForCalendarCard.number}</Text>
-                        <Text style={[style.titleCard, {}]}>{dataForCalendarCard.diaSemana}</Text>
+                        <Text maxFontSizeMultiplier={1.5} style={[style.titleCard, { fontFamily: 'Lato_700Bold', fontSize: 24, }]}>{dataForCalendarCard.number}</Text>
+                        <Text maxFontSizeMultiplier={1.5} style={[style.titleCard, {}]}>{dataForCalendarCard.diaSemana}</Text>
                     </View>
                     <View style={style.LineaTitle}></View>
                     <View style={style.MainContent}>
@@ -44,7 +44,7 @@ export default function CalendarCard({ setCalendarCardVisibility, dataForCalenda
                                     />
                                 )
                                 : <View style={{ width: '100%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                                    <Text style={{ color: '#FFFFFF', fontSize: 18 }}>Aun no tienes tareas </Text>
+                                    <Text maxFontSizeMultiplier={1.5} style={{ color: '#FFFFFF', fontSize: 18 }}>Aun no tienes tareas </Text>
                                 </View>
 
                         }
@@ -57,7 +57,7 @@ export default function CalendarCard({ setCalendarCardVisibility, dataForCalenda
                                 color='#fff'
                                 size={18}
                             />
-                            <Text style={style.textAddNewText}>Crear un Recordatorio</Text>
+                            <Text maxFontSizeMultiplier={1.5} style={style.textAddNewText}>Crear un Recordatorio</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
