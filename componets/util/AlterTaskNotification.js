@@ -24,7 +24,7 @@ export default function AlterTaskNotification({ setNotificationVisibility, dataF
     const AlterTask = async (task) => {
         setLoadingState(true)
         const obj = JSON.stringify(task)
-        const response = await axios.post('http://31.220.17.121:3500/completeTask', { obj }, {
+        const response = await axios.post(`${process.env.EXPO_PUBLIC_API_URL}/Routine/completeTask`, { obj }, {
             headers: {
                 'Content-Type': 'application/json'
             }
