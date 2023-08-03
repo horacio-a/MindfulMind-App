@@ -19,7 +19,7 @@ export default function TextosConteiners({ data, Redirect }) {
         <TouchableOpacity onPress={() => { setSelectedText(data); Redirect('EditText') }} style={styleTextComp.ConteinerText}>
             <View style={styleTextComp.titleTextConteiner}>
                 <View style={[styleTextComp.circleText, { backgroundColor: `${data.colorHex}` }]}></View>
-                <Text style={styleTextComp.titleText}>{data.title}</Text>
+                <Text maxFontSizeMultiplier={1.25} style={styleTextComp.titleText}>{data.title}</Text>
 
             </View>
             <Text style={styleTextComp.Text}>
@@ -27,7 +27,7 @@ export default function TextosConteiners({ data, Redirect }) {
                     (((data.text).substring(0, 325 - 3)) + '...') :
                     data.text}
             </Text>
-            <Text style={styleTextComp.dateText}>{dayCreate}</Text>
+            <Text maxFontSizeMultiplier={1.25} style={styleTextComp.dateText}>{dayCreate}</Text>
 
         </TouchableOpacity>
     )
