@@ -104,13 +104,14 @@ export default function ChangePass({ setChangePassContent, ChangeProfilePicture,
             <View style={style.Back}>
                 <View style={style.conteiner}></View>
                 <View style={style.card}>
-                    <Text style={{ color: '#FFFFFF', textAlign: 'center', fontFamily: 'Lato_700Bold', marginVertical: 20, fontSize: 20 }}>Cambia tu contraseña</Text>
+                    <Text maxFontSizeMultiplier={1.5} style={{ color: '#FFFFFF', textAlign: 'center', fontFamily: 'Lato_700Bold', marginVertical: 20, fontSize: 20 }}>Cambia tu contraseña</Text>
 
                     <ScrollView>
                         <View style={{ width: '100%', height: 500, alignItems: 'center', paddingTop: 25 }}>
 
                             <View style={[style.conteinerInputPassword, { fontFamily: 'Lato_700Bold' }]}>
                                 <TextInput style={[style.inputPassword, { fontFamily: 'Lato_400Regular' }]}
+                                    maxFontSizeMultiplier={1.5}
                                     onChangeText={onChangePassword}
                                     placeholder="Tu contraseña actual"
                                     keyboardType="default"
@@ -129,6 +130,7 @@ export default function ChangePass({ setChangePassContent, ChangeProfilePicture,
 
                             <View style={[style.conteinerInputPassword, { fontFamily: 'Lato_700Bold' }]}>
                                 <TextInput style={[style.inputPassword, { fontFamily: 'Lato_400Regular' }]}
+                                    maxFontSizeMultiplier={1.25}
                                     onChangeText={onChangeNewPassword}
                                     placeholder="Tu nueva contraseña"
                                     keyboardType="default"
@@ -146,6 +148,7 @@ export default function ChangePass({ setChangePassContent, ChangeProfilePicture,
                             </View>
                             <View style={[style.conteinerInputPassword, { fontFamily: 'Lato_700Bold' }]}>
                                 <TextInput style={[style.inputPassword, { fontFamily: 'Lato_400Regular' }]}
+                                    maxFontSizeMultiplier={1.5}
                                     onChangeText={onChangeNewPassword2}
                                     placeholder="Confirma tu nueva contraseña"
                                     keyboardType="default"
@@ -164,12 +167,12 @@ export default function ChangePass({ setChangePassContent, ChangeProfilePicture,
                             </View>
 
                             <View style={{ width: '100%', height: 25, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                                <Text style={{ color: '#fff', fontFamily: 'Lato_700Bold', fontSize: 16 }}>
+                                <Text maxFontSizeMultiplier={1.5} style={{ color: '#fff', fontFamily: 'Lato_700Bold', fontSize: 16 }}>
                                     {MsgError}
                                 </Text>
                             </View>
                             <TouchableOpacity onPress={() => { changePassword() }} style={style.ButtonSend}>
-                                <Text style={[style.TextButtonSend, { fontFamily: 'Lato_700Bold' }]}>
+                                <Text maxFontSizeMultiplier={1.5} style={[style.TextButtonSend, { fontFamily: 'Lato_700Bold' }]}>
                                     Enviar
                                 </Text>
                             </TouchableOpacity>
