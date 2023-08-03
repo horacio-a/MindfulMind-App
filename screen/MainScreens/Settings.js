@@ -94,7 +94,7 @@ export default function SettingScreen({ navigation }) {
         data.profilePicture = newImg
         await SecureStore.setItemAsync('userToken', JSON.stringify(data))
 
-        await axios.post('http://31.220.17.121:3500/changeprofilepicture', { data }, {
+        await axios.post(`${process.env.EXPO_PUBLIC_API_URL}'/UserSetting/changeprofilepicture`, { data }, {
             headers: {
                 'Content-Type': 'application/json'
             }
