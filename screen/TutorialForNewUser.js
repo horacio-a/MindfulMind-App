@@ -1,6 +1,5 @@
 import { StyleSheet, Text, View, TextInput, TouchableOpacity, TouchableWithoutFeedback, BackHandler, Alert, Animated, Image } from 'react-native';
 import { useContext, useState, useEffect, useRef } from 'react';
-import axios from 'axios';
 import { Icon } from '@rneui/themed';
 import {
     useFonts,
