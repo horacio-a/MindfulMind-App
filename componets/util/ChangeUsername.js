@@ -86,7 +86,7 @@ export default function ChangeUsername({ setChangeUsernameContent, setUser }) {
                             <View style={{ alignItems: 'center' }}>
                                 <Text style={{ color: '#FFF', fontFamily: 'Lato_700Bold', fontSize: 20 }}>Tu nombre de usuario ahora es {Username}</Text>
                                 <TouchableOpacity onPress={() => { setChangeUsernameContent(false) }} style={[style.ButtonSend, { height: 55, marginBottom: 50, width: 100 }]}>
-                                    <Text style={[style.TextButtonSend, { fontFamily: 'Lato_700Bold' }]}>
+                                    <Text maxFontSizeMultiplier={1.5} style={[style.TextButtonSend, { fontFamily: 'Lato_700Bold' }]}>
                                         Genial
                                     </Text>
                                 </TouchableOpacity>
@@ -96,12 +96,12 @@ export default function ChangeUsername({ setChangeUsernameContent, setUser }) {
 
                         </View>
                         : <View style={style.card}>
-                            <Text style={{ color: '#FFFFFF', textAlign: 'center', fontFamily: 'Lato_700Bold', marginVertical: 50, fontSize: 20 }}>Cambia tu nombre de usuario</Text>
+                            <Text maxFontSizeMultiplier={1.5} style={{ color: '#FFFFFF', textAlign: 'center', fontFamily: 'Lato_700Bold', marginVertical: 50, fontSize: 20 }}>Cambia tu nombre de usuario</Text>
 
                             <View style={{ width: '100%', height: 500, alignItems: 'center', paddingTop: 100 }}>
 
                                 <View style={[style.conteinerInputPassword, { fontFamily: 'Lato_700Bold' }]}>
-                                    <TextInput style={[style.inputPassword, { fontFamily: 'Lato_400Regular' }]}
+                                    <TextInput maxFontSizeMultiplier={1.5} style={[style.inputPassword, { fontFamily: 'Lato_400Regular' }]}
                                         onChangeText={onChangePassword}
                                         placeholder="Tu contraseña"
                                         keyboardType="default"
@@ -119,7 +119,7 @@ export default function ChangeUsername({ setChangeUsernameContent, setUser }) {
                                 </View>
 
                                 <View style={[style.conteinerInputPassword, { fontFamily: 'Lato_700Bold' }]}>
-                                    <TextInput style={[style.inputPassword, { fontFamily: 'Lato_400Regular', marginLeft: 0 }]}
+                                    <TextInput maxFontSizeMultiplier={1.5} style={[style.inputPassword, { fontFamily: 'Lato_400Regular', marginLeft: 0 }]}
                                         onChangeText={onChangeUsername}
                                         placeholder="Tu nuevo nombre de usuario"
                                         keyboardType="default"
@@ -131,12 +131,12 @@ export default function ChangeUsername({ setChangeUsernameContent, setUser }) {
 
 
                                 <View style={{ width: '100%', height: 25, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                                    <Text style={{ color: '#fff', fontFamily: 'Lato_700Bold', fontSize: 16 }}>
+                                    <Text maxFontSizeMultiplier={1.5} style={{ color: '#fff', fontFamily: 'Lato_700Bold', fontSize: 16 }}>
                                         {MsgError}
                                     </Text>
                                 </View>
                                 <TouchableOpacity onPress={() => { changeUsername() }} style={style.ButtonSend}>
-                                    <Text style={[style.TextButtonSend, { fontFamily: 'Lato_700Bold' }]}>
+                                    <Text maxFontSizeMultiplier={1.5} style={[style.TextButtonSend, { fontFamily: 'Lato_700Bold' }]}>
                                         Enviar
                                     </Text>
                                 </TouchableOpacity>
