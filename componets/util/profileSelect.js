@@ -22,7 +22,7 @@ export default function ProfileSelect({ setprofilSelectcontent, ChangeProfilePic
             <View style={style.Back}>
                 <View style={style.conteiner}></View>
                 <View style={style.card}>
-                    <Text style={{ color: '#FFFFFF', textAlign: 'center', fontFamily: 'Lato_700Bold', marginVertical: 20, fontSize: 20 }}>Seleciones su foto de perfil</Text>
+                    <Text maxFontSizeMultiplier={1.5} style={{ color: '#FFFFFF', textAlign: 'center', fontFamily: 'Lato_700Bold', marginVertical: 20, fontSize: 20 }}>Seleciones su foto de perfil</Text>
 
                     <ScrollView >
                         <View style={style.dobleImgs}>
@@ -58,7 +58,7 @@ export default function ProfileSelect({ setprofilSelectcontent, ChangeProfilePic
                 <TouchableWithoutFeedback onPress={() => { setprofilSelectcontent(false) }} >
                     <View style={style.CloserWidthMax} ></View>
                 </TouchableWithoutFeedback>
-            </View>
+            </View >
         )
     }
 }
