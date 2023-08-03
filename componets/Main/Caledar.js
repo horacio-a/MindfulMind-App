@@ -34,7 +34,7 @@ export default function Caledar({ setCalendarCardVisibility, setdateForCalendarC
         return (
             <>
                 <View style={stylesCalendar.ConteinerTitle}>
-                    <Text style={stylesCalendar.TitleMain}>Calendario principal</Text>
+                    <Text maxFontSizeMultiplier={1.5} style={stylesCalendar.TitleMain}>Calendario principal</Text>
                 </View>
                 {
                     loading === false
