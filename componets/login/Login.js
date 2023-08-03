@@ -10,7 +10,7 @@ import { TextDateGlobalState } from "../../context/DataGlobalState";
 import { CalendarDateGlobalState } from '../../context/DataGlobalState';
 import { RoutineDateGlobalState } from '../../context/DataGlobalState';
 import { BackPageState } from '../../context/BackPageState';
-
+import { GetAllDataFuntion } from '../../context/GetAllData';
 
 import {
     useFonts,
@@ -31,9 +31,7 @@ export default function ComponetLogin({ Redirect, goRegister }) {
     const { routineData, SetRoutineData } = useContext(RoutineDateGlobalState);
     const { CalendarData, SetCalendarData } = useContext(CalendarDateGlobalState);
     const { TextData, SetTextData } = useContext(TextDateGlobalState);
-
     const [GeneralErrorMsg, setGeneralErrorMsg] = useState('')
-
     const [secureState, setsecureState] = useState(true)
     const [icon, setIcon] = useState('visibility-off')
     const [User, onChangeUser] = useState('');
@@ -84,42 +82,30 @@ export default function ComponetLogin({ Redirect, goRegister }) {
 
     const LoginFuntion = async () => {
         if (FormCheck() === true) {
-            const response = await axios.post('http://31.220.17.121:3500/login', { user: User, password: Password }, {
+            const response = await axios.post(`${process.env.EXPO_PUBLIC_API_URL}/login/login`, { user: User, password: Password }, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
             })
+
             if (response.data.authentication === true) {
                 const data = JSON.stringify(response.data)
-                console.log(data)
-                await SecureStore.setItemAsync('userToken', data)
-                const getAllData = async () => {
-                    const respuesta = await axios.post('http://31.220.17.121:3500/mainDataInitial', {
-                        "obj": {
-                            "Calendar": {
-                                "user": response.data.user,
-                                "idCalendar": "Calendario Principal"
-                            },
-                            "Tasks": {
-                                "user": response.data.user
-                            },
-                            "Text": {
-                                "user": response.data.user
-                            }
-                        }
-                    }, {
-                        headers: {
-                            'Content-Type': 'application/json'
-                        }
-                    })
-                    SetCalendarData(respuesta.data.CalendarData)
-                    SetRoutineData(respuesta.data.TasksData)
-                    SetTextData(respuesta.data.TextData)
-
-
+                if (response.data.tutorial === 0) {
+                    await SecureStore.setItemAsync('userToken', data)
+                    const respuesta = (await GetAllDataFuntion())
+                    SetCalendarData(respuesta.CalendarData)
+                    SetRoutineData(respuesta.TasksData)
+                    SetTextData(respuesta.TextData)
+                    Redirect('TutorialForNewUser')
+                } else {
+                    await SecureStore.setItemAsync('userToken', data)
+                    const respuesta = (await GetAllDataFuntion())
+                    SetCalendarData(respuesta.CalendarData)
+                    SetRoutineData(respuesta.TasksData)
+                    SetTextData(respuesta.TextData)
+                    setsession(true)
                 }
-                getAllData()
-                setsession(true)
+
             } else if (response.data.authentication === false) {
                 setGeneralErrorMsg(response.data.errMsg)
                 setTimeout(() => {
@@ -140,6 +126,7 @@ export default function ComponetLogin({ Redirect, goRegister }) {
         return (
             <View style={stylesLogin.ConteinerInputs}>
                 <TextInput style={[stylesLogin.input, { fontFamily: 'Lato_400Regular' }]}
+                    maxFontSizeMultiplier={1.5}
                     onChangeText={onChangeUser}
                     placeholder="Usuario"
                     keyboardType="default"
@@ -150,6 +137,7 @@ export default function ComponetLogin({ Redirect, goRegister }) {
                 </View>
                 <View style={[stylesLogin.conteinerInputPassword, { fontFamily: 'Lato_700Bold' }]}>
                     <TextInput style={[stylesLogin.inputPassword, { fontFamily: 'Lato_400Regular' }]}
+                        maxFontSizeMultiplier={1.5}
                         onChangeText={onChangePassword}
                         placeholder="Contraseña"
                         keyboardType="default"
@@ -169,17 +157,17 @@ export default function ComponetLogin({ Redirect, goRegister }) {
                     <Text maxFontSizeMultiplier={1.2} style={stylesLogin.textInputError}>{ErrorPasswordMsg}</Text>
                 </View>
                 <TouchableOpacity onPress={() => { Redirect('ForgetPassword'); setBackPage('SignIn') }}>
-                    <Text style={[stylesLogin.TextForgotPassword, { fontFamily: 'Lato_700Bold' }]}>
+                    <Text maxFontSizeMultiplier={1.5} style={[stylesLogin.TextForgotPassword, { fontFamily: 'Lato_700Bold' }]}>
                         ¿Olvidaste tu Contraseña?
                     </Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => { goRegister() }}>
-                    <Text style={[stylesLogin.TextForgotPassword, { fontFamily: 'Lato_700Bold' }]}>
+                    <Text maxFontSizeMultiplier={1.5} style={[stylesLogin.TextForgotPassword, { fontFamily: 'Lato_700Bold' }]}>
                         Crear una cuenta
                     </Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={LoginFuntion} style={stylesLogin.ButtonSend}>
-                    <Text style={[stylesLogin.TextButtonSend, { fontFamily: 'Lato_700Bold' }]}>
+                    <Text maxFontSizeMultiplier={1.5} style={[stylesLogin.TextButtonSend, { fontFamily: 'Lato_700Bold' }]}>
                         Enviar
                     </Text>
                 </TouchableOpacity>
