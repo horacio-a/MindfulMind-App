@@ -8,7 +8,7 @@ const GetAllDataFuntion = async () => {
 
 
     const respose = await axios.post(
-        'http://31.220.17.121:3500/mainDataInitial',
+        `${process.env.EXPO_PUBLIC_API_URL}/getData/mainDataInitial`,
         {
             obj: {
                 Calendar: {
