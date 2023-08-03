@@ -140,7 +140,7 @@ export default function CreateCalendarTask({ navigation }) {
         }
 
 
-        const response = await axios.post('http://31.220.17.121:3500/AddCalendarTask', {
+        const response = await axios.post(`${process.env.EXPO_PUBLIC_API_URL}/Calendar/AddCalendarTask`, {
             data: {
                 "user": user.user,
                 "Title": Title,
@@ -163,7 +163,7 @@ export default function CreateCalendarTask({ navigation }) {
             }
         })
         if (response.data.request = true) {
-            const respuesta = await axios.get(`http://31.220.17.121:3500/calendar/${user.user}/Calendario Principal`)
+            const respuesta = await axios.get(`${process.env.EXPO_PUBLIC_API_URL}/getData/calendar/${user.user}/Calendario Principal`)
             SetCalendarData(respuesta.data)
             Redirect('Home')
         }
