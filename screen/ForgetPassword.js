@@ -27,7 +27,7 @@ export default function ForgetPassword({ navigation }) {
     const sendEmail = async () => {
 
         if (Email !== '') {
-            const respose = await axios.post('http://31.220.17.121:3500/Authcod/forgetpassword', {
+            const respose = await axios.post(`${process.env.EXPO_PUBLIC_API_URL}/ForgetPassword/Authcod/forgetpassword`, {
                 "data": {
                     "user": Email,
                     "email": Email
@@ -55,7 +55,7 @@ export default function ForgetPassword({ navigation }) {
 
     }
     const CheckAuthCode = async () => {
-        const respose = await axios.post('http://31.220.17.121:3500/checkAuthcode', {
+        const respose = await axios.post(`${process.env.EXPO_PUBLIC_API_URL}/ForgetPassword/checkAuthcode`, {
             "data": {
                 "token": Cod,
                 "email": Email
@@ -80,7 +80,7 @@ export default function ForgetPassword({ navigation }) {
     }
     const changePassword = async () => {
         if (newPassword === ConfirmNewPassword) {
-            const respose = await axios.post('http://31.220.17.121:3500/ChangePassword', {
+            const respose = await axios.post(`${process.env.EXPO_PUBLIC_API_URL}/ForgetPassword/ChangePassword`, {
                 "data": {
                     "token": Cod,
                     "email": Email,
