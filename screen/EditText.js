@@ -44,7 +44,7 @@ export default function EditText({ navigation }) {
 
     const [btnEnable, setbtnEnable] = useState(true)
 
-    const CreateTasks = async () => {
+    const UpdateText = async () => {
         setbtnEnable(false)
         let user = JSON.parse(await SecureStore.getItemAsync('userToken'))
 
@@ -71,7 +71,7 @@ export default function EditText({ navigation }) {
             colorHex: colorSelect,
             date: date
         }
-        const respones = await axios.post('http://31.220.17.121:3500/updatetext', { data, id: SelectedText.id }, {
+        const respones = await axios.post(`${process.env.EXPO_PUBLIC_API_URL}/Text/updatetext`, { data, id: SelectedText.id }, {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -91,7 +91,7 @@ export default function EditText({ navigation }) {
             id: SelectedText.id,
             user: user.user,
         }
-        const respones = await axios.post('http://31.220.17.121:3500/deleteText', { data }, {
+        const respones = await axios.post(`${process.env.EXPO_PUBLIC_API_URL}/Text/deleteText`, { data }, {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -157,7 +157,7 @@ export default function EditText({ navigation }) {
                                 <TouchableOpacity onPress={() => { setEdit(false) }} style={{ width: '50%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                                     <Text maxFontSizeMultiplier={1.5} style={{ color: '#FFFFFF', fontSize: 18, fontFamily: 'Lato_700Bold' }}>Cancelar</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity onPress={() => { btnEnable ? CreateTasks() : '' }} style={{ width: '50%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                <TouchableOpacity onPress={() => { btnEnable ? UpdateText() : '' }} style={{ width: '50%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
                                     <Text maxFontSizeMultiplier={1.5} style={{ color: `${btnEnable ? '#FFFFFF' : '#959696'}`, fontSize: 18, fontFamily: 'Lato_700Bold' }}>Guardar</Text>
                                 </TouchableOpacity>
 
