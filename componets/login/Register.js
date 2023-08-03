@@ -148,34 +148,34 @@ export default function ComponetRegister({ Redirect, goLogin }) {
                     RegisterMsg
                         ? <View style={{ width: '85%', height: '65%', display: 'flex', justifyContent: 'center', alignContent: 'center' }}>
                             <View style={{ width: '100%', height: '55%', backgroundColor: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center', borderRadius: 20 }}>
-                                <Text style={{ fontFamily: 'Lato_700Bold', textAlign: 'center', fontSize: 18, padding: 5, marginBottom: '5%' }}>Genial tu cuenta fue creada, solo queda confirmarla con el link que te enviamos a tu email.</Text>
+                                <Text maxFontSizeMultiplier={1.5} style={{ fontFamily: 'Lato_700Bold', textAlign: 'center', fontSize: 18, padding: 5, marginBottom: '5%' }}>Genial tu cuenta fue creada, solo queda confirmarla con el link que te enviamos a tu email.</Text>
                                 <TouchableOpacity onPress={() => { goLogin() }} style={{ width: '50%', height: '10%', textAlign: 'center', borderColor: '#1e1e1e', borderWidth: 1, display: 'flex', justifyContent: 'center', alignContent: 'center', }}>
-                                    <Text style={{ textAlign: 'center', fontFamily: 'Lato_700Bold', }}>Ir a iniciar sesion</Text>
+                                    <Text maxFontSizeMultiplier={1.5} style={{ textAlign: 'center', fontFamily: 'Lato_700Bold', }}>Ir a iniciar sesion</Text>
                                 </TouchableOpacity>
                             </View>
                         </View >
                         : <ScrollView>
                             <View style={[stylesLogin.ConteinerInputs, { marginTop: 0 }]}>
-                                <TextInput style={[stylesLogin.input, { fontFamily: 'Lato_400Regular' }]}
+                                <TextInput maxFontSizeMultiplier={1.5} style={[stylesLogin.input, { fontFamily: 'Lato_400Regular' }]}
                                     onChangeText={onChangeEmail}
                                     placeholder="Email"
                                     keyboardType="email-address"
                                     placeholderTextColor="rgba(245, 240, 240, 0.75)"
                                 />
                                 <View style={stylesLogin.conteinerInputError}>
-                                    <Text style={stylesLogin.textInputError}>{emailError}</Text>
+                                    <Text maxFontSizeMultiplier={1.5} style={stylesLogin.textInputError}>{emailError}</Text>
                                 </View>
-                                <TextInput style={[stylesLogin.input, { fontFamily: 'Lato_400Regular' }]}
+                                <TextInput maxFontSizeMultiplier={1.5} style={[stylesLogin.input, { fontFamily: 'Lato_400Regular' }]}
                                     onChangeText={onChangeUser}
                                     placeholder="Usuario"
                                     keyboardType="default"
                                     placeholderTextColor="rgba(245, 240, 240, 0.75)"
                                 />
                                 <View style={stylesLogin.conteinerInputError}>
-                                    <Text style={stylesLogin.textInputError}>{UserError}</Text>
+                                    <Text maxFontSizeMultiplier={1.5} style={stylesLogin.textInputError}>{UserError}</Text>
                                 </View>
                                 <View style={stylesLogin.conteinerInputPassword}>
-                                    <TextInput style={[stylesLogin.inputPassword, { fontFamily: 'Lato_400Regular' }]}
+                                    <TextInput maxFontSizeMultiplier={1.5} style={[stylesLogin.inputPassword, { fontFamily: 'Lato_400Regular' }]}
                                         onChangeText={onChangePassword}
                                         placeholder="Contraseña"
                                         keyboardType="default"
@@ -196,7 +196,7 @@ export default function ComponetRegister({ Redirect, goLogin }) {
                                 </View>
 
                                 <View style={stylesLogin.conteinerInputPassword}>
-                                    <TextInput style={[stylesLogin.inputPassword, { fontFamily: 'Lato_400Regular' }]}
+                                    <TextInput maxFontSizeMultiplier={1.5} style={[stylesLogin.inputPassword, { fontFamily: 'Lato_400Regular' }]}
                                         onChangeText={onChangeConfirmPassword}
                                         placeholder="Confirma Contraseña"
                                         name='user'
@@ -213,16 +213,16 @@ export default function ComponetRegister({ Redirect, goLogin }) {
                                     </View>
                                 </View>
                                 <View style={stylesLogin.conteinerInputError}>
-                                    <Text style={stylesLogin.textInputError}>{ConfirmPasswordError}</Text>
+                                    <Text maxFontSizeMultiplier={1.5} style={stylesLogin.textInputError}>{ConfirmPasswordError}</Text>
                                 </View>
 
                                 <TouchableOpacity onPress={() => { goLogin() }}>
-                                    <Text style={[stylesLogin.TextForgotPassword, { fontFamily: 'Lato_700Bold' }]}>
+                                    <Text maxFontSizeMultiplier={1.5} style={[stylesLogin.TextForgotPassword, { fontFamily: 'Lato_700Bold' }]}>
                                         Ya tengo una cuenta
                                     </Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity onPress={() => { sendRegister() }} style={stylesLogin.ButtonSend}>
-                                    <Text style={[stylesLogin.TextButtonSend, { fontFamily: 'Lato_700Bold' }]}>
+                                    <Text maxFontSizeMultiplier={1.5} style={[stylesLogin.TextButtonSend, { fontFamily: 'Lato_700Bold' }]}>
                                         Enviar
                                     </Text>
                                 </TouchableOpacity>
