@@ -99,7 +99,7 @@ export default function ComponetRegister({ Redirect, goLogin }) {
                     password: Password,
                     email: Email
                 }
-                const data = await axios.post('http://31.220.17.121:3500/register', { obj }, {
+                const data = await axios.post(`${process.env.EXPO_PUBLIC_API_URL}/login/register`, { obj }, {
                     headers: {
                         'Content-Type': 'application/json'
                     }
