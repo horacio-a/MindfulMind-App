@@ -35,7 +35,7 @@ export default function TextComponent({ Redirect }) {
             <>
                 <View style={styleTextComp.MainConteiner}>
                     <View style={styleTextComp.ConteinerTitle}>
-                        <Text style={[styleTextComp.title]}>Tus textos</Text>
+                        <Text maxFontSizeMultiplier={1.5} style={[styleTextComp.title]}>Tus textos</Text>
                     </View>
                     <TouchableOpacity onPress={() => { Redirect('CreateText') }} style={styleTextComp.addnewText}>
                         <Icon
@@ -43,7 +43,7 @@ export default function TextComponent({ Redirect }) {
                             type="antdesign"
                             color='#fff'
                         />
-                        <Text style={styleTextComp.textAddNewText}>Agregar un texto</Text>
+                        <Text maxFontSizeMultiplier={1.75} style={styleTextComp.textAddNewText}>Agregar un texto</Text>
                     </TouchableOpacity>
                     <View style={{ height: 345, marginTop: 20 }}>
                         <ScrollView
