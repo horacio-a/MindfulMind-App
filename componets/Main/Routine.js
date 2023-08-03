@@ -51,7 +51,6 @@ export default function Routine({ Redirect, SendAlter }) {
     }
 
 
-
     if (!fontsLoaded) {
         return (
             <LoadingRoutine />
@@ -63,53 +62,63 @@ export default function Routine({ Redirect, SendAlter }) {
                 <View style={stylesMain.ConteinerTitle}>
                     <Text maxFontSizeMultiplier={1.5} style={[stylesMain.Title]}>Tu Rutina</Text>
                 </View>
-                <View style={stylesMain.ConteinerSmallBlock}>
-                    <View style={stylesMain.SmallBlock}>
-                        <View style={stylesMain.BlockTitle}>
-                            <Text allowFontScaling={false} style={[stylesMain.TitleBlock]}>Lista</Text>
-                        </View>
+                {
+                    routineData.data[0] !== undefined
+                        ? <View style={stylesMain.ConteinerSmallBlock}>
+                            <View style={stylesMain.SmallBlock}>
+                                <View style={stylesMain.BlockTitle}>
+                                    <Text allowFontScaling={false} style={[stylesMain.TitleBlock]}>Lista</Text>
+                                </View>
 
-                        <ScrollView nestedScrollEnabled={true}>
-                            {
-                                loading == false
-                                    ? (
-                                        routineData.data.map(task => (
-                                            <TouchableOpacity onPress={() => { SendAlter(task) }} style={stylesMain.conteinerTask} key={task.id}>
-                                                <View style={stylesMain.conteinerImgTaks}>
-                                                    {
-                                                        task.completed === 1
-                                                            ? <Image style={stylesMain.imgList} source={require('../../img/CompleteTask.png')} />
-                                                            : <Image style={stylesMain.imgList} source={require('../../img/EmptyTask.png')} />
-                                                    }
-                                                </View>
-                                                <View style={stylesMain.conteinerTextTaks}>
-                                                    <Text maxFontSizeMultiplier={1.25} numberOfLines={1} style={stylesMain.TextTask}>
-                                                        {task.tasksName}
-                                                    </Text>
-                                                </View>
-                                            </TouchableOpacity>
-                                        )))
-                                    : (<></>)
-                            }
-                        </ScrollView>
-                    </View>
+                                <ScrollView nestedScrollEnabled={true}>
+                                    {
+                                        loading == false
+                                            ? (
+                                                routineData.data.map(task => (
+                                                    <TouchableOpacity onPress={() => { SendAlter(task) }} style={stylesMain.conteinerTask} key={task.id}>
+                                                        <View style={stylesMain.conteinerImgTaks}>
+                                                            {
+                                                                task.completed === 1
+                                                                    ? <Image style={stylesMain.imgList} source={require('../../img/CompleteTask.png')} />
+                                                                    : <Image style={stylesMain.imgList} source={require('../../img/EmptyTask.png')} />
+                                                            }
+                                                        </View>
+                                                        <View style={stylesMain.conteinerTextTaks}>
+                                                            <Text maxFontSizeMultiplier={1.25} numberOfLines={1} style={stylesMain.TextTask}>
+                                                                {task.tasksName}
+                                                            </Text>
+                                                        </View>
+                                                    </TouchableOpacity>
+                                                )))
+                                            : (<></>)
+                                    }
+                                </ScrollView>
+                            </View>
 
-                    <View style={stylesMain.SmallBlock}>
-                        <View style={stylesMain.BlockTitle}>
-                            <Text allowFontScaling={false} style={[stylesMain.TitleBlock, { fontSize: 14 }]}>El porcentaje del dia</Text>
-                        </View>
-                        <View style={stylesMain.BlockTextPorcentaje}>
-                            <View style={[stylesMain.InnerBlock, {
-                                backgroundColor: `${parseInt(routineData.porcentaje) < 35 ? '#fff' : (parseInt(routineData.porcentaje) < 85 ? '#FFA500' : '#01A601')}`
-                            }]}>
-                                <Text style={[stylesMain.TextPorcentaje, { color: `${parseInt(routineData.porcentaje) < 35 ? '#1E1E1E' : '#fff'}` }]}>{routineData.porcentaje}</Text>
+                            <View style={stylesMain.SmallBlock}>
+                                <View style={stylesMain.BlockTitle}>
+                                    <Text allowFontScaling={false} style={[stylesMain.TitleBlock, { fontSize: 14 }]}>El porcentaje del dia</Text>
+                                </View>
+                                <View style={stylesMain.BlockTextPorcentaje}>
+                                    <View style={[stylesMain.InnerBlock, {
+                                        backgroundColor: `${parseInt(routineData.porcentaje) < 35 ? '#fff' : (parseInt(routineData.porcentaje) < 85 ? '#FFA500' : '#01A601')}`
+                                    }]}>
+                                        <Text maxFontSizeMultiplier={1} style={[stylesMain.TextPorcentaje, { color: `${parseInt(routineData.porcentaje) < 35 ? '#1E1E1E' : '#fff'}` }]}>{routineData.porcentaje === 'NaN%' ? '0%' : `${routineData.porcentaje}`}</Text>
+                                    </View>
+                                </View>
                             </View>
                         </View>
-                    </View>
-                </View>
 
+                        : <View style={stylesMain.ConteinerTitleForEmpty}>
+                            <Text style={{ color: '#1e1e1e', textAlign: 'center', fontSize: 20, width: '75%', fontFamily: 'Lato_700Bold' }}>Cuando inicies tu rutina</Text>
+                            <Text style={{ color: '#1e1e1e', textAlign: 'center', fontSize: 20, width: '75%', fontFamily: 'Lato_700Bold' }}>podrás verla aquí</Text>
+
+
+
+                        </View>
+                }
                 <TouchableOpacity onPress={() => { EditRoutine() }} style={stylesMain.AddBlock}>
-                    <Text style={styles.Text}>Editar tu rutina</Text>
+                    <Text maxFontSizeMultiplier={1.5} style={styles.Text}>{routineData.data[0] !== undefined ? 'Editar tu rutina' : 'Iniciar tu rutina'}</Text>
                 </TouchableOpacity>
             </View>
         )
