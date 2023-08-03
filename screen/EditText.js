@@ -114,7 +114,7 @@ export default function EditText({ navigation }) {
                             <View style={[style.Content]}>
                                 <View style={style.conteinerTitle}>
 
-                                    <TextInput style={[style.input, { fontFamily: 'Lato_400Regular' }]}
+                                    <TextInput maxFontSizeMultiplier={1.5} style={[style.input, { fontFamily: 'Lato_400Regular' }]}
                                         placeholder="Titulo"
                                         keyboardType="default"
                                         placeholderTextColor="rgba(245, 240, 240, 0.75)"
@@ -130,7 +130,7 @@ export default function EditText({ navigation }) {
 
                                 </View>
                                 <View style={{ width: '100%', height: 30, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                                    <Text style={{ textAlign: 'center', color: '#fff', fontFamily: 'Lato_700Bold' }}>{titleMsgErr}</Text>
+                                    <Text maxFontSizeMultiplier={1.5} style={{ textAlign: 'center', color: '#fff', fontFamily: 'Lato_700Bold' }}>{titleMsgErr}</Text>
                                 </View>
 
                             </View>
@@ -142,7 +142,7 @@ export default function EditText({ navigation }) {
                                     alignItems: 'center'
                                 }}>
 
-                                    <TextInput
+                                    <TextInput maxFontSizeMultiplier={1.5}
                                         placeholder='¿Como estuvo tu dia?'
                                         style={style.textarea}
                                         multiline={true}
@@ -155,10 +155,10 @@ export default function EditText({ navigation }) {
 
                             <View style={{ width: '100%', height: '7.5%', flexDirection: 'row' }}>
                                 <TouchableOpacity onPress={() => { setEdit(false) }} style={{ width: '50%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                                    <Text style={{ color: '#FFFFFF', fontSize: 18, fontFamily: 'Lato_700Bold' }}>Cancelar</Text>
+                                    <Text maxFontSizeMultiplier={1.5} style={{ color: '#FFFFFF', fontSize: 18, fontFamily: 'Lato_700Bold' }}>Cancelar</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity onPress={() => { btnEnable ? CreateTasks() : '' }} style={{ width: '50%', height: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                                    <Text style={{ color: `${btnEnable ? '#FFFFFF' : '#959696'}`, fontSize: 18, fontFamily: 'Lato_700Bold' }}>Guardar</Text>
+                                    <Text maxFontSizeMultiplier={1.5} style={{ color: `${btnEnable ? '#FFFFFF' : '#959696'}`, fontSize: 18, fontFamily: 'Lato_700Bold' }}>Guardar</Text>
                                 </TouchableOpacity>
 
                             </View>
@@ -167,11 +167,12 @@ export default function EditText({ navigation }) {
                             <View style={{ width: '85%', height: '15%', justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row' }}>
                                 <View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' }}>
                                     <View style={{ width: 40, height: 40, backgroundColor: `${SelectedText.colorHex}`, borderRadius: 100, marginRight: 15 }}></View>
-                                    <Text style={{
+                                    <Text maxFontSizeMultiplier={1.5} style={{
                                         color: '#ffff',
                                         fontFamily: 'Lato_700Bold',
                                         fontSize: 20,
-                                        textTransform: 'capitalize'
+                                        textTransform: 'capitalize',
+                                        width: '70%'
                                     }}>{SelectedText.title}</Text>
                                 </View>
                                 <View style={{ flexDirection: 'row' }} >
@@ -199,7 +200,7 @@ export default function EditText({ navigation }) {
                                 </ScrollView>
                             </View>
                             <View style={{ width: '85%', height: '15%', justifyContent: 'flex-end', alignItems: 'center', flexDirection: 'row' }}>
-                                <Text style={{
+                                <Text maxFontSizeMultiplier={1.5} style={{
                                     color: '#959696',
                                 }}>Ultima edicion: {dayCreate}</Text>
                             </View>
@@ -212,13 +213,13 @@ export default function EditText({ navigation }) {
                         <View style={stylesHeader.Back}>
                             <View style={stylesHeader.Notification}>
                                 <View style={stylesHeader.ConteinerTitle}>
-                                    <Text style={{
+                                    <Text maxFontSizeMultiplier={1.5} style={{
                                         color: '#fff',
                                         fontFamily: 'Lato_700Bold',
                                         fontSize: 18,
                                         marginBottom: 5
                                     }}>Espera</Text>
-                                    <Text style={{
+                                    <Text maxFontSizeMultiplier={1.25} style={{
                                         color: '#fff',
                                         fontFamily: 'Lato_400Regular',
                                         fontSize: 16,
@@ -227,10 +228,10 @@ export default function EditText({ navigation }) {
                                 </View>
                                 <View style={stylesHeader.ConteinerButtom}>
                                     <TouchableOpacity onPress={() => { setNotificationVisibility(false) }} style={stylesHeader.ButtomLeft}>
-                                        <Text style={stylesHeader.TextButtom}>No</Text>
+                                        <Text maxFontSizeMultiplier={1.5} style={stylesHeader.TextButtom}>No</Text>
                                     </TouchableOpacity>
                                     <TouchableOpacity onPress={() => { DeleteTasks() }} style={stylesHeader.ButtomRight}>
-                                        <Text style={stylesHeader.TextButtom}>Si</Text>
+                                        <Text maxFontSizeMultiplier={1.5} style={stylesHeader.TextButtom}>Si</Text>
                                     </TouchableOpacity>
                                 </View>
 
@@ -247,29 +248,29 @@ export default function EditText({ navigation }) {
                         ? <View style={style.MainNotificacion}>
                             <View style={style.NotificacionContent}>
                                 <View style={style.NotificacionTitle}>
-                                    <Text style={{ color: '#fff', fontSize: 22, fontFamily: 'Lato_700Bold' }}>¿Como te sentiste hoy?</Text>
+                                    <Text maxFontSizeMultiplier={1.5} style={{ color: '#fff', fontSize: 22, fontFamily: 'Lato_700Bold' }}>¿Como te sentiste hoy?</Text>
                                 </View>
                                 <ScrollView style={{ width: '100%' }}>
                                     <View style={style.ConteinerDoble}>
                                         <TouchableOpacity onPress={() => { setColorSelect('#FFC700'); setcolorPickerVisi(false) }} style={{ width: '45%', height: '90%', justifyContent: 'space-around', alignItems: 'center', }}>
                                             <View style={{ width: '80%', height: '80%', backgroundColor: '#FFC700', borderRadius: 15 }}></View>
-                                            <Text style={{ color: '#fff', fontSize: 16, fontFamily: 'Lato_700Bold' }}>Alegre</Text>
+                                            <Text maxFontSizeMultiplier={1.5} style={{ color: '#fff', fontSize: 16, fontFamily: 'Lato_700Bold' }}>Alegre</Text>
                                         </TouchableOpacity>
 
 
                                         <TouchableOpacity onPress={() => { setColorSelect('#4447F4'); setcolorPickerVisi(false) }} style={{ width: '45%', height: '90%', justifyContent: 'space-around', alignItems: 'center', }}>
                                             <View style={{ width: '80%', height: '80%', backgroundColor: '#4447F4', borderRadius: 15 }}></View>
-                                            <Text style={{ color: '#fff', fontSize: 16, fontFamily: 'Lato_700Bold' }}>Triste</Text>
+                                            <Text maxFontSizeMultiplier={1.5} style={{ color: '#fff', fontSize: 16, fontFamily: 'Lato_700Bold' }}>Triste</Text>
                                         </TouchableOpacity>
                                     </View>
                                     <View style={style.ConteinerDoble}>
                                         <TouchableOpacity onPress={() => { setColorSelect('#A2FF86'); setcolorPickerVisi(false) }} style={{ width: '45%', height: '90%', justifyContent: 'space-around', alignItems: 'center', }}>
                                             <View style={{ width: '80%', height: '80%', backgroundColor: '#A2FF86', borderRadius: 15 }}></View>
-                                            <Text style={{ color: '#fff', fontSize: 16, fontFamily: 'Lato_700Bold' }}>Esperanzado</Text>
+                                            <Text maxFontSizeMultiplier={1.5} style={{ color: '#fff', fontSize: 16, fontFamily: 'Lato_700Bold' }}>Esperanzado</Text>
                                         </TouchableOpacity>
                                         <TouchableOpacity onPress={() => { setColorSelect('#FFFFFF'); setcolorPickerVisi(false) }} style={{ width: '45%', height: '90%', justifyContent: 'space-around', alignItems: 'center', }}>
                                             <View style={{ width: '80%', height: '80%', backgroundColor: '#FFFFFF', borderRadius: 15 }}></View>
-                                            <Text style={{ color: '#fff', fontSize: 16, fontFamily: 'Lato_700Bold' }}>Indiferente</Text>
+                                            <Text maxFontSizeMultiplier={1.5} style={{ color: '#fff', fontSize: 16, fontFamily: 'Lato_700Bold' }}>Indiferente</Text>
                                         </TouchableOpacity>
 
                                     </View>
@@ -277,11 +278,11 @@ export default function EditText({ navigation }) {
 
                                         <TouchableOpacity onPress={() => { setColorSelect('#CF010B'); setcolorPickerVisi(false) }} style={{ width: '45%', height: '90%', justifyContent: 'space-around', alignItems: 'center', }}>
                                             <View style={{ width: '80%', height: '80%', backgroundColor: '#CF010B', borderRadius: 15 }}></View>
-                                            <Text style={{ color: '#fff', fontSize: 16, fontFamily: 'Lato_700Bold' }}>Enojado</Text>
+                                            <Text maxFontSizeMultiplier={1.5} style={{ color: '#fff', fontSize: 16, fontFamily: 'Lato_700Bold' }}>Enojado</Text>
                                         </TouchableOpacity>
                                         <TouchableOpacity onPress={() => { setColorSelect('#4D4D4D'); setcolorPickerVisi(false) }} style={{ width: '45%', height: '90%', justifyContent: 'space-around', alignItems: 'center', }}>
                                             <View style={{ width: '80%', height: '80%', backgroundColor: '#4D4D4D', borderRadius: 15 }}></View>
-                                            <Text style={{ color: '#fff', fontSize: 16, fontFamily: 'Lato_700Bold' }}>Cansado</Text>
+                                            <Text maxFontSizeMultiplier={1.5} style={{ color: '#fff', fontSize: 16, fontFamily: 'Lato_700Bold' }}>Cansado</Text>
                                         </TouchableOpacity>
                                     </View>
 
