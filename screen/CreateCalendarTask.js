@@ -13,6 +13,7 @@ import SelectComponet from '../componets/util/SelectComponet';
 import * as SecureStore from 'expo-secure-store';
 import axios from 'axios';
 import { CalendarDateGlobalState } from '../context/DataGlobalState';
+import { EXPO_PUBLIC_API_URL } from "@env"
 
 
 
@@ -41,7 +42,7 @@ export default function CreateCalendarTask({ navigation }) {
         var meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
         var mes = meses[fecha.getUTCMonth()];
         // Formatear el texto final
-        var textoFormateado = diaDeLaSemana + ' ' + fecha.getDate() + ', ' + mes + ' ' + fecha.getUTCFullYear();
+        var textoFormateado = diaDeLaSemana + ' ' + fecha.getUTCDate() + ', ' + mes + ' ' + fecha.getUTCFullYear();
         setFecha(textoFormateado)
     }, [])
     const Redirect = (url) => {
@@ -70,6 +71,24 @@ export default function CreateCalendarTask({ navigation }) {
     const [stringTimeTo, setStringTimeTo] = useState('08:00');
     const [finishHour, setfinishHour] = useState('')
 
+    useEffect(() => {
+        const selectedDate = new Date()
+        setDateTo(selectedDate)
+        setDateFrom(selectedDate)
+
+        let horas = selectedDate.getHours();
+        let minutos = selectedDate.getMinutes();
+
+        if (minutos.toString()[1] === undefined) {
+            setStringTimeFrom(horas + ':0' + minutos)
+            setStringTimeTo(horas + ':0' + minutos)
+
+        } else {
+            setStringTimeFrom(horas + ':' + minutos)
+            setStringTimeTo(horas + ':' + minutos)
+
+        }
+    }, [])
 
     const showMode = (currentMode) => {
         setShowFrom(true);
@@ -106,6 +125,9 @@ export default function CreateCalendarTask({ navigation }) {
         } else {
             setStringTimeFrom(horas + ':' + minutos)
         }
+        if (selectedDate > dateTo) {
+            onChangeTo('', selectedDate)
+        }
     };
 
     const onChangeTo = (event, selectedDate) => {
@@ -119,6 +141,9 @@ export default function CreateCalendarTask({ navigation }) {
             setStringTimeTo(horas + ':0' + minutos)
         } else {
             setStringTimeTo(horas + ':' + minutos)
+        }
+        if (selectedDate < dateFrom) {
+            onChangeFrom('', selectedDate)
         }
     };
 
@@ -140,7 +165,8 @@ export default function CreateCalendarTask({ navigation }) {
         }
 
 
-        const response = await axios.post(`${process.env.EXPO_PUBLIC_API_URL}/Calendar/AddCalendarTask`, {
+
+        const response = await axios.post(`${EXPO_PUBLIC_API_URL}/calendar/create`, {
             data: {
                 "user": user.user,
                 "Title": Title,
@@ -163,7 +189,7 @@ export default function CreateCalendarTask({ navigation }) {
             }
         })
         if (response.data.request = true) {
-            const respuesta = await axios.get(`${process.env.EXPO_PUBLIC_API_URL}/getData/calendar/${user.user}/Calendario Principal`)
+            const respuesta = await axios.get(`${EXPO_PUBLIC_API_URL}/getData/calendar/${user.user}/Calendario Principal`)
             SetCalendarData(respuesta.data)
             Redirect('Home')
         }
