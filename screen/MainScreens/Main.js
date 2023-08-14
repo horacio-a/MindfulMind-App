@@ -18,6 +18,8 @@ import { BackPageState } from '../../context/BackPageState';
 import { GetAllDataFuntion } from '../../context/GetAllData';
 import { Icon } from '@rneui/themed';
 import styleTextComp from '../../Styles/TextComStyle';
+import { CaledarCardSelect } from '../../context/CalendarCardSelect';
+
 
 export default function Main({ navigation }) {
     const [refreshing, setRefreshing] = useState(false);
@@ -25,6 +27,7 @@ export default function Main({ navigation }) {
     const { routineData, SetRoutineData } = useContext(RoutineDateGlobalState);
     const { TextData, SetTextData } = useContext(TextDateGlobalState);
     const { BackPage, setBackPage } = useContext(BackPageState)
+    const { dataForCalendarCard, setdateForCalendarCard } = useContext(CaledarCardSelect)
 
 
     const onRefresh = useCallback(async () => {
@@ -43,7 +46,6 @@ export default function Main({ navigation }) {
     const { session, setsession } = useContext(SesionGlobalState);
     const [notificationVisibility, setNotificationVisibility] = useState(false)
     const [CalendarCardVisibility, setCalendarCardVisibility] = useState(false)
-    const [dataForCalendarCard, setdateForCalendarCard] = useState('')
 
     const [dataForNotification, setdateForNotification] = useState('')
     const [loading, setloading] = useState(true)
