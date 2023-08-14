@@ -15,11 +15,13 @@ import ProfileSelect from '../../componets/util/profileSelect';
 import axios from 'axios';
 import ChangePass from '../../componets/util/ChangePass';
 import ChangeUsername from '../../componets/util/ChangeUsername';
-
+import { EXPO_PUBLIC_API_URL } from "@env"
+import { ExpoPushToken } from '../../context/ExpoPushTokenState';
 
 export default function SettingScreen({ navigation }) {
     const { BackPage, setBackPage } = useContext(BackPageState)
     const { session, setsession } = useContext(SesionGlobalState);
+    const { ExpoToken, setExpoToken } = useContext(ExpoPushToken);
     const [user, setUser] = useState('')
     const [profilePicture, setprofilePicture] = useState()
     const [profilSelectcontent, setprofilSelectcontent] = useState(false)
@@ -63,6 +65,7 @@ export default function SettingScreen({ navigation }) {
         navigation.navigate(url)
     }
     const ExitSession = async () => {
+        await axios.post(`${EXPO_PUBLIC_API_URL}/login/logout`, { NotificationToken: ExpoToken })
         await SecureStore.deleteItemAsync('userToken')
         setsession(false)
     }
@@ -94,7 +97,7 @@ export default function SettingScreen({ navigation }) {
         data.profilePicture = newImg
         await SecureStore.setItemAsync('userToken', JSON.stringify(data))
 
-        await axios.post(`${process.env.EXPO_PUBLIC_API_URL}'/UserSetting/changeprofilepicture`, { data }, {
+        await axios.post(`${EXPO_PUBLIC_API_URL}'/UserSetting/changeprofilepicture`, { data }, {
             headers: {
                 'Content-Type': 'application/json'
             }
