@@ -119,7 +119,7 @@ export default function TutorialForNewUser({ navigation }) {
                     etapa.primera
                         ? <View style={{ backgroundColor: '#1e1e1e', flex: 1, alignItems: 'center', justifyContent: 'center', marginTop: Constants.statusBarHeight, }}>
                             <Animated.Text maxFontSizeMultiplier={1.5} style={{ color: '#fff', fontFamily: 'Lato_400Regular', opacity: fadeAnim, fontSize: 26, textAlign: 'center' }}>Bienvenido a Mindfulmind</Animated.Text>
-                            <Animated.Text maxFontSizeMultiplier={1.5} style={{ color: '#fff', fontFamily: 'Lato_400Regular', opacity: fadeAnim1, fontSize: 20, marginTop: 15, textAlign: 'center' }}>Productividad conciente</Animated.Text>
+                            <Animated.Text maxFontSizeMultiplier={1.5} style={{ color: '#fff', fontFamily: 'Lato_400Regular', opacity: fadeAnim1, fontSize: 20, marginTop: 15, textAlign: 'center' }}>Productividad consciente</Animated.Text>
                         </View>
                         : (
                             etapa.segunda
@@ -128,7 +128,7 @@ export default function TutorialForNewUser({ navigation }) {
 
                                     <View style={{ alignItems: 'center', justifyContent: 'center', height: '80%' }}>
                                         <Animated.Text maxFontSizeMultiplier={1.5} style={{ color: '#fff', fontFamily: 'Lato_400Regular', opacity: fadeAnim, fontSize: 26, height: '5%', textAlign: 'center' }}>¿Necesitas un tutorial?</Animated.Text>
-                                        <Animated.Text maxFontSizeMultiplier={1.5} style={{ color: '#959696', fontFamily: 'Lato_400Regular', opacity: fadeAnim1, fontSize: 16, marginTop: 15, textAlign: 'center' }}>Podras acceder mas adelante</Animated.Text>
+                                        <Animated.Text maxFontSizeMultiplier={1.5} style={{ color: '#959696', fontFamily: 'Lato_400Regular', opacity: fadeAnim1, fontSize: 16, marginTop: 15, textAlign: 'center' }}>Podrás acceder más adelante</Animated.Text>
                                     </View>
                                     <View style={{ height: '10%', width: '100%', flexDirection: 'row', justifyContent: 'space-around' }}>
                                         <TouchableOpacity onPress={() => { setsession(true) }} style={{ width: '35%', height: '50%', borderWidth: 1, borderColor: '#fff', borderRadius: 2, alignItems: 'center', justifyContent: 'center' }}>
@@ -157,9 +157,9 @@ export default function TutorialForNewUser({ navigation }) {
                                             <View style={{ height: '10%', width: '100%' }}></View>
 
                                             <View style={{ alignItems: 'center', justifyContent: 'center', height: '80%' }}>
-                                                <Animated.Text maxFontSizeMultiplier={1.5} style={{ color: '#fff', fontFamily: 'Lato_400Regular', opacity: fadeAnim2, fontSize: 26, height: '10%', textAlign: 'center' }}>¿Cual es el objetivo de Mindfulmind?</Animated.Text>
+                                                <Animated.Text maxFontSizeMultiplier={1.5} style={{ color: '#fff', fontFamily: 'Lato_400Regular', opacity: fadeAnim2, fontSize: 26, height: '10%', textAlign: 'center' }}>¿Cuál es el objetivo de Mindfulmind?</Animated.Text>
                                                 <View style={{ width: '75%', height: 'auto' }}>
-                                                    <Animated.Text maxFontSizeMultiplier={1.5} style={{ color: '#FFF', fontFamily: 'Lato_400Regular', opacity: fadeAnim3, fontSize: 18, textAlign: 'center' }}>Con mindfulmind queremos que tu vida sea mas facil, y para lograr eso queremos aumentar tu productividad. Y como vamos a lograr eso... </Animated.Text>
+                                                    <Animated.Text maxFontSizeMultiplier={1.5} style={{ color: '#FFF', fontFamily: 'Lato_400Regular', opacity: fadeAnim3, fontSize: 18, textAlign: 'center' }}>Con mindfulmind queremos que tu vida sea más fácil, y para lograr eso queremos aumentar tu productividad. Y como vamos a lograr eso...</Animated.Text>
                                                 </View>
 
                                             </View>
@@ -174,7 +174,7 @@ export default function TutorialForNewUser({ navigation }) {
                                                         sexta: false
                                                     })
                                                 }} style={{ width: '35%', height: '50%', borderWidth: 1, borderColor: '#fff', borderRadius: 2, alignItems: 'center', justifyContent: 'center' }}>
-                                                    <Text maxFontSizeMultiplier={1.5} style={{ color: '#fff', fontFamily: 'Lato_700Bold' }}>Atras</Text>
+                                                    <Text maxFontSizeMultiplier={1.5} style={{ color: '#fff', fontFamily: 'Lato_700Bold' }}>Atrás</Text>
                                                 </TouchableOpacity>
                                                 <TouchableOpacity onPress={() => {
                                                     setetapa({
@@ -203,7 +203,7 @@ export default function TutorialForNewUser({ navigation }) {
                                                         RoutineExample.primera
                                                             ? <View style={{ alignItems: 'center', justifyContent: 'center', height: '80%', width: '100%' }}>
                                                                 <View style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }}>
-                                                                    <Animated.Text maxFontSizeMultiplier={1.5} style={{ color: '#959696', fontFamily: 'Lato_400Regular', opacity: fadeAnim2, fontSize: 20, height: 'auto', textAlign: 'center', marginBottom: 25 }}>Vamos a implementar un rutina</Animated.Text>
+                                                                    <Animated.Text maxFontSizeMultiplier={1.5} style={{ color: '#959696', fontFamily: 'Lato_400Regular', opacity: fadeAnim2, fontSize: 20, height: 'auto', textAlign: 'center', marginBottom: 25 }}>Vamos a implementar una rutina</Animated.Text>
                                                                     <Image style={{ height: '70%', width: '55%' }} source={require('../assets/tutorial/routinePhoto1.jpg')} />
                                                                 </View>
                                                             </View>
@@ -256,7 +256,7 @@ export default function TutorialForNewUser({ navigation }) {
                                                                 })
                                                             }
                                                         }} style={{ width: '35%', height: '50%', borderWidth: 1, borderColor: '#fff', borderRadius: 2, alignItems: 'center', justifyContent: 'center' }}>
-                                                            <Text maxFontSizeMultiplier={1.5} style={{ color: '#fff', fontFamily: 'Lato_700Bold' }}>Atras</Text>
+                                                            <Text maxFontSizeMultiplier={1.5} style={{ color: '#fff', fontFamily: 'Lato_700Bold' }}>Atrás</Text>
                                                         </TouchableOpacity>
 
                                                         <TouchableOpacity onPress={() => {
@@ -303,15 +303,15 @@ export default function TutorialForNewUser({ navigation }) {
                                                     etapa.quinta
                                                         ? <View style={{ backgroundColor: '#1e1e1e', flex: 1, alignItems: 'center', justifyContent: 'center', marginTop: Constants.statusBarHeight, }}>
                                                             <View style={{ height: '10%', width: '100%', justifyContent: 'flex-end' }}>
-                                                                <Animated.Text maxFontSizeMultiplier={1.5} style={{ color: '#fff', fontFamily: 'Lato_400Regular', opacity: fadeAnim2, fontSize: 26, height: '50%', textAlign: 'center' }}>Pero para ideas unicos...</Animated.Text>
+                                                                <Animated.Text maxFontSizeMultiplier={1.5} style={{ color: '#fff', fontFamily: 'Lato_400Regular', opacity: fadeAnim2, fontSize: 26, height: '50%', textAlign: 'center' }}>Pero para ideas únicos...</Animated.Text>
 
                                                             </View>
                                                             {
                                                                 RoutineExample.primera
                                                                     ? <View style={{ alignItems: 'center', justifyContent: 'center', height: '80%', width: '100%' }}>
                                                                         <View style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }}>
-                                                                            <Animated.Text maxFontSizeMultiplier={1.5} style={{ color: '#959696', fontFamily: 'Lato_400Regular', opacity: fadeAnim2, fontSize: 20, height: 'auto', textAlign: 'center', marginBottom: 25 }}>Podes ir a tu calendario</Animated.Text>
-                                                                            <Image style={{ height: '70%', width: '55%' }} source={require('../assets/tutorial/routinePhoto1.jpg')} />
+                                                                            <Animated.Text maxFontSizeMultiplier={1.5} style={{ color: '#959696', fontFamily: 'Lato_400Regular', opacity: fadeAnim2, fontSize: 20, height: 'auto', textAlign: 'center', marginBottom: 25 }}>Podés ir a tu calendario</Animated.Text>
+                                                                            <Image style={{ height: '70%', width: '55%' }} source={require('../assets/tutorial/calendarPhoto1.jpg')} />
                                                                         </View>
                                                                     </View>
                                                                     : (
@@ -319,7 +319,7 @@ export default function TutorialForNewUser({ navigation }) {
                                                                             ? <View style={{ alignItems: 'center', justifyContent: 'center', height: '80%', width: '100%' }}>
                                                                                 <View style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }}>
                                                                                     <Animated.Text maxFontSizeMultiplier={1.5} style={{ color: '#959696', fontFamily: 'Lato_400Regular', opacity: fadeAnim2, fontSize: 20, height: 'auto', textAlign: 'center', marginBottom: 25 }}>Crear y personalizar tu evento</Animated.Text>
-                                                                                    <Image style={{ height: '70%', width: '55%' }} source={require('../assets/tutorial/routinePhoto2.jpg')} />
+                                                                                    <Image style={{ height: '70%', width: '55%' }} source={require('../assets/tutorial/calendarPhoto2.jpg')} />
                                                                                 </View>
                                                                             </View>
                                                                             : (
@@ -327,7 +327,7 @@ export default function TutorialForNewUser({ navigation }) {
                                                                                     ? <View style={{ alignItems: 'center', justifyContent: 'center', height: '80%', width: '100%' }}>
                                                                                         <View style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }}>
                                                                                             <Animated.Text maxFontSizeMultiplier={1.5} style={{ color: '#959696', fontFamily: 'Lato_400Regular', opacity: fadeAnim2, fontSize: 20, height: 'auto', textAlign: 'center', marginBottom: 25 }}>Y nosotros te hacemos acordar</Animated.Text>
-                                                                                            <Image style={{ height: '70%', width: '55%' }} source={require('../assets/tutorial/routinePhoto-3.jpg')} />
+                                                                                            <Image style={{ height: '70%', width: '55%' }} source={require('../assets/tutorial/calendarPhoto3.jpg')} />
                                                                                         </View>
                                                                                     </View>
                                                                                     : <></>)
@@ -337,11 +337,17 @@ export default function TutorialForNewUser({ navigation }) {
                                                                 <TouchableOpacity onPress={() => {
 
                                                                     if (RoutineExample.primera) {
-                                                                        setetapa({
+                                                                        setRoutineExample({
                                                                             primera: false,
                                                                             segunda: false,
                                                                             tercera: true,
-                                                                            cuarta: false,
+
+                                                                        })
+                                                                        setetapa({
+                                                                            primera: false,
+                                                                            segunda: false,
+                                                                            tercera: false,
+                                                                            cuarta: true,
                                                                             quinta: false,
                                                                             sexta: false
                                                                         })
@@ -363,7 +369,7 @@ export default function TutorialForNewUser({ navigation }) {
                                                                         })
                                                                     }
                                                                 }} style={{ width: '35%', height: '50%', borderWidth: 1, borderColor: '#fff', borderRadius: 2, alignItems: 'center', justifyContent: 'center' }}>
-                                                                    <Text maxFontSizeMultiplier={1.5} style={{ color: '#fff', fontFamily: 'Lato_700Bold' }}>Atras</Text>
+                                                                    <Text maxFontSizeMultiplier={1.5} style={{ color: '#fff', fontFamily: 'Lato_700Bold' }}>Atrás</Text>
                                                                 </TouchableOpacity>
 
                                                                 <TouchableOpacity onPress={() => {
@@ -410,7 +416,7 @@ export default function TutorialForNewUser({ navigation }) {
                                                             etapa.sexta
                                                                 ? <View style={{ backgroundColor: '#1e1e1e', flex: 1, alignItems: 'center', justifyContent: 'center', marginTop: Constants.statusBarHeight, }}>
                                                                     <View style={{ height: '10%', width: '100%', justifyContent: 'flex-end' }}>
-                                                                        <Animated.Text maxFontSizeMultiplier={1.5} style={{ color: '#fff', fontFamily: 'Lato_400Regular', opacity: fadeAnim2, fontSize: 26, height: '50%', textAlign: 'center' }}>Pero tambien vos sos importante</Animated.Text>
+                                                                        <Animated.Text maxFontSizeMultiplier={1.5} style={{ color: '#fff', fontFamily: 'Lato_400Regular', opacity: fadeAnim2, fontSize: 26, height: '50%', textAlign: 'center' }}>Pero también vos sos importante</Animated.Text>
 
                                                                     </View>
                                                                     {
@@ -418,23 +424,23 @@ export default function TutorialForNewUser({ navigation }) {
                                                                             ? <View style={{ alignItems: 'center', justifyContent: 'center', height: '80%', width: '100%' }}>
                                                                                 <View style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }}>
                                                                                     <Animated.Text maxFontSizeMultiplier={1.5} style={{ color: '#959696', fontFamily: 'Lato_400Regular', opacity: fadeAnim2, fontSize: 20, height: 'auto', textAlign: 'center', marginBottom: 25 }}>Contamos con un apartado de texto</Animated.Text>
-                                                                                    <Image style={{ height: '70%', width: '55%' }} source={require('../assets/tutorial/routinePhoto1.jpg')} />
+                                                                                    <Image style={{ height: '70%', width: '55%' }} source={require('../assets/tutorial/textPhoto1.jpg')} />
                                                                                 </View>
                                                                             </View>
                                                                             : (
                                                                                 RoutineExample.segunda
                                                                                     ? <View style={{ alignItems: 'center', justifyContent: 'center', height: '80%', width: '100%' }}>
                                                                                         <View style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }}>
-                                                                                            <Animated.Text maxFontSizeMultiplier={1.5} style={{ color: '#959696', fontFamily: 'Lato_400Regular', opacity: fadeAnim2, fontSize: 20, height: 'auto', textAlign: 'center', marginBottom: 25 }}>donde podes hacer un resumen de tu dia</Animated.Text>
-                                                                                            <Image style={{ height: '70%', width: '55%' }} source={require('../assets/tutorial/routinePhoto2.jpg')} />
+                                                                                            <Animated.Text maxFontSizeMultiplier={1.5} style={{ color: '#959696', fontFamily: 'Lato_400Regular', opacity: fadeAnim2, fontSize: 20, height: 'auto', textAlign: 'center', marginBottom: 25 }}>Donde podés hacer un resumen de tu día</Animated.Text>
+                                                                                            <Image style={{ height: '70%', width: '55%' }} source={require('../assets/tutorial/textPhoto2.jpg')} />
                                                                                         </View>
                                                                                     </View>
                                                                                     : (
                                                                                         RoutineExample.tercera
                                                                                             ? <View style={{ alignItems: 'center', justifyContent: 'center', height: '80%', width: '100%' }}>
                                                                                                 <View style={{ width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center' }}>
-                                                                                                    <Animated.Text maxFontSizeMultiplier={1.5} style={{ color: '#959696', fontFamily: 'Lato_400Regular', opacity: fadeAnim2, fontSize: 20, height: 'auto', textAlign: 'center', marginBottom: 25 }}>y asi vas a poder ver como estuvieron tus meses</Animated.Text>
-                                                                                                    <Image style={{ height: '70%', width: '55%' }} source={require('../assets/tutorial/routinePhoto-3.jpg')} />
+                                                                                                    <Animated.Text maxFontSizeMultiplier={1.5} style={{ color: '#959696', fontFamily: 'Lato_400Regular', opacity: fadeAnim2, fontSize: 20, height: 'auto', textAlign: 'center', marginBottom: 25 }}>Y así vas a poder ver como estuvieron tus dias.</Animated.Text>
+                                                                                                    <Image style={{ height: '70%', width: '55%' }} source={require('../assets/tutorial/textPhoto3.jpg')} />
                                                                                                 </View>
                                                                                             </View>
                                                                                             : <></>)
@@ -470,7 +476,7 @@ export default function TutorialForNewUser({ navigation }) {
                                                                                 })
                                                                             }
                                                                         }} style={{ width: '35%', height: '50%', borderWidth: 1, borderColor: '#fff', borderRadius: 2, alignItems: 'center', justifyContent: 'center' }}>
-                                                                            <Text maxFontSizeMultiplier={1.5} style={{ color: '#fff', fontFamily: 'Lato_700Bold' }}>Atras</Text>
+                                                                            <Text maxFontSizeMultiplier={1.5} style={{ color: '#fff', fontFamily: 'Lato_700Bold' }}>Atrás</Text>
                                                                         </TouchableOpacity>
 
                                                                         <TouchableOpacity onPress={() => {
@@ -514,7 +520,7 @@ export default function TutorialForNewUser({ navigation }) {
 
                                                                 </View >
                                                                 : <View style={{ backgroundColor: '#1e1e1e', flex: 1, alignItems: 'center', justifyContent: 'center', marginTop: Constants.statusBarHeight, }}>
-                                                                    <Animated.Text maxFontSizeMultiplier={1.5} style={{ color: '#fff', fontFamily: 'Lato_400Regular', opacity: fadeAnim, fontSize: 26 }}>Ya estas listo</Animated.Text>
+                                                                    <Animated.Text maxFontSizeMultiplier={1.5} style={{ color: '#fff', fontFamily: 'Lato_400Regular', opacity: fadeAnim, fontSize: 26 }}>Ya estás listo</Animated.Text>
                                                                     <Animated.Text maxFontSizeMultiplier={1.5} style={{ textAlign: 'center', color: '#fff', fontFamily: 'Lato_400Regular', opacity: fadeAnim1, fontSize: 20, marginTop: 15 }}>Ya puedes usar a pleno mindfulmind.</Animated.Text>
                                                                     <TouchableOpacity onPress={() => { setsession(true) }} style={{ width: '35%', height: '5%', borderWidth: 1, borderColor: '#fff', borderRadius: 2, alignItems: 'center', justifyContent: 'center', marginTop: 15 }}>
                                                                         <Text maxFontSizeMultiplier={1.5} style={{ color: '#fff', fontFamily: 'Lato_700Bold' }}>Finalizar</Text>
