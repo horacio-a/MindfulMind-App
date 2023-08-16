@@ -132,7 +132,7 @@ export default function AdministraRoutine({ navigation }) {
             }, 2500);
         } else {
             let user = JSON.parse(await SecureStore.getItemAsync('userToken'))
-            const response = await axios.post(`${EXPO_PUBLIC_API_URL}/Routine/newtask`, {
+            const response = await axios.post(`https://api.mindfulmind.com.ar/Routine/newtask`, {
                 "user": user.user,
                 "title": InputTitle
             }, {
@@ -178,7 +178,7 @@ export default function AdministraRoutine({ navigation }) {
             obj.data.push({ id: element.id, NewOrden: (i + 1) })
         }
 
-        const response = await axios.post(`${EXPO_PUBLIC_API_URL}/Routine/ReOrder`, { obj }, {
+        const response = await axios.post(`https://api.mindfulmind.com.ar/Routine/ReOrder`, { obj }, {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -191,7 +191,7 @@ export default function AdministraRoutine({ navigation }) {
 
     const deleteTasks = async () => {
         console.log(DataForDelete)
-        const response = await axios.delete(`${EXPO_PUBLIC_API_URL}/Routine/DeleteTasks`, { data: DataForDelete })
+        const response = await axios.delete(`https://api.mindfulmind.com.ar/Routine/DeleteTasks`, { data: DataForDelete })
         SetRoutineData(response.data)
         console.log(response.data)
 
