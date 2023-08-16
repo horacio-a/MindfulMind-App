@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity, ImageBackground, Alert } from 'react-native';
+import { StyleSheet, Text, View, Image, ScrollView, TouchableOpacity, ImageBackground, BackHandler, Alert } from 'react-native';
 import * as SecureStore from 'expo-secure-store';
 import { useContext, useEffect, useState } from 'react';
 import {
@@ -48,6 +48,20 @@ export default function SettingScreen({ navigation }) {
         funtionUser()
     }, [])
 
+    useEffect(() => {
+        const backAction = () => {
+            Redirect('Home')
+        };
+
+        const backHandler = BackHandler.addEventListener(
+            'hardwareBackPress',
+            backAction,
+        );
+
+        return () => backHandler.remove();
+    }, []);
+
+
 
     let [fontsLoaded] = useFonts({
         Lato_400Regular,
@@ -65,7 +79,7 @@ export default function SettingScreen({ navigation }) {
         navigation.navigate(url)
     }
     const ExitSession = async () => {
-        await axios.post(`${EXPO_PUBLIC_API_URL}/login/logout`, { NotificationToken: ExpoToken })
+        await axios.post(`https://api.mindfulmind.com.ar/login/logout`, { NotificationToken: ExpoToken })
         await SecureStore.deleteItemAsync('userToken')
         setsession(false)
     }
@@ -97,7 +111,7 @@ export default function SettingScreen({ navigation }) {
         data.profilePicture = newImg
         await SecureStore.setItemAsync('userToken', JSON.stringify(data))
 
-        await axios.post(`${EXPO_PUBLIC_API_URL}'/UserSetting/changeprofilepicture`, { data }, {
+        await axios.post(`https://api.mindfulmind.com.ar'/UserSetting/changeprofilepicture`, { data }, {
             headers: {
                 'Content-Type': 'application/json'
             }
