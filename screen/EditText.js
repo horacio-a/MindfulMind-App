@@ -12,6 +12,8 @@ import axios from 'axios';
 import { ScrollView } from 'react-native';
 import { TextSelect } from "../context/TextSelect";
 import { TextDateGlobalState } from '../context/DataGlobalState';
+import { EXPO_PUBLIC_API_URL } from "@env"
+
 
 export default function EditText({ navigation }) {
     const [NotificationVisibility, setNotificationVisibility] = useState(false)
@@ -22,6 +24,7 @@ export default function EditText({ navigation }) {
     const [titleMsgErr, settitleMsgErr] = useState('');
     const [edit, setEdit] = useState(false)
     const [dayCreate, setdayCreate] = useState('')
+    const [dayEdit, setdayEdit] = useState('')
 
     const Redirect = (url) => {
         navigation.navigate(url)
@@ -35,6 +38,10 @@ export default function EditText({ navigation }) {
         setdayCreate(time.toLocaleString('es-AR'))
     }, [SelectedText])
 
+    useEffect(() => {
+        const time = new Date(SelectedText.lastEdition)
+        setdayEdit(time.toLocaleString('es-AR'))
+    }, [SelectedText])
 
 
     let [fontsLoaded] = useFonts({
@@ -69,9 +76,10 @@ export default function EditText({ navigation }) {
             text: Texto,
             user: user.user,
             colorHex: colorSelect,
-            date: date
+            date: SelectedText.date,
+            lastEdition: date
         }
-        const respones = await axios.post(`${process.env.EXPO_PUBLIC_API_URL}/Text/updatetext`, { data, id: SelectedText.id }, {
+        const respones = await axios.post(`https://api.mindfulmind.com.ar/Text/updatetext`, { data, id: SelectedText.id }, {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -91,7 +99,7 @@ export default function EditText({ navigation }) {
             id: SelectedText.id,
             user: user.user,
         }
-        const respones = await axios.post(`${process.env.EXPO_PUBLIC_API_URL}/Text/deleteText`, { data }, {
+        const respones = await axios.post(`https://api.mindfulmind.com.ar/Text/deleteText`, { data }, {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -199,11 +207,25 @@ export default function EditText({ navigation }) {
 
                                 </ScrollView>
                             </View>
-                            <View style={{ width: '85%', height: '15%', justifyContent: 'flex-end', alignItems: 'center', flexDirection: 'row' }}>
-                                <Text maxFontSizeMultiplier={1.5} style={{
-                                    color: '#959696',
-                                }}>Ultima edicion: {dayCreate}</Text>
-                            </View>
+                            {
+                                SelectedText.date === SelectedText.lastEdition
+                                    ? <View style={{ width: '85%', height: '15%', justifyContent: 'center', alignItems: 'flex-end', }}>
+                                        <Text maxFontSizeMultiplier={1.5} style={{
+                                            color: '#959696',
+                                        }}>ultima edicion: {dayCreate}</Text>
+
+                                    </View>
+                                    : <View style={{ width: '85%', height: '15%', justifyContent: 'center', alignItems: 'flex-end', }}>
+                                        <Text maxFontSizeMultiplier={1.5} style={{
+                                            color: '#959696',
+                                        }}>Creado: {dayCreate}</Text>
+                                        <Text maxFontSizeMultiplier={1.5} style={{
+                                            color: '#959696',
+                                        }}>Ultima edicion: {dayEdit}</Text>
+
+                                    </View>
+                            }
+
                         </View>
                 }
 
