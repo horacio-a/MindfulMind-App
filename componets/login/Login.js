@@ -19,10 +19,12 @@ import {
 } from '@expo-google-fonts/dev';
 import axios from 'axios';
 import { useEffect } from 'react';
+import { EXPO_PUBLIC_API_URL } from "@env"
 
 
 
 export default function ComponetLogin({ Redirect, goRegister }) {
+    const [btnDisabled, setbtnDisabled] = useState(false)
     const { BackPage, setBackPage } = useContext(BackPageState)
     const { session, setsession } = React.useContext(SesionGlobalState);
     const [ErrorUserMsg, setErrorUserMsg] = useState('')
@@ -81,8 +83,10 @@ export default function ComponetLogin({ Redirect, goRegister }) {
     }
 
     const LoginFuntion = async () => {
+        setbtnDisabled(true)
+
         if (FormCheck() === true) {
-            const response = await axios.post(`${process.env.EXPO_PUBLIC_API_URL}/login/login`, { user: User, password: Password }, {
+            const response = await axios.post(`https://api.mindfulmind.com.ar/login/login`, { user: User, password: Password }, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
@@ -113,8 +117,7 @@ export default function ComponetLogin({ Redirect, goRegister }) {
                 }, 3500);
             }
         }
-
-
+        setbtnDisabled(false)
 
     }
 
@@ -161,12 +164,18 @@ export default function ComponetLogin({ Redirect, goRegister }) {
                         ¿Olvidaste tu Contraseña?
                     </Text>
                 </TouchableOpacity>
+
+                <TouchableOpacity onPress={() => { Redirect('ForgetUser'); setBackPage('SignIn') }}>
+                    <Text maxFontSizeMultiplier={1.5} style={[stylesLogin.TextForgotPassword, { fontFamily: 'Lato_700Bold' }]}>
+                        ¿Olvidaste tu usuario?
+                    </Text>
+                </TouchableOpacity>
                 <TouchableOpacity onPress={() => { goRegister() }}>
                     <Text maxFontSizeMultiplier={1.5} style={[stylesLogin.TextForgotPassword, { fontFamily: 'Lato_700Bold' }]}>
                         Crear una cuenta
                     </Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={LoginFuntion} style={stylesLogin.ButtonSend}>
+                <TouchableOpacity disabled={btnDisabled} onPress={LoginFuntion} style={stylesLogin.ButtonSend}>
                     <Text maxFontSizeMultiplier={1.5} style={[stylesLogin.TextButtonSend, { fontFamily: 'Lato_700Bold' }]}>
                         Enviar
                     </Text>
