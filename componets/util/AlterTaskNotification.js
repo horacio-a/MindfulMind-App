@@ -9,6 +9,7 @@ import axios from 'axios';
 import { RoutineDateGlobalState } from '../../context/DataGlobalState';
 import { useContext, useState, useEffect } from 'react';
 import * as SecureStore from 'expo-secure-store';
+import { EXPO_PUBLIC_API_URL } from "@env"
 
 
 export default function AlterTaskNotification({ setNotificationVisibility, dataForNotification }) {
@@ -24,7 +25,7 @@ export default function AlterTaskNotification({ setNotificationVisibility, dataF
     const AlterTask = async (task) => {
         setLoadingState(true)
         const obj = JSON.stringify(task)
-        const response = await axios.post(`${process.env.EXPO_PUBLIC_API_URL}/Routine/completeTask`, { obj }, {
+        const response = await axios.post(`https://api.mindfulmind.com.ar/Routine/completeTask`, { obj }, {
             headers: {
                 'Content-Type': 'application/json'
             }
