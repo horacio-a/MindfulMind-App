@@ -9,6 +9,7 @@ import { useContext, useEffect, useState } from 'react';
 import { Icon } from '@rneui/themed';
 import axios from 'axios';
 import * as SecureStore from 'expo-secure-store';
+import { EXPO_PUBLIC_API_URL } from "@env"
 
 export default function ChangeUsername({ setChangeUsernameContent, setUser }) {
     const [successfulMsg, setsuccessfulMsg] = useState(false)
@@ -53,7 +54,7 @@ export default function ChangeUsername({ setChangeUsernameContent, setUser }) {
             email: user.email,
             user: user.user
         }
-        const respose = await axios.post(`${process.env.EXPO_PUBLIC_API_URL}/UserSetting/changeUsername`, { data }, {
+        const respose = await axios.post(`https://api.mindfulmind.com.ar/UserSetting/changeUsername`, { data }, {
             headers: {
                 'Content-Type': 'application/json'
             }
