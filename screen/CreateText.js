@@ -70,9 +70,8 @@ export default function CreateText({ navigation }) {
             colorHex: colorSelect,
             date: date,
             lastEdition: date
-
         }
-        const respones = await axios.post(`https://api.mindfulmind.com.ar/Text/createtext`, { data }, {
+        const respones = await axios.post(`https://api.mindfulmind.com.ar}/Text/createtext`, { data }, {
             headers: {
                 'Content-Type': 'application/json'
             }
