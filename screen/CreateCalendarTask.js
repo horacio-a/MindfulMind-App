@@ -166,7 +166,7 @@ export default function CreateCalendarTask({ navigation }) {
 
 
 
-        const response = await axios.post(`${EXPO_PUBLIC_API_URL}/calendar/create`, {
+        const response = await axios.post(`https://api.mindfulmind.com.ar/calendar/create`, {
             data: {
                 "user": user.user,
                 "Title": Title,
@@ -189,7 +189,7 @@ export default function CreateCalendarTask({ navigation }) {
             }
         })
         if (response.data.request = true) {
-            const respuesta = await axios.get(`${EXPO_PUBLIC_API_URL}/getData/calendar/${user.user}/Calendario Principal`)
+            const respuesta = await axios.get(`https://api.mindfulmind.com.ar/getData/calendar/${user.user}/Calendario Principal`)
             SetCalendarData(respuesta.data)
             Redirect('Home')
         }
