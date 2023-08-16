@@ -13,6 +13,7 @@ import { ScrollView } from 'react-native';
 
 import { TextSelect } from "../context/TextSelect";
 import { TextDateGlobalState } from '../context/DataGlobalState';
+import { EXPO_PUBLIC_API_URL } from "@env"
 
 
 export default function CreateText({ navigation }) {
@@ -67,9 +68,11 @@ export default function CreateText({ navigation }) {
             text: Texto,
             user: user.user,
             colorHex: colorSelect,
-            date: date
+            date: date,
+            lastEdition: date
+
         }
-        const respones = await axios.post(`${process.env.EXPO_PUBLIC_API_URL}/Text/createtext`, { data }, {
+        const respones = await axios.post(`https://api.mindfulmind.com.ar/Text/createtext`, { data }, {
             headers: {
                 'Content-Type': 'application/json'
             }
