@@ -45,21 +45,33 @@ export default function TextComponent({ Redirect }) {
                         />
                         <Text maxFontSizeMultiplier={1.75} style={styleTextComp.textAddNewText}>Agregar un texto</Text>
                     </TouchableOpacity>
-                    <View style={{ height: 345, marginTop: 20 }}>
-                        <ScrollView
-                            nestedScrollEnabled={true}>
-                            {
-                                loading === false
-                                    ? (TextData.map(item => <TextosConteiners
-                                        key={item.id}
-                                        data={item}
-                                        Redirect={Redirect}
-                                    />))
-                                    : (<></>)
-                            }
 
-                        </ScrollView>
-                    </View>
+                    {
+                        TextData[0] !== undefined
+                            ? (<View style={{ height: 345, marginTop: 20 }}>
+                                <ScrollView
+                                    nestedScrollEnabled={true}>
+                                    {
+
+                                        loading === false
+                                            ? (
+                                                TextData.map(item => <TextosConteiners
+                                                    key={item.id}
+                                                    data={item}
+                                                    Redirect={Redirect}
+                                                />)
+                                            )
+                                            : (<></>)
+                                    }
+
+                                </ScrollView>
+                            </View>)
+                            : <View style={{ width: '100%', height: 200, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                <Text maxFontSizeMultiplier={1.75} style={{ color: '#1e1e1e', fontSize: 24, fontFamily: 'Lato_700Bold', textAlign: 'center', width: '85%' }}>Todavia no tienes textos</Text>
+                            </View>
+                    }
+
+
 
                 </View>
 
