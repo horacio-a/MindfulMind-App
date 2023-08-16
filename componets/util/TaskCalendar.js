@@ -4,10 +4,14 @@ import {
     Lato_400Regular,
     Lato_700Bold,
 } from '@expo-google-fonts/dev';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useEffect } from 'react';
+import { CalendarSelect } from '../../context/CalendarSelect';
+import { CalendarDateGlobalState } from '../../context/DataGlobalState';
 
-export default function TaskCalendar({ data }) {
+export default function TaskCalendar({ data, Redirect }) {
+    const { SelectedCalendar, setSelectedCalendar } = useContext(CalendarSelect)
+    const { CalendarData, SetCalendarData } = useContext(CalendarDateGlobalState);
     const [allDay, setAllDay] = useState(false)
     const time = new Date(data.intialHour).toLocaleTimeString('es-AR').slice(0, 5)
     useEffect(() => {
@@ -26,18 +30,18 @@ export default function TaskCalendar({ data }) {
         return (
             allDay ?
                 (
-                    <View style={Styles.ConteinerMain} >
+                    <TouchableOpacity onPress={() => { Redirect('EditarCalendar'); setSelectedCalendar(data) }} style={Styles.ConteinerMain} >
                         <Text style={Styles.Text}> Todo el dia</Text>
                         <View style={[Styles.separador, { backgroundColor: data.colorHex }]}></View>
                         <Text style={Styles.Text}>{data.title}</Text>
-                    </View>
+                    </TouchableOpacity>
                 )
                 : (
-                    <View style={Styles.ConteinerMain}>
+                    <TouchableOpacity onPress={() => { Redirect('EditarCalendar'); setSelectedCalendar(data) }} style={Styles.ConteinerMain}>
                         <Text style={Styles.Text}> {time}</Text>
                         <View style={[Styles.separador, { backgroundColor: data.colorHex }]}></View>
                         <Text style={Styles.Text}>{data.title}</Text>
-                    </View>
+                    </TouchableOpacity>
                 )
 
         )
