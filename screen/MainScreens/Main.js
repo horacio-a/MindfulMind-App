@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Button, Text, View, FlatList, ScrollView, SafeAreaView, TouchableOpacity, RefreshControl } from 'react-native';
+import { StyleSheet, Button, Text, View, FlatList, ScrollView, SafeAreaView, TouchableOpacity, RefreshControl, BackHandler, Alert } from 'react-native';
 import Header from '../../componets/Header';
 import NavBar from '../../componets/navBar';
 import Routine from '../../componets/Main/Routine';
@@ -38,6 +38,28 @@ export default function Main({ navigation }) {
         SetTextData(response.TextData)
 
         setRefreshing(false);
+    }, []);
+
+
+    useEffect(() => {
+        const backAction = () => {
+            Alert.alert('Espera', '¿Estas seguro que quieres salir?', [
+                { text: 'Si', onPress: () => BackHandler.exitApp() },
+                {
+                    text: 'No',
+                    onPress: () => null,
+                    style: 'cancel',
+                },
+            ]);
+            return true;
+        };
+
+        const backHandler = BackHandler.addEventListener(
+            'hardwareBackPress',
+            backAction,
+        );
+
+        return () => backHandler.remove();
     }, []);
 
 
