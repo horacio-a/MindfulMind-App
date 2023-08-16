@@ -7,7 +7,12 @@ import {
     Lato_700Bold,
 } from '@expo-google-fonts/dev';
 import axios from 'axios';
+import { EXPO_PUBLIC_API_URL } from "@env"
+
+
+
 export default function ForgetPassword({ navigation }) {
+    const [btnDisabled, setbtnDisabled] = useState(false)
     const [Email, setEmail] = useState('')
     const [authEmail, setauthEmail] = useState(false)
     const [authCod, setauthCod] = useState(false)
@@ -25,9 +30,9 @@ export default function ForgetPassword({ navigation }) {
     }
 
     const sendEmail = async () => {
-
+        setbtnDisabled(true)
         if (Email !== '') {
-            const respose = await axios.post(`${process.env.EXPO_PUBLIC_API_URL}/ForgetPassword/Authcod/forgetpassword`, {
+            const respose = await axios.post(`https://api.mindfulmind.com.ar/ForgetPassword/Authcod/forgetpassword`, {
                 "data": {
                     "user": Email,
                     "email": Email
@@ -52,10 +57,13 @@ export default function ForgetPassword({ navigation }) {
                 seterrorMsg('')
             }, 3500);
         }
+        setbtnDisabled(false)
 
     }
     const CheckAuthCode = async () => {
-        const respose = await axios.post(`${process.env.EXPO_PUBLIC_API_URL}/ForgetPassword/checkAuthcode`, {
+        setbtnDisabled(true)
+
+        const respose = await axios.post(`https://api.mindfulmind.com.ar/ForgetPassword/checkAuthcode`, {
             "data": {
                 "token": Cod,
                 "email": Email
@@ -75,12 +83,15 @@ export default function ForgetPassword({ navigation }) {
             }, 3500);
 
         }
+        setbtnDisabled(false)
+
 
 
     }
     const changePassword = async () => {
+        setbtnDisabled(true)
         if (newPassword === ConfirmNewPassword) {
-            const respose = await axios.post(`${process.env.EXPO_PUBLIC_API_URL}/ForgetPassword/ChangePassword`, {
+            const respose = await axios.post(`https://api.mindfulmind.com.ar/ForgetPassword/ChangePassword`, {
                 "data": {
                     "token": Cod,
                     "email": Email,
@@ -102,6 +113,8 @@ export default function ForgetPassword({ navigation }) {
             console.log('hola')
             seterrorMsg('Las contraseñas no coinciden')
         }
+        setbtnDisabled(false)
+
     }
 
 
@@ -109,7 +122,6 @@ export default function ForgetPassword({ navigation }) {
         const backAction = () => {
             Alert.alert('Espera', '¿Estas seguro que quieres salir?', [
                 { text: 'Si', onPress: () => BackHandler.exitApp() },
-
                 {
                     text: 'No',
                     onPress: () => null,
@@ -168,7 +180,7 @@ export default function ForgetPassword({ navigation }) {
                                                 <View style={style.conteinerTextError}>
                                                     <Text maxFontSizeMultiplier={1.5} style={style.TextError}>{errorMsg}</Text>
                                                 </View>
-                                                <TouchableOpacity onPress={() => { changePassword() }} style={style.ButtonSend}>
+                                                <TouchableOpacity disabled={btnDisabled} onPress={() => { changePassword() }} style={style.ButtonSend}>
                                                     <Text maxFontSizeMultiplier={1.5} style={[style.TextButtonSend, { fontFamily: 'Lato_700Bold' }]}>
                                                         Enviar
                                                     </Text>
@@ -188,7 +200,7 @@ export default function ForgetPassword({ navigation }) {
                                         <View style={style.conteinerTextError}>
                                             <Text maxFontSizeMultiplier={1.5} style={style.TextError}>{errorMsg}</Text>
                                         </View>
-                                        <TouchableOpacity maxFontSizeMultiplier={1.5} onPress={() => { CheckAuthCode() }} style={style.ButtonSend}>
+                                        <TouchableOpacity disabled={btnDisabled} maxFontSizeMultiplier={1.5} onPress={() => { CheckAuthCode() }} style={style.ButtonSend}>
                                             <Text style={[style.TextButtonSend, { fontFamily: 'Lato_700Bold' }]}>
                                                 Enviar
                                             </Text>
@@ -210,7 +222,7 @@ export default function ForgetPassword({ navigation }) {
                                     <Text maxFontSizeMultiplier={1.5} style={style.TextError}>{errorMsg}</Text>
 
                                 </View>
-                                <TouchableOpacity onPress={() => { sendEmail() }} style={style.ButtonSend}>
+                                <TouchableOpacity disabled={btnDisabled} onPress={() => { sendEmail() }} style={style.ButtonSend}>
                                     <Text maxFontSizeMultiplier={1.5} style={[style.TextButtonSend, { fontFamily: 'Lato_700Bold' }]}>
                                         Enviar
                                     </Text>
