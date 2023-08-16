@@ -10,9 +10,17 @@ import { useContext, useState } from 'react';
 import TaskCalendar from './TaskCalendar';
 import { Icon } from '@rneui/themed';
 import { DayNewTasks } from '../../context/DayNewTasks';
+import { CaledarCardSelect } from '../../context/CalendarCardSelect';
+import { useEffect } from 'react';
 
-export default function CalendarCard({ setCalendarCardVisibility, dataForCalendarCard, Redirect }) {
+export default function CalendarCard({ setCalendarCardVisibility, Redirect }) {
     const { DayTasks, setDayTasks } = useContext(DayNewTasks)
+    const { dataForCalendarCard, setdateForCalendarCard } = useContext(CaledarCardSelect)
+    const [data, setdata] = useState('')
+    useEffect(() => {
+        setdata(dataForCalendarCard)
+    }, [dataForCalendarCard])
+
     const [loading, setloading] = useState(true)
     let [fontsLoaded] = useFonts({
         Lato_400Regular,
@@ -29,17 +37,17 @@ export default function CalendarCard({ setCalendarCardVisibility, dataForCalenda
                 <View style={style.card}>
                     <View style={style.titleCardConteiner}>
                         <Text maxFontSizeMultiplier={1.5} style={[style.titleCard, { fontFamily: 'Lato_700Bold', fontSize: 24, }]}>{dataForCalendarCard.number}</Text>
-                        <Text maxFontSizeMultiplier={1.5} style={[style.titleCard, {}]}>{dataForCalendarCard.diaSemana}</Text>
+                        <Text maxFontSizeMultiplier={1.5} style={[style.titleCard, {}]}>{data.diaSemana}</Text>
                     </View>
                     <View style={style.LineaTitle}></View>
                     <View style={style.MainContent}>
                         {
-                            dataForCalendarCard.Tasks
+                            data.Tasks
                                 ? (
                                     <FlatList
                                         style={{ width: '100%' }}
-                                        data={dataForCalendarCard.Tasks}
-                                        renderItem={({ item }) => <TaskCalendar data={item} />}
+                                        data={data.Tasks}
+                                        renderItem={({ item }) => <TaskCalendar data={item} Redirect={Redirect} />}
                                         key={item => item.id}
                                     />
                                 )
@@ -50,7 +58,7 @@ export default function CalendarCard({ setCalendarCardVisibility, dataForCalenda
                         }
                     </View>
                     <View style={style.AddBar}>
-                        <TouchableOpacity onPress={() => { Redirect('CreateCalendarTask'); setDayTasks(dataForCalendarCard.fecha); setCalendarCardVisibility(false) }} style={style.ButtomAdd}>
+                        <TouchableOpacity onPress={() => { Redirect('CreateCalendarTask'); setDayTasks(data.fecha); setCalendarCardVisibility(false) }} style={style.ButtomAdd}>
                             <Icon
                                 name='pluscircleo'
                                 type="antdesign"
