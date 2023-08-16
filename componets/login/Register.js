@@ -9,7 +9,7 @@ import {
     Lato_700Bold,
     Inter_900Black,
 } from '@expo-google-fonts/dev';
-
+import { EXPO_PUBLIC_API_URL } from "@env"
 import { Icon } from '@rneui/themed';
 import axios from 'axios';
 
@@ -99,7 +99,7 @@ export default function ComponetRegister({ Redirect, goLogin }) {
                     password: Password,
                     email: Email
                 }
-                const data = await axios.post(`${process.env.EXPO_PUBLIC_API_URL}/login/register`, { obj }, {
+                const data = await axios.post(`https://api.mindfulmind.com.ar/login/register`, { obj }, {
                     headers: {
                         'Content-Type': 'application/json'
                     }
