@@ -28,13 +28,19 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "runtimeVersion": {
+        "policy": "sdkVersion"
+      }
     },
     "android": {
+      "package": "com.apk.mindfulmind",
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "runtimeVersion": "1.0.0"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -43,6 +49,13 @@
       "eas": {
         "projectId": "49a4d4a0-80f7-4e53-ae42-d34494b9c746"
       }
+    },
+    "updates": {
+      "url": "https://u.expo.dev/49a4d4a0-80f7-4e53-ae42-d34494b9c746"
+    },
+    "androidStatusBar": {
+      "backgroundColor": "#1e1e1e",
+      "translucent": false
     }
   }
 }
