@@ -7,7 +7,6 @@ import {
     Lato_700Bold,
 } from '@expo-google-fonts/dev';
 import Header from '../../componets/Header';
-import NavBar from '../../componets/navBar';
 import { SesionGlobalState } from '../../context/SesionGlobalState';
 import { Icon } from '@rneui/themed';
 import { BackPageState } from '../../context/BackPageState';
@@ -15,8 +14,9 @@ import ProfileSelect from '../../componets/util/profileSelect';
 import axios from 'axios';
 import ChangePass from '../../componets/util/ChangePass';
 import ChangeUsername from '../../componets/util/ChangeUsername';
-import { EXPO_PUBLIC_API_URL } from "@env"
 import { ExpoPushToken } from '../../context/ExpoPushTokenState';
+
+
 
 export default function SettingScreen({ navigation }) {
     const { BackPage, setBackPage } = useContext(BackPageState)
@@ -27,6 +27,10 @@ export default function SettingScreen({ navigation }) {
     const [profilSelectcontent, setprofilSelectcontent] = useState(false)
     const [ChangePassContent, setChangePassContent] = useState(false)
     const [ChangeUsernameContent, setChangeUsernameContent] = useState(false)
+
+
+
+
 
     useEffect(() => {
         const funtionUser = async () => {
@@ -51,6 +55,7 @@ export default function SettingScreen({ navigation }) {
     useEffect(() => {
         const backAction = () => {
             Redirect('Home')
+            return true;
         };
 
         const backHandler = BackHandler.addEventListener(
@@ -146,6 +151,7 @@ export default function SettingScreen({ navigation }) {
                         <TouchableOpacity onPress={() => setChangePassContent(true)} style={{ width: '100%', height: 50, backgroundColor: '#1e1e1e', marginTop: 15, borderRadius: 5, display: 'flex', justifyContent: 'center' }}>
                             <Text maxFontSizeMultiplier={1.5} style={{ color: '#fff', fontFamily: 'Lato_700Bold', fontSize: 16, marginLeft: 10 }}>Cambiar contraseña</Text>
                         </TouchableOpacity>
+
 
                         <TouchableOpacity onPress={() => { CuestionExitSession() }} style={styles.exitButton}>
                             <Icon
