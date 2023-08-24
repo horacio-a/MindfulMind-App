@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "254890954207",
+    "project_id": "mindfulmind-91626",
+    "storage_bucket": "mindfulmind-91626.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:254890954207:android:7c921147297b8cb191086a",
+        "android_client_info": {
+          "package_name": "com.mindfulmind.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "254890954207-rpql9d8hjfjsqg5epij1jbuoqbi4tial.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7mRaMJrNxZdIq696d6qY1Kv2CHm4ty90"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "254890954207-rpql9d8hjfjsqg5epij1jbuoqbi4tial.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
