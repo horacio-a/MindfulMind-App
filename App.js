@@ -1,4 +1,3 @@
-import Loading from './screen/Loading';
 import { View, Text, Button, Platform } from 'react-native';
 import { useEffect, useState, useRef } from 'react';
 import * as SecureStore from 'expo-secure-store';
@@ -17,6 +16,25 @@ import { EXPO_PUBLIC_API_URL } from "@env"
 import { CaledarCardSelect } from './context/CalendarCardSelect';
 import { StatusBar } from 'expo-status-bar';
 import Navigation from './Navigation';
+import Main from './screen/MainScreens/Main';
+import RoutineScreen from './screen/MainScreens/Routine';
+import CalendarScreen from './screen/MainScreens/Calendar';
+import TextScreen from './screen/MainScreens/Texts';
+import SettingScreen from './screen/MainScreens/Settings';
+import CreateCalendarTask from './screen/CreateCalendarTask';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+const Stack = createNativeStackNavigator();
+import Loading from './screen/Loading';
+import Login from './screen/Login';
+import ForgetPassword from './screen/ForgetPassword';
+import AdministraRoutine from './screen/AdmistarRoutine';
+import CreateText from './screen/CreateText';
+import EditText from './screen/EditText';
+import EditarCalendar from './screen/EditCalendar';
+import TutorialForNewUser from './screen/TutorialForNewUser';
+import ForgetUser from './screen/ForgetUser';
+
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -30,7 +48,7 @@ Notifications.setNotificationChannelAsync('default', {
   name: 'default',
   importance: Notifications.AndroidImportance.MAX,
   vibrationPattern: [0, 250, 250, 250],
-  lightColor: '#FF231F7C',
+  lightColor: '#1E1E1E',
 });
 
 
@@ -78,24 +96,33 @@ export default function App({ navigation }) {
 
   useEffect(() => {
 
-    // Fetch the token from storage then navigate to our appropriate place
     const IsUserRegister = async () => {
+      let stopLoading = true
       const userToken = await SecureStore.getItemAsync('userToken')
       if (userToken) {
         const response = (await GetAllDataFuntion())
         SetCalendarData(response.CalendarData)
         SetRoutineData(response.TasksData)
         SetTextData(response.TextData)
+        stopLoading = false
         setloading(false)
         setsession(true)
 
       } else {
         setTimeout(() => {
+          stopLoading = false
           setsession(false)
           setloading(false)
         }, 1000);
 
       }
+      setTimeout(() => {
+        if (stopLoading) {
+          SecureStore.deleteItemAsync('userToken')
+          setsession(false)
+          setloading(false)
+        }
+      }, 6500);
     };
 
     IsUserRegister();
@@ -104,6 +131,25 @@ export default function App({ navigation }) {
 
 
 
+
+  const config = {
+    animation: 'spring',
+    config: {
+      stiffness: 1000,
+      damping: 500,
+      mass: 3,
+      overshootClamping: true,
+      restDisplacementThreshold: 0.01,
+      restSpeedThreshold: 0.01,
+    },
+  };
+
+
+  const forFade = ({ current }) => ({
+    cardStyle: {
+      opacity: current.progress,
+    },
+  });
 
 
   return (
@@ -123,8 +169,57 @@ export default function App({ navigation }) {
                             <TextDateGlobalState.Provider value={{ TextData, SetTextData }}>
                               <DayNewTasks.Provider value={{ DayTasks, setDayTasks }}>
 
-                                <Navigation />
+                                <NavigationContainer>
+                                  <Stack.Navigator initialRouteName={"SignIn"} >
+                                    {!session ? (
+                                      <>
+                                        <Stack.Screen name="TutorialForNewUser"
+                                          component={TutorialForNewUser} options={{ headerShown: false, forFade }} />
 
+                                        <Stack.Screen name="SignIn"
+                                          component={Login} options={{ headerShown: false, forFade }} />
+
+                                        <Stack.Screen name="ForgetPassword"
+                                          component={ForgetPassword} options={{ headerShown: false, forFade }} />
+
+                                        <Stack.Screen name="ForgetUser"
+                                          component={ForgetUser} options={{ headerShown: false, forFade }} />
+                                      </>
+                                    ) : (
+                                      <>
+                                        <Stack.Screen name="Home"
+                                          component={Main} options={{ headerShown: false, forFade }} />
+
+                                        <Stack.Screen name="AdminRoutine"
+                                          component={AdministraRoutine} options={{ headerShown: false, forFade }} />
+
+                                        <Stack.Screen name="RoutineScreen"
+                                          component={RoutineScreen} options={{ headerShown: false, forFade }} />
+
+                                        <Stack.Screen name="CalendarScreen"
+                                          component={CalendarScreen} options={{ headerShown: false, forFade }} />
+
+                                        <Stack.Screen name="EditarCalendar"
+                                          component={EditarCalendar} options={{ headerShown: false, forFade }} />
+
+                                        <Stack.Screen name="TextScreen"
+                                          component={TextScreen} options={{ headerShown: false, forFade }} />
+
+                                        <Stack.Screen name="SettingScreen"
+                                          component={SettingScreen} options={{ headerShown: false, forFade }} />
+
+                                        <Stack.Screen name="CreateCalendarTask"
+                                          component={CreateCalendarTask} options={{ headerShown: false, forFade }} />
+
+                                        <Stack.Screen name="CreateText"
+                                          component={CreateText} options={{ headerShown: false, forFade }} />
+
+                                        <Stack.Screen name="EditText"
+                                          component={EditText} options={{ headerShown: false, forFade }} />
+                                      </>
+                                    )}
+                                  </Stack.Navigator>
+                                </NavigationContainer >
                               </DayNewTasks.Provider>
                             </TextDateGlobalState.Provider>
                           </CalendarDateGlobalState.Provider>
@@ -146,34 +241,39 @@ export default function App({ navigation }) {
 }
 
 async function registerForPushNotificationsAsync() {
-  let token;
+  try {
 
-  if (Platform.OS === 'android') {
-    await Notifications.setNotificationChannelAsync('default', {
-      name: 'default',
-      importance: Notifications.AndroidImportance.MAX,
-      vibrationPattern: [0, 250, 250, 250],
-      lightColor: '#FF231F7C',
-    });
-  }
+    let token;
 
-  if (Device.isDevice) {
-    const { status: existingStatus } = await Notifications.getPermissionsAsync();
-    let finalStatus = existingStatus;
-    if (existingStatus !== 'granted') {
-      const { status } = await Notifications.requestPermissionsAsync();
-      finalStatus = status;
+    if (Platform.OS === 'android') {
+      await Notifications.setNotificationChannelAsync('default', {
+        name: 'default',
+        importance: Notifications.AndroidImportance.MAX,
+        vibrationPattern: [0, 250, 250, 250],
+        lightColor: '#FF231F7C',
+      });
     }
-    if (finalStatus !== 'granted') {
-      alert('Failed to get push token for push notification!');
-      return;
-    }
-    token = (await Notifications.getExpoPushTokenAsync({
-      projectId: '49a4d4a0-80f7-4e53-ae42-d34494b9c746',
-    })).data;
-  } else {
-    alert('Must use physical device for Push Notifications');
-  }
 
-  return token;
+    if (Device.isDevice) {
+      const { status: existingStatus } = await Notifications.getPermissionsAsync();
+      let finalStatus = existingStatus;
+      if (existingStatus !== 'granted') {
+        const { status } = await Notifications.requestPermissionsAsync();
+        finalStatus = status;
+      }
+      if (finalStatus !== 'granted') {
+        alert('Failed to get push token for push notification!');
+        return;
+      }
+      token = (await Notifications.getExpoPushTokenAsync({
+        projectId: '49a4d4a0-80f7-4e53-ae42-d34494b9c746',
+      })).data;
+    } else {
+      alert('Must use physical device for Push Notifications');
+    }
+
+    return token;
+  } catch (error) {
+    return error
+  }
 }
