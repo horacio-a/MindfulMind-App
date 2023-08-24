@@ -24,7 +24,7 @@ export default function AlterTaskNotification({ setNotificationVisibility, dataF
 
     const AlterTask = async (task) => {
         setLoadingState(true)
-        const obj = JSON.stringify(task)
+        const obj = task
         const response = await axios.post(`https://api.mindfulmind.com.ar/Routine/completeTask`, { obj }, {
             headers: {
                 'Content-Type': 'application/json'
