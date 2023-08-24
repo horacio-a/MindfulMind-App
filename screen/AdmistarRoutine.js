@@ -89,9 +89,9 @@ export default function AdministraRoutine({ navigation }) {
     }
 
     useEffect(() => {
-        const backAction = () => {
-
-            () => null
+        const backAction = async () => {
+            Redirect('Home')
+            SetRoutineData(JSON.parse(await SecureStore.getItemAsync('routineDataCopy')))
             return true;
         };
 
@@ -149,7 +149,6 @@ export default function AdministraRoutine({ navigation }) {
             setroutineDataCopy(copyOfCopy)
             SetRoutineData(copy)
         }
-
     }
 
 
@@ -190,10 +189,8 @@ export default function AdministraRoutine({ navigation }) {
 
 
     const deleteTasks = async () => {
-        console.log(DataForDelete)
         const response = await axios.delete(`https://api.mindfulmind.com.ar/Routine/DeleteTasks`, { data: DataForDelete })
         SetRoutineData(response.data)
-        console.log(response.data)
 
         setvisibilityNotification(false)
     }
