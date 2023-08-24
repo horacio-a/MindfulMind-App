@@ -14,7 +14,6 @@ import ContentLoader from "react-native-easy-content-loader";
 import * as SecureStore from 'expo-secure-store';
 
 export default function Routine({ Redirect, SendAlter }) {
-    const [fakeLoading, setFakeLoading] = useState(false)
     const [loading, setloading] = useState(false)
     const { routineData, SetRoutineData } = useContext(RoutineDateGlobalState);
 
