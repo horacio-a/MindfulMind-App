@@ -102,7 +102,6 @@ export default function ForgetPassword({ navigation }) {
                     'Content-Type': 'application/json'
                 }
             })
-            console.log(respose.data)
             if (respose.data.error) {
                 seterrorMsg(respose.data.msg)
 
@@ -110,7 +109,6 @@ export default function ForgetPassword({ navigation }) {
                 setmsgGeneral(true)
             }
         } else {
-            console.log('hola')
             seterrorMsg('Las contraseñas no coinciden')
         }
         setbtnDisabled(false)
@@ -120,14 +118,7 @@ export default function ForgetPassword({ navigation }) {
 
     useEffect(() => {
         const backAction = () => {
-            Alert.alert('Espera', '¿Estas seguro que quieres salir?', [
-                { text: 'Si', onPress: () => BackHandler.exitApp() },
-                {
-                    text: 'No',
-                    onPress: () => null,
-                    style: 'cancel',
-                },
-            ]);
+            Redirect('SignIn')
             return true;
         };
 
