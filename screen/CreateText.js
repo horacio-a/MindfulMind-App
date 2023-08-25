@@ -1,4 +1,4 @@
-import { StyleSheet, Switch, Text, View, FlatList, TextInput, SafeAreaView, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { StyleSheet, Switch, Text, View, FlatList, TextInput, SafeAreaView, TouchableOpacity, TouchableWithoutFeedback, Keyboard, BackHandler, Alert } from 'react-native';
 import Header from '../componets/Header';
 import {
     useFonts,
@@ -24,7 +24,19 @@ export default function CreateText({ navigation }) {
     const [Title, setTitle] = useState('')
     const [titleMsgErr, settitleMsgErr] = useState('');
 
+    useEffect(() => {
+        const backAction = () => {
+            Redirect('Home')
+            return true;
+        };
 
+        const backHandler = BackHandler.addEventListener(
+            'hardwareBackPress',
+            backAction,
+        );
+
+        return () => backHandler.remove();
+    }, []);
     const Redirect = (url) => {
         navigation.navigate(url)
     }
@@ -71,7 +83,7 @@ export default function CreateText({ navigation }) {
             date: date,
             lastEdition: date
         }
-        const respones = await axios.post(`https://api.mindfulmind.com.ar}/Text/createtext`, { data }, {
+        const respones = await axios.post(`https://api.mindfulmind.com.ar/Text/createtext`, { data }, {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -82,13 +94,16 @@ export default function CreateText({ navigation }) {
         setbtnEnable(true)
 
     }
+    const script = () => {
+        Redirect('Home')
+    }
 
     if (!fontsLoaded) {
         return <></>;
     } else {
         return (
             <>
-                <Header back={true} Redirect={Redirect} />
+                <Header back={true} Redirect={Redirect} script={script} />
                 <View style={{ flex: 1, backgroundColor: '#000000' }} >
                     <View style={[style.Content]}>
                         <View style={style.conteinerTitle}>
