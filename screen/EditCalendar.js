@@ -1,4 +1,4 @@
-import { StyleSheet, Switch, Text, View, FlatList, TextInput, SafeAreaView, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { StyleSheet, Switch, Text, View, FlatList, TextInput, SafeAreaView, TouchableOpacity, TouchableWithoutFeedback, Keyboard, BackHandler, Alert } from 'react-native';
 import Header from '../componets/Header';
 import {
     useFonts,
@@ -254,12 +254,25 @@ export default function EditarCalendar({ navigation }) {
         Redirect('Home')
     }
 
+    useEffect(() => {
+        const backAction = () => {
+            Redirect('Home')
+            return true;
+        };
+
+        const backHandler = BackHandler.addEventListener(
+            'hardwareBackPress',
+            backAction,
+        );
+
+        return () => backHandler.remove();
+    }, []);
+
     const deleteCalendarTasks = async () => {
         if (editAll === false) {
             let response = await axios.delete(`https://api.mindfulmind.com.ar/calendar/delete`, { data: { user: user.user, id: SelectedCalendar.id, idCalendar: SelectedCalendar.idCalendar } })
             const newdata = response.data.days.findIndex((element) => element.fecha === SelectedCalendar.date)
             setdateForCalendarCard(response.data.days[newdata])
-            console.log(response.data)
             SetCalendarData(response.data)
         }
         if (editAll === true) {
