@@ -1,4 +1,4 @@
-import { StyleSheet, Switch, Text, View, FlatList, TextInput, SafeAreaView, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { StyleSheet, Switch, Text, View, FlatList, TextInput, SafeAreaView, TouchableOpacity, TouchableWithoutFeedback, Keyboard, BackHandler, Alert } from 'react-native';
 import Header from '../componets/Header';
 import {
     useFonts,
@@ -34,7 +34,6 @@ export default function CreateCalendarTask({ navigation }) {
 
     useEffect(() => {
         var fecha = new Date(DayTasks);
-        console.log(fecha)
         // Obtener el día de la semana en texto
         var diasSemana = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
         var diaDeLaSemana = diasSemana[fecha.getUTCDay()];
@@ -89,6 +88,22 @@ export default function CreateCalendarTask({ navigation }) {
 
         }
     }, [])
+
+
+    useEffect(() => {
+        const backAction = () => {
+
+            Redirect('Home')
+            return true;
+        };
+
+        const backHandler = BackHandler.addEventListener(
+            'hardwareBackPress',
+            backAction,
+        );
+
+        return () => backHandler.remove();
+    }, []);
 
     const showMode = (currentMode) => {
         setShowFrom(true);
@@ -195,12 +210,17 @@ export default function CreateCalendarTask({ navigation }) {
         }
     }
 
+
+    const script = () => {
+        Redirect('Home')
+    }
+
     if (!fontsLoaded) {
         return <></>;
     } else {
         return (
             <>
-                <Header back={true} Redirect={Redirect} />
+                <Header back={true} Redirect={Redirect} script={script} />
                 <View style={{ flex: 1, backgroundColor: '#000000' }} >
                     <View style={[style.Content, { borderBottomLeftRadius: 20, borderBottomRightRadius: 20 }]}>
                         <View style={style.conteinerTitle}>
