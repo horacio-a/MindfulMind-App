@@ -8,6 +8,8 @@ import {
 } from '@expo-google-fonts/dev';
 import Constants from 'expo-constants';
 import { SesionGlobalState } from '../context/SesionGlobalState';
+import axios from 'axios';
+import * as SecureStore from 'expo-secure-store';
 
 
 export default function TutorialForNewUser({ navigation }) {
@@ -110,6 +112,13 @@ export default function TutorialForNewUser({ navigation }) {
         }).start();
     }
 
+    const skipTutorial = async () => {
+        const userToken = JSON.parse(await SecureStore.getItemAsync('userToken'))
+
+        await axios.post('https://api.mindfulmind.com.ar/tutorialOff', { user: userToken.user })
+        setsession(true)
+    }
+
     if (!fontsLoaded) {
         return <></>;
     } else {
@@ -131,7 +140,7 @@ export default function TutorialForNewUser({ navigation }) {
                                         <Animated.Text maxFontSizeMultiplier={1.5} style={{ color: '#959696', fontFamily: 'Lato_400Regular', opacity: fadeAnim1, fontSize: 16, marginTop: 15, textAlign: 'center' }}>Podrás acceder más adelante</Animated.Text>
                                     </View>
                                     <View style={{ height: '10%', width: '100%', flexDirection: 'row', justifyContent: 'space-around' }}>
-                                        <TouchableOpacity onPress={() => { setsession(true) }} style={{ width: '35%', height: '50%', borderWidth: 1, borderColor: '#fff', borderRadius: 2, alignItems: 'center', justifyContent: 'center' }}>
+                                        <TouchableOpacity onPress={() => { skipTutorial() }} style={{ width: '35%', height: '50%', borderWidth: 1, borderColor: '#fff', borderRadius: 2, alignItems: 'center', justifyContent: 'center' }}>
                                             <Text maxFontSizeMultiplier={1.5} style={{ color: '#fff', fontFamily: 'Lato_700Bold' }}>Omitir</Text>
                                         </TouchableOpacity>
                                         <TouchableOpacity onPress={() => {
@@ -522,7 +531,7 @@ export default function TutorialForNewUser({ navigation }) {
                                                                 : <View style={{ backgroundColor: '#1e1e1e', flex: 1, alignItems: 'center', justifyContent: 'center', marginTop: Constants.statusBarHeight, }}>
                                                                     <Animated.Text maxFontSizeMultiplier={1.5} style={{ color: '#fff', fontFamily: 'Lato_400Regular', opacity: fadeAnim, fontSize: 26 }}>Ya estás listo</Animated.Text>
                                                                     <Animated.Text maxFontSizeMultiplier={1.5} style={{ textAlign: 'center', color: '#fff', fontFamily: 'Lato_400Regular', opacity: fadeAnim1, fontSize: 20, marginTop: 15 }}>Ya puedes usar a pleno mindfulmind.</Animated.Text>
-                                                                    <TouchableOpacity onPress={() => { setsession(true) }} style={{ width: '35%', height: '5%', borderWidth: 1, borderColor: '#fff', borderRadius: 2, alignItems: 'center', justifyContent: 'center', marginTop: 15 }}>
+                                                                    <TouchableOpacity onPress={() => { skipTutorial() }} style={{ width: '35%', height: '5%', borderWidth: 1, borderColor: '#fff', borderRadius: 2, alignItems: 'center', justifyContent: 'center', marginTop: 15 }}>
                                                                         <Text maxFontSizeMultiplier={1.5} style={{ color: '#fff', fontFamily: 'Lato_700Bold' }}>Finalizar</Text>
                                                                     </TouchableOpacity>
                                                                 </View>
