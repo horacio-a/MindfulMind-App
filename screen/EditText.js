@@ -1,4 +1,4 @@
-import { StyleSheet, Switch, Text, View, FlatList, TextInput, SafeAreaView, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { StyleSheet, Switch, Text, View, FlatList, TextInput, SafeAreaView, TouchableOpacity, TouchableWithoutFeedback, Keyboard, BackHandler, Alert } from 'react-native';
 import Header from '../componets/Header';
 import {
     useFonts,
@@ -104,18 +104,33 @@ export default function EditText({ navigation }) {
                 'Content-Type': 'application/json'
             }
         })
-
-
-
     }
 
+    useEffect(() => {
+        const backAction = () => {
+
+            Redirect('Home')
+            return true;
+        };
+
+        const backHandler = BackHandler.addEventListener(
+            'hardwareBackPress',
+            backAction,
+        );
+
+        return () => backHandler.remove();
+    }, []);
+
+    const script = () => {
+        Redirect('Home')
+    }
 
     if (!fontsLoaded) {
         return <></>;
     } else {
         return (
             <>
-                <Header back={true} Redirect={Redirect} />
+                <Header back={true} Redirect={Redirect} script={script} />
                 {
                     edit
                         ? <View style={{ flex: 1, backgroundColor: '#000000' }} >
