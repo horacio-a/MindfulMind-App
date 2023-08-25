@@ -51,18 +51,9 @@ export default function ForgetUser({ navigation }) {
         setbtnDisabled(false)
 
     }
-
-
     useEffect(() => {
         const backAction = () => {
-            Alert.alert('Espera', '¿Estas seguro que quieres salir?', [
-                { text: 'Si', onPress: () => BackHandler.exitApp() },
-                {
-                    text: 'No',
-                    onPress: () => null,
-                    style: 'cancel',
-                },
-            ]);
+            Redirect('SignIn')
             return true;
         };
 
@@ -73,6 +64,8 @@ export default function ForgetUser({ navigation }) {
 
         return () => backHandler.remove();
     }, []);
+
+
 
 
     if (!fontsLoaded) {
