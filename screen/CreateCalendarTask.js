@@ -203,11 +203,12 @@ export default function CreateCalendarTask({ navigation }) {
                 'Content-Type': 'application/json'
             }
         })
-        if (response.data.request = true) {
-            const respuesta = await axios.get(`https://api.mindfulmind.com.ar/getData/calendar/${user.user}/Calendario Principal`)
-            SetCalendarData(respuesta.data)
+        if (!response.data.err) {
+            SetCalendarData(response.data)
             Redirect('Home')
+
         }
+
     }
 
 
