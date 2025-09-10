@@ -83,10 +83,9 @@ export default function ComponetLogin({ Redirect, goRegister }) {
     }
 
     const LoginFuntion = async () => {
-        setbtnDisabled(true)
 
         if (FormCheck() === true) {
-            const response = await axios.post(`https://api.mindfulmind.com.ar/login/login`, { user: User, password: Password }, {
+            const response = await axios.post(`https://mindfulmindapi.horacioalbornoz.com/login/login`, { user: User, password: Password }, {
                 headers: {
                     'Content-Type': 'application/json'
                 }

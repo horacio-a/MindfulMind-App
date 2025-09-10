@@ -54,7 +54,7 @@ export default function ChangeUsername({ setChangeUsernameContent, setUser }) {
             email: user.email,
             user: user.user
         }
-        const respose = await axios.post(`https://api.mindfulmind.com.ar/UserSetting/changeUsername`, { data }, {
+        const respose = await axios.post(`https://mindfulmindapi.horacioalbornoz.com/UserSetting/changeUsername`, { data }, {
             headers: {
                 'Content-Type': 'application/json'
             }

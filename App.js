@@ -81,7 +81,7 @@ export default function App({ navigation }) {
       const userToken = JSON.parse(await SecureStore.getItemAsync('userToken'))
       const res = userToken.notificationTokens.filter((element) => element === ExpoToken)
       if (res[0] === undefined) {
-        axios.post(`https://api.mindfulmind.com.ar/setNotificationToken`, { user: userToken.user, NotificationToken: ExpoToken })
+        axios.post(`https://mindfulmindapi.horacioalbornoz.com/setNotificationToken`, { user: userToken.user, NotificationToken: ExpoToken })
         let user = userToken
         user.notificationTokens.push(ExpoToken)
         await SecureStore.setItemAsync('userToken', JSON.stringify(user))

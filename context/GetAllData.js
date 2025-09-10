@@ -6,7 +6,7 @@ const GetAllDataFuntion = async () => {
     let user = JSON.parse(await SecureStore.getItemAsync('userToken'))
 
     const respose = await axios.post(
-        `https://api.mindfulmind.com.ar/getData/all`,
+        `https://mindfulmindapi.horacioalbornoz.com/getData/all`,
         {
             obj: {
                 Calendar: {

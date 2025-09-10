@@ -26,7 +26,7 @@ export default function ForgetUser({ navigation }) {
     const sendEmail = async () => {
         setbtnDisabled(true)
         if (Email !== '') {
-            const respose = await axios.post(`https://api.mindfulmind.com.ar/ForgetPassword/forgetUser`, {
+            const respose = await axios.post(`https://mindfulmindapi.horacioalbornoz.com/ForgetPassword/forgetUser`, {
                 "user": Email,
                 "email": Email
             }, {

@@ -181,7 +181,7 @@ export default function CreateCalendarTask({ navigation }) {
 
 
 
-        const response = await axios.post(`https://api.mindfulmind.com.ar/calendar/create`, {
+        const response = await axios.post(`https://mindfulmindapi.horacioalbornoz.com/calendar/create`, {
             data: {
                 "user": user.user,
                 "Title": Title,

@@ -84,7 +84,7 @@ export default function SettingScreen({ navigation }) {
         navigation.navigate(url)
     }
     const ExitSession = async () => {
-        await axios.post(`https://api.mindfulmind.com.ar/login/logout`, { NotificationToken: ExpoToken })
+        await axios.post(`https://mindfulmindapi.horacioalbornoz.com/login/logout`, { NotificationToken: ExpoToken })
         await SecureStore.deleteItemAsync('userToken')
         setsession(false)
     }
@@ -116,7 +116,7 @@ export default function SettingScreen({ navigation }) {
         data.profilePicture = newImg
         await SecureStore.setItemAsync('userToken', JSON.stringify(data))
 
-        await axios.post(`https://api.mindfulmind.com.ar'/UserSetting/changeprofilepicture`, { data }, {
+        await axios.post(`https://mindfulmindapi.horacioalbornoz.com'/UserSetting/changeprofilepicture`, { data }, {
             headers: {
                 'Content-Type': 'application/json'
             }

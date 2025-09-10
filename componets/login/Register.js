@@ -99,7 +99,7 @@ export default function ComponetRegister({ Redirect, goLogin }) {
                     password: Password,
                     email: Email
                 }
-                const data = await axios.post(`https://api.mindfulmind.com.ar/login/register`, { obj }, {
+                const data = await axios.post(`https://mindfulmindapi.horacioalbornoz.com/login/register`, { obj }, {
                     headers: {
                         'Content-Type': 'application/json'
                     }

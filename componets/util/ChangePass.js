@@ -81,7 +81,7 @@ export default function ChangePass({ setChangePassContent, ChangeProfilePicture,
                 email: user.email,
                 user: user.user
             }
-            const respose = await axios.post(`https://api.mindfulmind.com.ar/UserSetting/changePasswordWithPass`, { data }, {
+            const respose = await axios.post(`https://mindfulmindapi.horacioalbornoz.com/UserSetting/changePasswordWithPass`, { data }, {
                 headers: {
                     'Content-Type': 'application/json'
                 }

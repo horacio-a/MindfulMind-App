@@ -79,7 +79,7 @@ export default function EditText({ navigation }) {
             date: SelectedText.date,
             lastEdition: date
         }
-        const respones = await axios.post(`https://api.mindfulmind.com.ar/Text/updatetext`, { data, id: SelectedText.id }, {
+        const respones = await axios.post(`https://mindfulmindapi.horacioalbornoz.com/Text/updatetext`, { data, id: SelectedText.id }, {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -99,7 +99,7 @@ export default function EditText({ navigation }) {
             id: SelectedText.id,
             user: user.user,
         }
-        const respones = await axios.post(`https://api.mindfulmind.com.ar/Text/deleteText`, { data }, {
+        const respones = await axios.post(`https://mindfulmindapi.horacioalbornoz.com/Text/deleteText`, { data }, {
             headers: {
                 'Content-Type': 'application/json'
             }

@@ -32,7 +32,7 @@ export default function ForgetPassword({ navigation }) {
     const sendEmail = async () => {
         setbtnDisabled(true)
         if (Email !== '') {
-            const respose = await axios.post(`https://api.mindfulmind.com.ar/ForgetPassword/Authcod/forgetpassword`, {
+            const respose = await axios.post(`https://mindfulmindapi.horacioalbornoz.com/ForgetPassword/Authcod/forgetpassword`, {
                 "data": {
                     "user": Email,
                     "email": Email
@@ -63,7 +63,7 @@ export default function ForgetPassword({ navigation }) {
     const CheckAuthCode = async () => {
         setbtnDisabled(true)
 
-        const respose = await axios.post(`https://api.mindfulmind.com.ar/ForgetPassword/checkAuthcode`, {
+        const respose = await axios.post(`https://mindfulmindapi.horacioalbornoz.com/ForgetPassword/checkAuthcode`, {
             "data": {
                 "token": Cod,
                 "email": Email
@@ -91,7 +91,7 @@ export default function ForgetPassword({ navigation }) {
     const changePassword = async () => {
         setbtnDisabled(true)
         if (newPassword === ConfirmNewPassword) {
-            const respose = await axios.post(`https://api.mindfulmind.com.ar/ForgetPassword/ChangePassword`, {
+            const respose = await axios.post(`https://mindfulmindapi.horacioalbornoz.com/ForgetPassword/ChangePassword`, {
                 "data": {
                     "token": Cod,
                     "email": Email,

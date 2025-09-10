@@ -115,7 +115,7 @@ export default function TutorialForNewUser({ navigation }) {
     const skipTutorial = async () => {
         const userToken = JSON.parse(await SecureStore.getItemAsync('userToken'))
 
-        await axios.post('https://api.mindfulmind.com.ar/tutorialOff', { user: userToken.user })
+        await axios.post('https://mindfulmindapi.horacioalbornoz.com/tutorialOff', { user: userToken.user })
         setsession(true)
     }
 

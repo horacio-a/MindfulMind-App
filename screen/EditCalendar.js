@@ -196,10 +196,10 @@ export default function EditarCalendar({ navigation }) {
             let response
             delete data.groupedTask;
             if (editAll === false) {
-                response = await axios.post(`https://api.mindfulmind.com.ar/calendar/update`, { data: data, info: editAll })
+                response = await axios.post(`https://mindfulmindapi.horacioalbornoz.com/calendar/update`, { data: data, info: editAll })
             }
             if (editAll === true) {
-                response = await axios.post(`https://api.mindfulmind.com.ar/calendar/updategroup`, { data, info })
+                response = await axios.post(`https://mindfulmindapi.horacioalbornoz.com/calendar/updategroup`, { data, info })
             }
             const newdata = response.data.days.findIndex((element) => element.fecha === SelectedCalendar.date)
             setdateForCalendarCard(response.data.days[newdata])
@@ -270,13 +270,13 @@ export default function EditarCalendar({ navigation }) {
 
     const deleteCalendarTasks = async () => {
         if (editAll === false) {
-            let response = await axios.delete(`https://api.mindfulmind.com.ar/calendar/delete`, { data: { user: user.user, id: SelectedCalendar.id, idCalendar: SelectedCalendar.idCalendar } })
+            let response = await axios.delete(`https://mindfulmindapi.horacioalbornoz.com/calendar/delete`, { data: { user: user.user, id: SelectedCalendar.id, idCalendar: SelectedCalendar.idCalendar } })
             const newdata = response.data.days.findIndex((element) => element.fecha === SelectedCalendar.date)
             setdateForCalendarCard(response.data.days[newdata])
             SetCalendarData(response.data)
         }
         if (editAll === true) {
-            let response = await axios.delete(`https://api.mindfulmind.com.ar/calendar/deletegroup`, { data: { user: user.user, id: SelectedCalendar.GroupId, idCalendar: SelectedCalendar.idCalendar } })
+            let response = await axios.delete(`https://mindfulmindapi.horacioalbornoz.com/calendar/deletegroup`, { data: { user: user.user, id: SelectedCalendar.GroupId, idCalendar: SelectedCalendar.idCalendar } })
             const newdata = response.data.days.findIndex((element) => element.fecha === SelectedCalendar.date)
             setdateForCalendarCard(response.data.days[newdata])
             SetCalendarData(response.data)

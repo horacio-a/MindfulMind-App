@@ -83,7 +83,7 @@ export default function CreateText({ navigation }) {
             date: date,
             lastEdition: date
         }
-        const respones = await axios.post(`https://api.mindfulmind.com.ar/Text/createtext`, { data }, {
+        const respones = await axios.post(`https://mindfulmindapi.horacioalbornoz.com/Text/createtext`, { data }, {
             headers: {
                 'Content-Type': 'application/json'
             }

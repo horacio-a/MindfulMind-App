@@ -131,8 +131,10 @@ export default function AdministraRoutine({ navigation }) {
                 seterrorMsg('')
             }, 2500);
         } else {
+            console.log('hola')
             let user = JSON.parse(await SecureStore.getItemAsync('userToken'))
-            const response = await axios.post(`https://api.mindfulmind.com.ar/Routine/newtask`, {
+            console.log(user)
+            const response = await axios.post(`https://mindfulmindapi.horacioalbornoz.com/Routine/newtask`, {
                 "user": user.user,
                 "title": InputTitle
             }, {
@@ -177,7 +179,7 @@ export default function AdministraRoutine({ navigation }) {
             obj.data.push({ id: element.id, NewOrden: (i + 1) })
         }
 
-        const response = await axios.post(`https://api.mindfulmind.com.ar/Routine/ReOrder`, { obj }, {
+        const response = await axios.post(`https://mindfulmindapi.horacioalbornoz.com/Routine/ReOrder`, { obj }, {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -189,7 +191,7 @@ export default function AdministraRoutine({ navigation }) {
 
 
     const deleteTasks = async () => {
-        const response = await axios.delete(`https://api.mindfulmind.com.ar/Routine/DeleteTasks`, { data: DataForDelete })
+        const response = await axios.delete(`https://mindfulmindapi.horacioalbornoz.com/Routine/DeleteTasks`, { data: DataForDelete })
         SetRoutineData(response.data)
 
         setvisibilityNotification(false)
